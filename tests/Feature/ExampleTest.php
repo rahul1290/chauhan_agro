@@ -23,6 +23,6 @@ class ExampleTest extends TestCase
     {
         $response = $this->get('/en');
         $response->assertStatus(200);
-        $response->assertSee('AgroVision');
+        $response->assertSee('Chauhan Agro');
     }
 }

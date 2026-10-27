@@ -43,26 +43,26 @@
                         
                         <div class="mb-3">
                             <label class="form-label fw-bold">Company / Website Name</label>
-                            <input type="text" name="site_name" class="form-control" value="{{ old('site_name', $allSettings['site_name']->value ?? 'AgroVision Heavy Industries') }}">
+                            <input type="text" name="site_name" class="form-control" value="{{ old('site_name', $allSettings['site_name']->value ?? 'Chauhan Agro Industries') }}">
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Brand Tagline</label>
-                            <input type="text" name="site_tagline" class="form-control" value="{{ old('site_tagline', $allSettings['site_tagline']->value ?? 'Pioneering Advanced Agricultural Machinery & Implements') }}">
+                            <input type="text" name="site_tagline" class="form-control" value="{{ old('site_tagline', $allSettings['site_tagline']->value ?? 'Pioneering Heavy Duty Agricultural Machinery & Implements Worldwide') }}">
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Logo Path / URL</label>
                             <div class="input-group">
-                                <input type="text" name="logo_path" class="form-control" value="{{ old('logo_path', $allSettings['logo_path']->value ?? 'assets/images/logo.svg') }}">
+                                <input type="text" name="logo_path" class="form-control" value="{{ old('logo_path', $allSettings['logo_path']->value ?? 'assets/images/branding/logo.svg') }}">
                                 <a href="{{ route('admin.media.index') }}" target="_blank" class="btn btn-outline-secondary">Browse Media</a>
                             </div>
-                            <div class="form-text">Relative path in public directory (e.g. <code>assets/images/logo.svg</code>) or uploaded media URL.</div>
+                            <div class="form-text">Relative path in public directory (e.g. <code>assets/images/branding/logo.svg</code>) or uploaded media URL.</div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Footer Copyright Notice</label>
-                            <input type="text" name="footer_copyright" class="form-control" value="{{ old('footer_copyright', $allSettings['footer_copyright']->value ?? '© ' . date('Y') . ' AgroVision Heavy Industries Pvt. Ltd. All Rights Reserved.') }}">
+                            <input type="text" name="footer_copyright" class="form-control" value="{{ old('footer_copyright', $allSettings['footer_copyright']->value ?? '© ' . date('Y') . ' Chauhan Agro Industries Pvt. Ltd. All Rights Reserved.') }}">
                         </div>
 
                         <div class="row g-3">
@@ -90,11 +90,11 @@
                         <div class="row g-3 mb-3">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Sales & Enquiry Email</label>
-                                <input type="email" name="contact_email" class="form-control" value="{{ old('contact_email', $allSettings['contact_email']->value ?? 'sales@agrovision.com') }}">
+                                <input type="email" name="contact_email" class="form-control" value="{{ old('contact_email', $allSettings['contact_email']->value ?? 'sales@chauhanagroindustries.com') }}">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Toll-Free / Customer Support Phone</label>
-                                <input type="text" name="contact_phone" class="form-control" value="{{ old('contact_phone', $allSettings['contact_phone']->value ?? '1800-123-AGRO') }}">
+                                <input type="text" name="contact_phone" class="form-control" value="{{ old('contact_phone', $allSettings['contact_phone']->value ?? '1800-212-9000') }}">
                             </div>
                         </div>
 
@@ -113,12 +113,12 @@
                         
                         <div class="mb-3">
                             <label class="form-label fw-bold">Manufacturing Facility & Head Office Address</label>
-                            <textarea name="contact_address" class="form-control" rows="3">{{ old('contact_address', $allSettings['contact_address']->value ?? 'Plot No. 45-48, Agro Machinery Industrial Estate, Phase 2, G.I.D.C., Ahmedabad, Gujarat - 382445, India') }}</textarea>
+                            <textarea name="contact_address" class="form-control" rows="3">{{ old('contact_address', $allSettings['contact_address']->value ?? 'Chauhan Agro Industries Complex, NH-8 Highway Corridor, Phase II, Precision Engineering Zone, Gujarat, India - 382010') }}</textarea>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Google Maps Embed URL</label>
-                            <textarea name="map_embed_url" class="form-control" rows="3">{{ old('map_embed_url', $allSettings['map_embed_url']->value ?? 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.956708751859!2d72.56966141496788!3d23.025344384951664!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjPCsDAxJzMxLjIiTiA3MsKwMzQnMTguNyJF!5e0!3m2!1sen!2sin!4v1620000000000!5m2!1sen!2sin') }}</textarea>
+                            <textarea name="map_embed_url" class="form-control" rows="3">{{ old('map_embed_url', $allSettings['map_embed_url']->value ?? 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117506.97341393664!2d72.49397669466551!3d23.020497771783387!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848aba5bd449%3A0x4fcedd11614f6516!2sAhmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin') }}</textarea>
                             <div class="form-text">Paste the <code>src</code> URL from Google Maps Embed iframe.</div>
                         </div>
                     </div>
@@ -131,27 +131,27 @@
                         
                         <div class="mb-3">
                             <label class="form-label fw-bold"><i class="bi bi-facebook text-primary me-2"></i>Facebook Page</label>
-                            <input type="url" name="social_facebook" class="form-control" value="{{ old('social_facebook', $allSettings['social_facebook']->value ?? 'https://facebook.com/agrovision') }}">
+                            <input type="url" name="social_facebook" class="form-control" value="{{ old('social_facebook', $allSettings['social_facebook']->value ?? 'https://facebook.com/chauhanagroindustries') }}">
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-bold"><i class="bi bi-youtube text-danger me-2"></i>YouTube Channel</label>
-                            <input type="url" name="social_youtube" class="form-control" value="{{ old('social_youtube', $allSettings['social_youtube']->value ?? 'https://youtube.com/@agrovision') }}">
+                            <input type="url" name="social_youtube" class="form-control" value="{{ old('social_youtube', $allSettings['social_youtube']->value ?? 'https://youtube.com/@chauhanagroindustries') }}">
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-bold"><i class="bi bi-linkedin text-info me-2"></i>LinkedIn Company Page</label>
-                            <input type="url" name="social_linkedin" class="form-control" value="{{ old('social_linkedin', $allSettings['social_linkedin']->value ?? 'https://linkedin.com/company/agrovision') }}">
+                            <input type="url" name="social_linkedin" class="form-control" value="{{ old('social_linkedin', $allSettings['social_linkedin']->value ?? 'https://linkedin.com/company/chauhan-agro-industries') }}">
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-bold"><i class="bi bi-instagram text-danger me-2"></i>Instagram Profile</label>
-                            <input type="url" name="social_instagram" class="form-control" value="{{ old('social_instagram', $allSettings['social_instagram']->value ?? 'https://instagram.com/agrovision') }}">
+                            <input type="url" name="social_instagram" class="form-control" value="{{ old('social_instagram', $allSettings['social_instagram']->value ?? 'https://instagram.com/chauhanagroindustries') }}">
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-bold"><i class="bi bi-twitter-x text-dark me-2"></i>Twitter / X Profile</label>
-                            <input type="url" name="social_twitter" class="form-control" value="{{ old('social_twitter', $allSettings['social_twitter']->value ?? 'https://twitter.com/agrovision') }}">
+                            <input type="url" name="social_twitter" class="form-control" value="{{ old('social_twitter', $allSettings['social_twitter']->value ?? 'https://twitter.com/chauhanagro') }}">
                         </div>
                     </div>
                 </div>
@@ -163,12 +163,12 @@
                         
                         <div class="mb-3">
                             <label class="form-label fw-bold">Default SEO Meta Title</label>
-                            <input type="text" name="default_meta_title" class="form-control" value="{{ old('default_meta_title', $allSettings['default_meta_title']->value ?? 'AgroVision - Advanced Agricultural Machinery & Implements Manufacturer') }}">
+                            <input type="text" name="default_meta_title" class="form-control" value="{{ old('default_meta_title', $allSettings['default_meta_title']->value ?? 'Chauhan Agro Industries | Heavy-Duty Agricultural Machinery, Rotary Tillers & Implements') }}">
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Default SEO Meta Description</label>
-                            <textarea name="default_meta_description" class="form-control" rows="3">{{ old('default_meta_description', $allSettings['default_meta_description']->value ?? 'Leading manufacturer of rotary tillers, disc harrows, cultivators, laser land levellers and advanced farm machinery engineered for supreme durability and tractor fuel economy.') }}</textarea>
+                            <textarea name="default_meta_description" class="form-control" rows="3">{{ old('default_meta_description', $allSettings['default_meta_description']->value ?? 'Discover industry-leading agricultural machinery from Chauhan Agro Industries (chauhanagroindustries.com): Multi-Speed Rotary Tillers, Heavy-Duty Disc Harrows, Laser Land Levellers, Seed Drills, and MB Ploughs engineered for maximum farm productivity.') }}</textarea>
                         </div>
                     </div>
                 </div>

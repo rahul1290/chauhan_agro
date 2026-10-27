@@ -1,7 +1,7 @@
 # GoDaddy Shared Hosting Deployment Guide
-## AgroVision Heavy Industries - Multilingual Business Website & Admin CMS
+## Chauhan Agro Industries (chauhanagroindustries.com) - Multilingual Business Website & Admin CMS
 
-This guide provides instructions for deploying the **AgroVision** Laravel application to **GoDaddy Linux Shared Hosting (cPanel)** or compatible PHP 8.x shared hosting environments.
+This guide provides instructions for deploying the **Chauhan Agro Industries** (`chauhanagroindustries.com`) Laravel application to **GoDaddy Linux Shared Hosting (cPanel)** or compatible PHP 8.x shared hosting environments.
 
 ---
 

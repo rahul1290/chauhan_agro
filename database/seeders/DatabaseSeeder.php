@@ -139,24 +139,24 @@ class DatabaseSeeder extends Seeder
 
         // 4. Site Settings
         $settings = [
-            ['key' => 'site_name', 'value' => 'AgroVision Heavy Industries', 'group' => 'general'],
+            ['key' => 'site_name', 'value' => 'Chauhan Agro Industries', 'group' => 'general'],
             ['key' => 'site_tagline', 'value' => 'Pioneering Heavy Duty Agricultural Machinery & Implements Worldwide', 'group' => 'general'],
-            ['key' => 'contact_email', 'value' => 'contact@agrovision-machinery.com', 'group' => 'contact'],
-            ['key' => 'sales_email', 'value' => 'sales@agrovision-machinery.com', 'group' => 'contact'],
+            ['key' => 'contact_email', 'value' => 'contact@chauhanagroindustries.com', 'group' => 'contact'],
+            ['key' => 'sales_email', 'value' => 'sales@chauhanagroindustries.com', 'group' => 'contact'],
             ['key' => 'toll_free_number', 'value' => '1800-212-9000', 'group' => 'contact'],
             ['key' => 'primary_phone', 'value' => '+91 98765 43210', 'group' => 'contact'],
             ['key' => 'whatsapp_number', 'value' => '+91 98765 43210', 'group' => 'contact'],
-            ['key' => 'headquarters_address', 'value' => "AgroVision Heavy Industrial Complex, NH-8 Highway Corridor, Phase II, Precision Engineering Zone, Gujarat, India - 382010", 'group' => 'contact'],
+            ['key' => 'headquarters_address', 'value' => "Chauhan Agro Industries Complex, NH-8 Highway Corridor, Phase II, Precision Engineering Zone, Gujarat, India - 382010", 'group' => 'contact'],
             ['key' => 'working_hours', 'value' => 'Monday - Saturday: 9:00 AM - 6:30 PM IST', 'group' => 'contact'],
             ['key' => 'google_map_embed', 'value' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117506.97341393664!2d72.49397669466551!3d23.020497771783387!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848aba5bd449%3A0x4fcedd11614f6516!2sAhmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin', 'group' => 'contact'],
-            ['key' => 'social_facebook', 'value' => 'https://facebook.com/agrovisionmachinery', 'group' => 'social'],
-            ['key' => 'social_youtube', 'value' => 'https://youtube.com/@agrovisionmachinery', 'group' => 'social'],
-            ['key' => 'social_linkedin', 'value' => 'https://linkedin.com/company/agrovision-machinery', 'group' => 'social'],
-            ['key' => 'social_instagram', 'value' => 'https://instagram.com/agrovisionmachinery', 'group' => 'social'],
-            ['key' => 'social_twitter', 'value' => 'https://twitter.com/agrovision_agro', 'group' => 'social'],
-            ['key' => 'meta_title_default', 'value' => 'AgroVision | Heavy-Duty Agricultural Machinery, Rotary Tillers & Implements', 'group' => 'seo'],
-            ['key' => 'meta_description_default', 'value' => 'Discover industry-leading agricultural machinery: Multi-Speed Rotary Tillers, Heavy-Duty Disc Harrows, Laser Land Levellers, Seed Drills, and MB Ploughs engineered for maximum farm productivity.', 'group' => 'seo'],
-            ['key' => 'footer_about_text', 'value' => 'AgroVision Heavy Industries is a premier global manufacturer of advanced farm machinery, agricultural implements, and tillage equipment engineered with robotic precision and high-tensile boron steel.', 'group' => 'general'],
+            ['key' => 'social_facebook', 'value' => 'https://facebook.com/chauhanagroindustries', 'group' => 'social'],
+            ['key' => 'social_youtube', 'value' => 'https://youtube.com/@chauhanagroindustries', 'group' => 'social'],
+            ['key' => 'social_linkedin', 'value' => 'https://linkedin.com/company/chauhan-agro-industries', 'group' => 'social'],
+            ['key' => 'social_instagram', 'value' => 'https://instagram.com/chauhanagroindustries', 'group' => 'social'],
+            ['key' => 'social_twitter', 'value' => 'https://twitter.com/chauhanagro', 'group' => 'social'],
+            ['key' => 'meta_title_default', 'value' => 'Chauhan Agro Industries | Heavy-Duty Agricultural Machinery, Rotary Tillers & Implements', 'group' => 'seo'],
+            ['key' => 'meta_description_default', 'value' => 'Discover industry-leading agricultural machinery from Chauhan Agro Industries (chauhanagroindustries.com): Multi-Speed Rotary Tillers, Heavy-Duty Disc Harrows, Laser Land Levellers, Seed Drills, and MB Ploughs engineered for maximum farm productivity.', 'group' => 'seo'],
+            ['key' => 'footer_about_text', 'value' => 'Chauhan Agro Industries is a premier global manufacturer of advanced farm machinery, agricultural implements, and tillage equipment engineered with robotic precision and high-tensile boron steel.', 'group' => 'general'],
         ];
 
         foreach ($settings as $s) {

@@ -2,7 +2,7 @@
     <div class="container py-4">
         <div class="text-center mb-5">
             <span class="section-badge">{{ $currentLocale === 'hi' ? 'हमारी विशेषताएं' : 'UNCOMPROMISING EXCELLENCE' }}</span>
-            <h2 class="section-title">{{ $section->title ?? ($currentLocale === 'hi' ? 'एग्रोविज़न ही क्यों चुनें?' : 'Why Choose AgroVision') }}</h2>
+            <h2 class="section-title">{{ $section->title ?? ($currentLocale === 'hi' ? 'चौहान एग्रो ही क्यों चुनें?' : 'Why Choose Chauhan Agro') }}</h2>
             @if($section->subtitle)
                 <p class="section-subtitle">{{ $section->subtitle }}</p>
             @endif

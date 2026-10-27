@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
-@section('meta_title', ($currentLocale === 'hi' ? 'संपर्क करें | एग्रोविज़न कृषि मशीनरी' : 'Contact Us | AgroVision Heavy Industries'))
-@section('meta_description', 'Contact AgroVision factory headquarters, sales advisors, or dealer relations. Phone, email, Google Maps directions, and online enquiry form.')
+@section('meta_title', ($currentLocale === 'hi' ? 'संपर्क करें | चौहान एग्रो इंडस्ट्रीज' : 'Contact Us | Chauhan Agro Industries'))
+@section('meta_description', 'Contact Chauhan Agro Industries (chauhanagroindustries.com) factory headquarters, sales advisors, or dealer relations. Phone, email, Google Maps directions, and online enquiry form.')
 
 @section('content')
 
@@ -14,7 +14,7 @@
                     <li class="breadcrumb-item active text-white" aria-current="page">{{ $currentLocale === 'hi' ? 'संपर्क करें' : 'Contact Us' }}</li>
                 </ol>
             </nav>
-            <h1 class="text-white fw-bold display-5 mb-2">{{ $currentLocale === 'hi' ? 'हमसे संपर्क करें' : 'Contact AgroVision' }}</h1>
+            <h1 class="text-white fw-bold display-5 mb-2">{{ $currentLocale === 'hi' ? 'हमसे संपर्क करें' : 'Contact Chauhan Agro Industries' }}</h1>
             <p class="text-light-muted mb-0" style="max-width: 700px; font-size: 1.15rem;">
                 {{ $currentLocale === 'hi' ? 'मशीनरी पूछताछ, फैक्टरी कोटेशन या डीलरशिप आवेदन के लिए हमारी समर्पित टीम से संपर्क करें।' : 'Reach out to our engineering specialists, authorized dealership directorate, or regional technical support.' }}
             </p>
@@ -35,7 +35,7 @@
                             </div>
                         </div>
                         <p class="text-secondary small mb-0" style="line-height: 1.7;">
-                            {{ site_setting('headquarters_address', 'AgroVision Heavy Industrial Complex, NH-8 Highway Corridor, Phase II, Precision Engineering Zone, India') }}
+                            {{ site_setting('headquarters_address', 'Chauhan Agro Industries Complex, NH-8 Highway Corridor, Phase II, Precision Engineering Zone, India') }}
                         </p>
                     </div>
                 </div>
@@ -174,7 +174,7 @@
                         <h6 class="fw-bold text-dark mb-2"><i class="bi bi-clock-fill text-success me-2"></i>{{ $currentLocale === 'hi' ? 'कार्य समय' : 'Operating Hours' }}</h6>
                         <p class="text-secondary small mb-3">{{ site_setting('working_hours', 'Monday - Saturday: 9:00 AM - 6:30 PM (IST)') }}</p>
                         <h6 class="fw-bold text-dark mb-2"><i class="bi bi-globe2 text-primary me-2"></i>{{ $currentLocale === 'hi' ? 'निर्यात पूछताछ' : 'International Export Inquiries' }}</h6>
-                        <p class="text-secondary small mb-0">For overseas dealership representation, OEM manufacturing, or export container inquiries, please email: <strong class="text-dark">export@agrovision-machinery.com</strong></p>
+                        <p class="text-secondary small mb-0">For overseas dealership representation, OEM manufacturing, or export container inquiries, please email: <strong class="text-dark">export@chauhanagroindustries.com</strong></p>
                     </div>
                 </div>
             </div>

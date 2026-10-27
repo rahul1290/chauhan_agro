@@ -20,7 +20,7 @@ class WebsiteTest extends TestCase
     {
         $response = $this->get('/en');
         $response->assertStatus(200);
-        $response->assertSee('AgroVision Heavy Industries');
+        $response->assertSee('Chauhan Agro Industries');
         $response->assertSee('Machinery & Implements');
         $response->assertSee('About Us');
     }
@@ -29,7 +29,7 @@ class WebsiteTest extends TestCase
     {
         $response = $this->get('/hi');
         $response->assertStatus(200);
-        $response->assertSee('एग्रोविज़न');
+        $response->assertSee('चौहान एग्रो');
     }
 
     /**
@@ -47,7 +47,7 @@ class WebsiteTest extends TestCase
     {
         $response = $this->get('/en/products?category=rotary-tillers');
         $response->assertStatus(200);
-        $response->assertSee('AgroVision Gold Multi-Speed Rotary Tiller');
+        $response->assertSee('Gold Multi-Speed Rotary Tiller');
     }
 
     public function test_product_detail_page_renders_with_specifications()
@@ -69,14 +69,14 @@ class WebsiteTest extends TestCase
     {
         $response = $this->get('/en/about-us');
         $response->assertStatus(200);
-        $response->assertSee('About AgroVision Heavy Industries');
+        $response->assertSee('About Chauhan Agro Industries');
     }
 
     public function test_contact_page_renders()
     {
         $response = $this->get('/en/contact');
         $response->assertStatus(200);
-        $response->assertSee('Contact AgroVision');
+        $response->assertSee('Contact Chauhan Agro Industries');
     }
 
     /**

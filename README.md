@@ -1,7 +1,7 @@
-# AgroVision Heavy Industries
+# Chauhan Agro Industries (chauhanagroindustries.com)
 ### Multilingual Agricultural Machinery Business Website & Dynamic Admin CMS
 
-A corporate agricultural machinery showcase web application and CMS inspired by modern industrial manufacturers like [Fieldking](https://www.fieldking.com/). Built for **AgroVision Heavy Industries**, featuring multilingual localization (English & Hindi, extensible to Marathi/Gujarati), dynamic page builder with reusable component sections, machinery product catalogue with technical specifications tables, brochure downloads, anti-spam enquiry management, and a role-based admin console.
+A corporate agricultural machinery showcase web application and CMS inspired by modern industrial manufacturers like [Fieldking](https://www.fieldking.com/). Built for **Chauhan Agro Industries** ([chauhanagroindustries.com](https://chauhanagroindustries.com)), featuring multilingual localization (English & Hindi, extensible to Marathi/Gujarati), dynamic page builder with reusable component sections, machinery product catalogue with technical specifications tables, brochure downloads, anti-spam enquiry management, and a role-based admin console.
 
 ---
 

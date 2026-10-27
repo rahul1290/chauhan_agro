@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
-@section('meta_title', ($selectedCategory ? $selectedCategory->name . ' | ' : '') . ($currentLocale === 'hi' ? 'कृषि उपकरण सूची | एग्रोविज़न' : 'Machinery Catalogue | AgroVision Heavy Industries'))
-@section('meta_description', $selectedCategory ? $selectedCategory->description : 'Browse heavy-duty agricultural machinery: Rotary tillers, disc harrows, laser levellers, and seed drills.')
+@section('meta_title', ($selectedCategory ? $selectedCategory->name . ' | ' : '') . ($currentLocale === 'hi' ? 'कृषि उपकरण सूची | चौहान एग्रो इंडस्ट्रीज' : 'Machinery Catalogue | Chauhan Agro Industries'))
+@section('meta_description', $selectedCategory ? $selectedCategory->description : 'Browse heavy-duty agricultural machinery: Rotary tillers, disc harrows, laser levellers, and seed drills from Chauhan Agro Industries.')
 
 @section('content')
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login | AgroVision CMS</title>
+    <title>Admin Login | Chauhan Agro Industries CMS</title>
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/bootstrap-icons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
@@ -42,8 +42,8 @@
             <div class="d-inline-flex align-items-center justify-content-center bg-success text-white rounded-circle p-3 mb-3" style="width: 56px; height: 56px;">
                 <i class="bi bi-shield-lock-fill fs-3 text-white"></i>
             </div>
-            <h3 class="fw-bold mb-1 text-white">AgroVision CMS</h3>
-            <p class="text-secondary small mb-0">Agricultural Machinery Administration Portal</p>
+            <h3 class="fw-bold mb-1 text-white">Chauhan Agro Industries</h3>
+            <p class="text-secondary small mb-0">chauhanagroindustries.com &bull; Control Center</p>
         </div>
 
         <div class="login-body">

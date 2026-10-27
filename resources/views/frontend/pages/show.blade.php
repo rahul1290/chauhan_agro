@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('meta_title', $page->meta_title ?? ($page->title . ' | AgroVision Heavy Industries'))
+@section('meta_title', $page->meta_title ?? ($page->title . ' | Chauhan Agro Industries'))
 @section('meta_description', $page->meta_description ?? $page->excerpt)
 
 @section('content')

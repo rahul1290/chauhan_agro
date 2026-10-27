@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('meta_title', $product->meta_title ?? ($product->name . ' | AgroVision Machinery'))
+@section('meta_title', $product->meta_title ?? ($product->name . ' | Chauhan Agro Industries'))
 @section('meta_description', $product->meta_description ?? Str::limit(strip_tags($product->description), 155))
 @section('og_image', asset($product->featured_image ?? 'assets/images/products/gold-rotary-tiller.jpg'))
 

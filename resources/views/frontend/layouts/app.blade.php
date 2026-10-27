@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>@yield('meta_title', site_setting('meta_title_default', 'AgroVision | Heavy-Duty Agricultural Machinery & Implements'))</title>
+    <title>@yield('meta_title', site_setting('meta_title_default', 'Chauhan Agro Industries | Heavy-Duty Agricultural Machinery & Implements'))</title>
     <meta name="description" content="@yield('meta_description', site_setting('meta_description_default', 'High-performance agricultural machinery: Rotary Tillers, Disc Harrows, Laser Land Levellers, Seed Drills and MB Ploughs.'))">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -48,7 +48,7 @@
                 </span>
                 <span class="contact-item d-none d-md-inline-flex">
                     <i class="bi bi-envelope-fill"></i>
-                    <a href="mailto:{{ site_setting('sales_email', 'sales@agrovision-machinery.com') }}">{{ site_setting('sales_email', 'sales@agrovision-machinery.com') }}</a>
+                    <a href="mailto:{{ site_setting('sales_email', 'sales@chauhanagroindustries.com') }}">{{ site_setting('sales_email', 'sales@chauhanagroindustries.com') }}</a>
                 </span>
                 <span class="contact-item d-none d-lg-inline-flex">
                     <i class="bi bi-shield-check"></i>
@@ -95,7 +95,7 @@
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light p-0">
                 <a class="navbar-brand" href="{{ loc_url('/') }}">
-                    <img src="{{ asset('assets/images/branding/logo.svg') }}" alt="AgroVision Heavy Industries" height="48">
+                    <img src="{{ asset('assets/images/branding/logo.svg') }}" alt="Chauhan Agro Industries" height="48">
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#agroNavbarContent" aria-controls="agroNavbarContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -183,9 +183,9 @@
             <div class="row g-4">
                 <!-- Column 1: Company Profile -->
                 <div class="col-lg-4 col-md-6">
-                    <img src="{{ asset('assets/images/branding/logo-white.svg') }}" alt="AgroVision" height="42" class="mb-4">
+                    <img src="{{ asset('assets/images/branding/logo-white.svg') }}" alt="Chauhan Agro Industries" height="42" class="mb-4">
                     <p class="text-light-muted mb-4 pe-lg-3" style="font-size: 0.92rem; line-height: 1.7;">
-                        {{ site_setting('footer_about_text', 'AgroVision Heavy Industries is a premier global manufacturer of advanced agricultural implements engineered with robotic precision, laser alignment, and genuine European boron steel.') }}
+                        {{ site_setting('footer_about_text', 'Chauhan Agro Industries is a premier global manufacturer of advanced agricultural implements engineered with robotic precision, laser alignment, and genuine European boron steel.') }}
                     </p>
                     <div class="d-flex align-items-center mb-3">
                         <a href="{{ site_setting('social_facebook', '#') }}" class="footer-social-link" title="Facebook"><i class="bi bi-facebook"></i></a>
@@ -237,7 +237,7 @@
                     <h4>{{ $currentLocale === 'hi' ? 'मुख्यालय एवं संयंत्र' : 'Factory & Plant' }}</h4>
                     <p style="font-size: 0.9rem; line-height: 1.6;" class="mb-3">
                         <i class="bi bi-geo-alt-fill text-warning me-2"></i>
-                        {{ site_setting('headquarters_address', 'AgroVision Heavy Industrial Complex, NH-8 Highway Corridor, Phase II, Precision Engineering Zone, India') }}
+                        {{ site_setting('headquarters_address', 'Chauhan Agro Industries Complex, NH-8 Highway Corridor, Phase II, Precision Engineering Zone, India') }}
                     </p>
                     <p style="font-size: 0.9rem;" class="mb-2">
                         <i class="bi bi-telephone-inbound-fill text-warning me-2"></i>
@@ -245,7 +245,7 @@
                     </p>
                     <p style="font-size: 0.9rem;" class="mb-2">
                         <i class="bi bi-envelope-at-fill text-warning me-2"></i>
-                        <a href="mailto:{{ site_setting('contact_email', 'contact@agrovision-machinery.com') }}">{{ site_setting('contact_email', 'contact@agrovision-machinery.com') }}</a>
+                        <a href="mailto:{{ site_setting('contact_email', 'contact@chauhanagroindustries.com') }}">{{ site_setting('contact_email', 'contact@chauhanagroindustries.com') }}</a>
                     </p>
                     <p style="font-size: 0.85rem;" class="text-secondary mt-3">
                         <i class="bi bi-clock-history me-1"></i> {{ site_setting('working_hours', 'Mon - Sat: 9:00 AM - 6:30 PM') }}
@@ -256,7 +256,7 @@
             <!-- Bottom Legal Bar -->
             <div class="agro-footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center gap-3">
                 <div>
-                    &copy; {{ date('Y') }} AgroVision Heavy Industries. {{ $currentLocale === 'hi' ? 'सर्वाधिकार सुरक्षित।' : 'All Rights Reserved.' }}
+                    &copy; {{ date('Y') }} {{ site_setting('site_name', 'Chauhan Agro Industries') }}. {{ $currentLocale === 'hi' ? 'सर्वाधिकार सुरक्षित।' : 'All Rights Reserved.' }}
                 </div>
                 <div class="d-flex align-items-center gap-3">
                     <a href="{{ loc_url('/privacy-policy') }}" class="text-muted" style="font-size: 0.82rem;">{{ $currentLocale === 'hi' ? 'गोपनीयता नीति' : 'Privacy Policy' }}</a>
