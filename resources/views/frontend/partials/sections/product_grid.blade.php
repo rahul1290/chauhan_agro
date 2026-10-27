@@ -26,7 +26,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="product-card">
                         <div class="product-thumb-wrapper">
-                            <img src="{{ asset($prod->featured_image ?? 'assets/images/products/gold-rotary-tiller.jpg') }}" alt="{{ $prod->name }}" loading="lazy">
+                            <img src="{{ asset($prod->featured_image ?? 'assets/images/products/gold-rotary-tiller.jpg') }}?v=2" alt="{{ $prod->name }}" loading="lazy">
 
                             @if($prod->hp_range)
                                 <div class="hp-badge">

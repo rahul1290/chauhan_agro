@@ -29,17 +29,17 @@
                 <!-- Left: Image Gallery -->
                 <div class="col-lg-6">
                     <div class="product-gallery-main mb-3">
-                        <img id="mainGalleryImg" src="{{ asset($product->featured_image ?? 'assets/images/products/gold-rotary-tiller.jpg') }}" alt="{{ $product->name }}">
+                        <img id="mainGalleryImg" src="{{ asset($product->featured_image ?? 'assets/images/products/gold-rotary-tiller.jpg') }}?v=2" alt="{{ $product->name }}">
                     </div>
 
                     @if($product->images->isNotEmpty())
                         <div class="gallery-thumbs">
-                            <div class="gallery-thumb-item active" onclick="switchMainImage('{{ asset($product->featured_image) }}', this)">
-                                <img src="{{ asset($product->featured_image) }}" alt="{{ $product->name }}">
+                            <div class="gallery-thumb-item active" onclick="switchMainImage('{{ asset($product->featured_image) }}?v=2', this)">
+                                <img src="{{ asset($product->featured_image) }}?v=2" alt="{{ $product->name }}">
                             </div>
                             @foreach($product->images as $img)
-                                <div class="gallery-thumb-item" onclick="switchMainImage('{{ asset($img->image_path) }}', this)">
-                                    <img src="{{ asset($img->image_path) }}" alt="{{ $img->caption }}">
+                                <div class="gallery-thumb-item" onclick="switchMainImage('{{ asset($img->image_path) }}?v=2', this)">
+                                    <img src="{{ asset($img->image_path) }}?v=2" alt="{{ $img->caption }}">
                                 </div>
                             @endforeach
                         </div>

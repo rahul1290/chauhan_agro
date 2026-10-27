@@ -237,19 +237,20 @@
                 </div>
 
                 <!-- Column 3: Machinery Lines -->
+                <!-- Column 3: Tractor Trollies & Trailers -->
                 <div class="col-lg-3 col-md-6 col-6">
-                    <h4>{{ $currentLocale === 'hi' ? 'प्रमुख मशीनरी' : 'Machinery Lines' }}</h4>
+                    <h4>{{ $currentLocale === 'hi' ? 'ट्रैक्टर ट्राली एवं ट्रेलर' : 'Tractor Trollies & Trailers' }}</h4>
                     <ul>
                         @if(isset($footerProductsMenu) && $footerProductsMenu->items->isNotEmpty())
                             @foreach($footerProductsMenu->items as $item)
                                 <li><a href="{{ $item->url }}">{{ $item->title }}</a></li>
                             @endforeach
                         @else
-                            <li><a href="{{ loc_url('/products?category=rotary-tillers') }}">{{ $currentLocale === 'hi' ? 'रोटावेटर' : 'Rotary Tillers' }}</a></li>
-                            <li><a href="{{ loc_url('/products?category=disc-harrows') }}">{{ $currentLocale === 'hi' ? 'डिस्क हैरो' : 'Disc Harrows' }}</a></li>
-                            <li><a href="{{ loc_url('/products?category=laser-land-levellers') }}">{{ $currentLocale === 'hi' ? 'लेजर लैंड लेवलर' : 'Laser Levellers' }}</a></li>
-                            <li><a href="{{ loc_url('/products?category=seeding-planting') }}">{{ $currentLocale === 'hi' ? 'सीड ड्रिल' : 'Zero-Till Seed Drills' }}</a></li>
-                            <li><a href="{{ loc_url('/products?category=harvest-straw-management') }}">{{ $currentLocale === 'hi' ? 'स्ट्रॉ रीपर' : 'Tractor Straw Reapers' }}</a></li>
+                            <li><a href="{{ loc_url('/products?category=rotary-tillers') }}">{{ $currentLocale === 'hi' ? 'हाइड्रोलिक टिपिंग ट्राली' : 'Hydraulic Tipping Trollies' }}</a></li>
+                            <li><a href="{{ loc_url('/products?category=disc-harrows') }}">{{ $currentLocale === 'hi' ? '4-व्हील कमर्शियल ट्रेलर' : '4-Wheel Commercial Trailers' }}</a></li>
+                            <li><a href="{{ loc_url('/products?category=cultivators-tillers') }}">{{ $currentLocale === 'hi' ? 'नॉन-टिपिंग कृषि ट्राली' : 'Non-Tipping Farm Trollies' }}</a></li>
+                            <li><a href="{{ loc_url('/products?category=laser-land-levellers') }}">{{ $currentLocale === 'hi' ? 'गन्ना ढुलाई ट्राली' : 'Sugarcane Mesh Trollies' }}</a></li>
+                            <li><a href="{{ loc_url('/products?category=seeding-planting') }}">{{ $currentLocale === 'hi' ? 'कमर्शियल डंपर ट्राली' : 'Heavy Dumper Trollies' }}</a></li>
                         @endif
                     </ul>
                 </div>

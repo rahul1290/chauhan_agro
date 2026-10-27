@@ -9,7 +9,7 @@
         <div class="carousel-inner">
             @foreach($banners as $index => $banner)
                 <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                    <div class="agro-hero-slide" style="background-image: url('{{ asset($banner->image_path) }}');">
+                    <div class="agro-hero-slide" style="background-image: url('{{ asset($banner->image_path) }}?v=2');">
                         <div class="agro-hero-overlay"></div>
                         <div class="container position-relative py-5" style="z-index: 2;">
                             <div class="row align-items-center">

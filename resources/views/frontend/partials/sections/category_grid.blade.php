@@ -22,7 +22,7 @@
                 <div class="col-lg-4 col-md-6">
                     <div class="category-card">
                         <div class="category-img-wrapper">
-                            <img src="{{ asset($cat->image ?? 'assets/images/categories/rotary-tiller.jpg') }}" alt="{{ $cat->name }}" loading="lazy">
+                            <img src="{{ asset($cat->image ?? 'assets/images/categories/rotary-tiller.jpg') }}?v=2" alt="{{ $cat->name }}" loading="lazy">
                             <div class="category-icon-badge">
                                 <i class="bi {{ $cat->icon ?? 'bi-gear-wide' }}"></i>
                             </div>

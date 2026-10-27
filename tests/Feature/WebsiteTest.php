@@ -39,15 +39,14 @@ class WebsiteTest extends TestCase
     {
         $response = $this->get('/en/products');
         $response->assertStatus(200);
-        $response->assertSee('Agricultural Machinery & Implements');
-        $response->assertSee('Rotary Tillers');
+        $response->assertSee('Tractor Trollies');
     }
 
     public function test_product_category_filtering()
     {
         $response = $this->get('/en/products?category=rotary-tillers');
         $response->assertStatus(200);
-        $response->assertSee('Gold Multi-Speed Rotary Tiller');
+        $response->assertSee('Heavy Duty Hydraulic Tipping Trolley');
     }
 
     public function test_product_detail_page_renders_with_specifications()
