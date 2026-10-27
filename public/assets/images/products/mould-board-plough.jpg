@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="100%" height="100%">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#831843;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9D174D;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FF6B00;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FFA800;stop-opacity:1" />
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="800" fill="url(#grad)" />
+  <rect width="1200" height="800" fill="url(#grid)" />
+
+  <!-- Geometric Industrial Elements -->
+  <circle cx="950" cy="400" r="280" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3" />
+  <circle cx="950" cy="400" r="200" fill="none" stroke="rgba(255,107,0,0.15)" stroke-width="2" stroke-dasharray="8 8" />
+  <polygon points="1200,0 850,0 1050,800 1200,800" fill="rgba(0,0,0,0.18)" />
+
+  <!-- Tractor Silhouette Graphic representation -->
+  <g transform="translate(760, 260) scale(1.1)">
+    <!-- Gear/Tiller wheel -->
+    <circle cx="160" cy="180" r="70" fill="#111827" stroke="#FF6B00" stroke-width="8"/>
+    <circle cx="160" cy="180" r="30" fill="#374151" stroke="#F59E0B" stroke-width="4"/>
+    <circle cx="340" cy="190" r="50" fill="#111827" stroke="#FF6B00" stroke-width="6"/>
+    <!-- Machine Chassis Frame -->
+    <path d="M 120 180 L 150 100 L 260 100 L 310 130 L 370 140 L 370 190 Z" fill="#047857" opacity="0.9"/>
+    <!-- Cab Glass -->
+    <polygon points="190,105 255,105 255,145 180,145" fill="#38BDF8" opacity="0.6"/>
+    <!-- Exhaust pipe -->
+    <rect x="270" y="70" width="8" height="35" fill="#D1D5DB"/>
+  </g>
+
+  <!-- Badge Pill -->
+  <rect x="80" y="160" width="340" height="42" rx="21" fill="url(#accent)" />
+  <text x="100" y="187" font-family="'Segoe UI', Roboto, sans-serif" font-weight="800" font-size="14" fill="#FFFFFF" letter-spacing="2">AGROVISION HEAVY DUTY</text>
+
+  <!-- Title & Subtitle -->
+  <text x="80" y="270" font-family="'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="52" fill="#FFFFFF">Hydraulic Reversible MB Plough</text>
+  <text x="80" y="330" font-family="'Segoe UI', Roboto, sans-serif" font-weight="400" font-size="24" fill="#E2E8F0">3-Bottom Heavy Duty Inversion</text>
+
+  <!-- Feature Highlights -->
+  <g transform="translate(80, 420)">
+    <rect x="0" y="0" width="180" height="75" rx="10" fill="rgba(0,0,0,0.35)" stroke="rgba(255,255,255,0.1)" />
+    <text x="20" y="32" font-family="'Segoe UI', sans-serif" font-size="12" fill="#94A3B8">METALLURGY</text>
+    <text x="20" y="58" font-family="'Segoe UI', sans-serif" font-weight="700" font-size="18" fill="#F8FAFC">Boron Steel 52 HRC</text>
+
+    <rect x="200" y="0" width="180" height="75" rx="10" fill="rgba(0,0,0,0.35)" stroke="rgba(255,255,255,0.1)" />
+    <text x="220" y="32" font-family="'Segoe UI', sans-serif" font-size="12" fill="#94A3B8">STANDARDS</text>
+    <text x="220" y="58" font-family="'Segoe UI', sans-serif" font-weight="700" font-size="18" fill="#F8FAFC">ISO 9001:2015</text>
+
+    <rect x="400" y="0" width="180" height="75" rx="10" fill="rgba(0,0,0,0.35)" stroke="rgba(255,255,255,0.1)" />
+    <text x="420" y="32" font-family="'Segoe UI', sans-serif" font-size="12" fill="#94A3B8">WARRANTY</text>
+    <text x="420" y="58" font-family="'Segoe UI', sans-serif" font-weight="700" font-size="18" fill="#F8FAFC">12-24 Months</text>
+  </g>
+
+  <!-- Bottom Accent Stripe -->
+  <rect x="0" y="788" width="1200" height="12" fill="url(#accent)" />
+</svg>

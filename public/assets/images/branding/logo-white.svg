@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 90" width="100%" height="100%">
+  <defs>
+    <linearGradient id="logoOrange" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#FF6B00;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F59E0B;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="logoGreen" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#059669;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#10B981;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Emblem Icon: Stylized Gear & Wheat Sprout -->
+  <g transform="translate(10, 10)">
+    <circle cx="35" cy="35" r="32" fill="#FFFFFF" />
+    <!-- Gear teeth -->
+    <path d="M 35 7 L 35 15 M 35 55 L 35 63 M 7 35 L 15 35 M 55 35 L 63 35 M 15 15 L 21 21 M 49 49 L 55 55 M 15 55 L 21 49 M 49 21 L 55 15" stroke="#FF6B00" stroke-width="4" stroke-linecap="round"/>
+    <!-- Central Sprout / Blade -->
+    <path d="M 35 48 C 25 36 26 22 35 18 C 44 22 45 36 35 48 Z" fill="url(#logoGreen)" />
+    <path d="M 35 48 L 35 22" stroke="#FFFFFF" stroke-width="2" />
+  </g>
+
+  <!-- Typography -->
+  <text x="92" y="44" font-family="'Outfit', 'Segoe UI', sans-serif" font-weight="900" font-size="32" fill="#FFFFFF" letter-spacing="-0.5">AGRO<tspan fill="#FF6B00">VISION</tspan></text>
+  <text x="94" y="64" font-family="'Segoe UI', sans-serif" font-weight="700" font-size="10.5" fill="#94A3B8" letter-spacing="3.5">HEAVY INDUSTRIES</text>
+</svg>
