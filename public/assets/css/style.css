@@ -49,9 +49,11 @@ a:hover {
 }
 
 /* --------------------------------------------------
-   Top Bar
+   Top Bar & Language Switcher
    -------------------------------------------------- */
 .agro-topbar {
+    position: relative;
+    z-index: 1040;
     background-color: var(--agro-dark);
     color: #94a3b8;
     font-size: 0.84rem;
@@ -77,19 +79,72 @@ a:hover {
 }
 
 .lang-selector-btn {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.12);
     color: #ffffff !important;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    font-size: 0.8rem;
-    padding: 3px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    font-size: 0.82rem;
+    padding: 4px 12px;
     border-radius: 20px;
     display: inline-flex;
     align-items: center;
     gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.lang-selector-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
+.lang-selector-btn:hover,
+.lang-selector-btn:focus,
+.lang-selector-btn[aria-expanded="true"] {
+    background: rgba(255, 255, 255, 0.22);
+    color: #ffffff !important;
+    border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* Ensure topbar dropdown menu items are crisp and clearly visible */
+.agro-topbar .dropdown {
+    position: relative;
+}
+
+.agro-topbar .dropdown-menu {
+    background-color: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+    border-radius: 10px !important;
+    padding: 8px 0 !important;
+    min-width: 210px !important;
+    margin-top: 6px !important;
+    z-index: 9999 !important;
+}
+
+.agro-topbar .dropdown-menu .dropdown-item {
+    color: #1e293b !important;
+    font-size: 0.88rem !important;
+    font-weight: 500 !important;
+    padding: 9px 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    background: transparent !important;
+    text-decoration: none !important;
+    transition: all 0.15s ease-in-out !important;
+}
+
+.agro-topbar .dropdown-menu .dropdown-item:hover,
+.agro-topbar .dropdown-menu .dropdown-item:focus {
+    background-color: #f1f5f9 !important;
+    color: #047857 !important;
+    padding-left: 22px !important;
+}
+
+.agro-topbar .dropdown-menu .dropdown-item.active {
+    background-color: #ecfdf5 !important;
+    color: #047857 !important;
+    font-weight: 700 !important;
+}
+
+.agro-topbar .dropdown-menu .dropdown-item.active i {
+    color: #047857 !important;
+    font-weight: bold !important;
 }
 
 /* --------------------------------------------------

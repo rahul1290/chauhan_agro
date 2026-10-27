@@ -60,22 +60,44 @@
                 <!-- Language Switcher Dropdown -->
                 <div class="dropdown">
                     <button class="btn lang-selector-btn dropdown-toggle" type="button" id="langDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span>{{ $currentLanguage->flag ?? '🌐' }}</span>
-                        <span class="fw-bold">{{ $currentLanguage->native_name ?? strtoupper($currentLocale) }}</span>
+                        <span>{{ $currentLanguage->flag ?? ($currentLocale === 'hi' ? '🇮🇳' : '🇬🇧') }}</span>
+                        <span class="fw-bold">{{ $currentLanguage->native_name ?? ($currentLocale === 'hi' ? 'हिन्दी' : 'English') }}</span>
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="langDropdown">
-                        @if(isset($activeLanguages))
-                            @foreach($activeLanguages as $lang)
+                    <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="langDropdown">
+                        @php
+                            $languagesToDisplay = (isset($activeLanguages) && $activeLanguages->isNotEmpty()) ? $activeLanguages : null;
+                        @endphp
+                        @if($languagesToDisplay)
+                            @foreach($languagesToDisplay as $lang)
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center gap-2 {{ $lang->code === $currentLocale ? 'active fw-bold text-success' : '' }}" href="{{ loc_switch($lang->code) }}">
-                                        <span>{{ $lang->flag }}</span>
-                                        <span>{{ $lang->native_name }} ({{ $lang->name }})</span>
+                                    <a class="dropdown-item {{ $lang->code === $currentLocale ? 'active' : '' }}" href="{{ loc_switch($lang->code) }}">
+                                        <span class="fs-6">{{ $lang->flag }}</span>
+                                        <span class="flex-grow-1">{{ $lang->native_name }} ({{ $lang->name }})</span>
                                         @if($lang->code === $currentLocale)
-                                            <i class="bi bi-check2 ms-auto"></i>
+                                            <i class="bi bi-check2"></i>
                                         @endif
                                     </a>
                                 </li>
                             @endforeach
+                        @else
+                            <li>
+                                <a class="dropdown-item {{ $currentLocale === 'en' ? 'active' : '' }}" href="{{ loc_switch('en') }}">
+                                    <span class="fs-6">🇬🇧</span>
+                                    <span class="flex-grow-1">English</span>
+                                    @if($currentLocale === 'en')
+                                        <i class="bi bi-check2"></i>
+                                    @endif
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item {{ $currentLocale === 'hi' ? 'active' : '' }}" href="{{ loc_switch('hi') }}">
+                                    <span class="fs-6">🇮🇳</span>
+                                    <span class="flex-grow-1">हिन्दी (Hindi)</span>
+                                    @if($currentLocale === 'hi')
+                                        <i class="bi bi-check2"></i>
+                                    @endif
+                                </a>
+                            </li>
                         @endif
                     </ul>
                 </div>
