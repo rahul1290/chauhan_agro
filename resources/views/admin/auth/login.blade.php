@@ -65,7 +65,7 @@
                     <label class="form-label fw-semibold small text-muted">Administrative Email</label>
                     <div class="input-group">
                         <span class="input-group-text bg-light border-end-0"><i class="bi bi-envelope text-muted"></i></span>
-                        <input type="email" name="email" value="{{ old('email', 'admin@agrovision.com') }}" class="form-control border-start-0" required autofocus placeholder="admin@agrovision.com">
+                        <input type="email" name="email" value="{{ old('email', 'admin@chauhanagroindustries.com') }}" class="form-control border-start-0" required autofocus placeholder="admin@chauhanagroindustries.com">
                     </div>
                 </div>
 
@@ -92,7 +92,7 @@
 
             <div class="mt-4 pt-3 border-top text-center">
                 <small class="text-muted d-block">Demo Credentials:</small>
-                <code class="small text-dark">admin@agrovision.com / password123</code>
+                <code class="small text-dark">admin@chauhanagroindustries.com / password123</code>
             </div>
         </div>
     </div>

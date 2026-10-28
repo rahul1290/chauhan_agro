@@ -42,7 +42,7 @@
                                 <div class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}" id="prodcontent-{{ $lang->code }}" role="tabpanel">
                                     <div class="mb-3">
                                         <label class="form-label fw-semibold small">Product Name ({{ $lang->name }}) <span class="text-danger">*</span></label>
-                                        <input type="text" name="translations[{{ $lang->code }}][name]" class="form-control" placeholder="e.g. {{ $lang->code === 'hi' ? 'एग्रोविज़न गोल्ड रोटावेटर' : 'AgroVision Gold Multi-Speed Rotary Tiller' }}">
+                                        <input type="text" name="translations[{{ $lang->code }}][name]" class="form-control" placeholder="e.g. {{ $lang->code === 'hi' ? 'चौहान एग्रो हाइड्रोलिक ट्रॉली' : 'Chauhan Agro Heavy Hydraulic Tipping Trailer' }}">
                                     </div>
 
                                     <div class="mb-3">

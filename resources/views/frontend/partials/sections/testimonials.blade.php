@@ -13,21 +13,21 @@
             if (empty($reviews)) {
                 $reviews = [
                     [
-                        'quote' => 'We operate 4 AgroVision Gold Rotavators across 600 acres of paddy and wheat. Even in heavy black cotton soil, diesel consumption dropped significantly.',
+                        'quote' => 'We operate 4 Chauhan Agro Heavy-Duty Hydraulic Tractor Trollies across 600 acres of paddy and sugarcane. Outstanding chassis strength and zero maintenance required.',
                         'author' => 'Sukhwinder Singh Gill',
                         'role' => 'Commercial Farm Owner, Punjab',
                         'avatar' => '/assets/images/testimonials/avatar1.jpg',
                         'rating' => 5,
                     ],
                     [
-                        'quote' => 'The AgroVision Dual-Slope Laser Leveller paid for itself in a single cropping season. Water savings exceeded 30%, and germination is 100% uniform.',
+                        'quote' => 'The Chauhan Agro Commercial 4-Wheel Heavy Trailer paid for itself in a single haulage season. Leaf spring suspension delivers extreme stability with full 12-ton payload.',
                         'author' => 'Ramesh Patel',
                         'role' => 'Agri-Contractor, Gujarat',
                         'avatar' => '/assets/images/testimonials/avatar2.jpg',
                         'rating' => 5,
                     ],
                     [
-                        'quote' => 'Extremely impressed with the hydraulic reversible MB plough. Flawless inversion and the shear bolt protection saved our PTO in stony terrain.',
+                        'quote' => 'Extremely impressed with the Chauhan Agro heavy-duty sugarcane trolley. Heavy channel chassis and high-tensile steel provide unmatched endurance during harvest.',
                         'author' => 'Devendra Sharma',
                         'role' => 'Farm Manager, Madhya Pradesh',
                         'avatar' => '/assets/images/testimonials/avatar3.jpg',
@@ -39,6 +39,9 @@
 
         <div class="row g-4">
             @foreach($reviews as $rev)
+                @php
+                    $cleanQuote = str_ireplace('AgroVision', 'Chauhan Agro', $rev['quote'] ?? '');
+                @endphp
                 <div class="col-lg-4 col-md-6">
                     <div class="testimonial-card">
                         <div class="testimonial-stars">
@@ -46,7 +49,7 @@
                                 <i class="bi bi-star-fill"></i>
                             @endfor
                         </div>
-                        <p class="testimonial-quote">"{{ $rev['quote'] ?? '' }}"</p>
+                        <p class="testimonial-quote">"{{ $cleanQuote }}"</p>
                         <div class="testimonial-author">
                             <img src="{{ asset($rev['avatar'] ?? 'assets/images/testimonials/avatar1.jpg') }}" alt="{{ $rev['author'] ?? '' }}" class="testimonial-avatar" loading="lazy">
                             <div>
