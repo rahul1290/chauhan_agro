@@ -210,9 +210,17 @@
                         {{ site_setting('footer_about_text', 'Chauhan Agro Industries is a premier global manufacturer of advanced agricultural implements engineered with robotic precision, laser alignment, and genuine European boron steel.') }}
                     </p>
                     <div class="d-flex align-items-center mb-3">
-                        <a href="{{ site_setting('social_facebook', 'https://www.facebook.com/share/1GpUiRYvWb/') }}" class="footer-social-link" title="Facebook" target="_blank" rel="noopener noreferrer"><i class="bi bi-facebook"></i></a>
-                        <a href="{{ site_setting('social_youtube', 'https://youtube.com/@chauhangroupindia?si=UnQCzy4DrxsMjZdc') }}" class="footer-social-link" title="YouTube" target="_blank" rel="noopener noreferrer"><i class="bi bi-youtube"></i></a>
-                        <a href="{{ site_setting('social_instagram', 'https://www.instagram.com/chauhangroup_india?utm_source=qr&exln=dnZxdXdkYjc1Z2Vs') }}" class="footer-social-link" title="Instagram" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram"></i></a>
+                        @php
+                            $fb = site_setting('social_facebook');
+                            $fbUrl = (!$fb || str_contains($fb, 'facebook.com/chauhanagroindustries')) ? 'https://www.facebook.com/share/1GpUiRYvWb/' : $fb;
+                            $yt = site_setting('social_youtube');
+                            $ytUrl = (!$yt || str_contains($yt, '@chauhanagroindustries')) ? 'https://youtube.com/@chauhangroupindia?si=UnQCzy4DrxsMjZdc' : $yt;
+                            $ig = site_setting('social_instagram');
+                            $igUrl = (!$ig || str_contains($ig, 'instagram.com/chauhanagroindustries')) ? 'https://www.instagram.com/chauhangroup_india?utm_source=qr&exln=dnZxdXdkYjc1Z2Vs' : $ig;
+                        @endphp
+                        <a href="{{ $fbUrl }}" class="footer-social-link" title="Facebook" target="_blank" rel="noopener noreferrer"><i class="bi bi-facebook"></i></a>
+                        <a href="{{ $ytUrl }}" class="footer-social-link" title="YouTube" target="_blank" rel="noopener noreferrer"><i class="bi bi-youtube"></i></a>
+                        <a href="{{ $igUrl }}" class="footer-social-link" title="Instagram" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram"></i></a>
                     </div>
                 </div>
 
