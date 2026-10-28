@@ -210,11 +210,9 @@
                         {{ site_setting('footer_about_text', 'Chauhan Agro Industries is a premier global manufacturer of advanced agricultural implements engineered with robotic precision, laser alignment, and genuine European boron steel.') }}
                     </p>
                     <div class="d-flex align-items-center mb-3">
-                        <a href="{{ site_setting('social_facebook', '#') }}" class="footer-social-link" title="Facebook"><i class="bi bi-facebook"></i></a>
-                        <a href="{{ site_setting('social_youtube', '#') }}" class="footer-social-link" title="YouTube"><i class="bi bi-youtube"></i></a>
-                        <a href="{{ site_setting('social_linkedin', '#') }}" class="footer-social-link" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
-                        <a href="{{ site_setting('social_instagram', '#') }}" class="footer-social-link" title="Instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="{{ site_setting('social_twitter', '#') }}" class="footer-social-link" title="Twitter"><i class="bi bi-twitter-x"></i></a>
+                        <a href="{{ site_setting('social_facebook', 'https://www.facebook.com/share/1GpUiRYvWb/') }}" class="footer-social-link" title="Facebook" target="_blank" rel="noopener noreferrer"><i class="bi bi-facebook"></i></a>
+                        <a href="{{ site_setting('social_youtube', 'https://youtube.com/@chauhangroupindia?si=UnQCzy4DrxsMjZdc') }}" class="footer-social-link" title="YouTube" target="_blank" rel="noopener noreferrer"><i class="bi bi-youtube"></i></a>
+                        <a href="{{ site_setting('social_instagram', 'https://www.instagram.com/chauhangroup_india?utm_source=qr&exln=dnZxdXdkYjc1Z2Vs') }}" class="footer-social-link" title="Instagram" target="_blank" rel="noopener noreferrer"><i class="bi bi-instagram"></i></a>
                     </div>
                 </div>
 

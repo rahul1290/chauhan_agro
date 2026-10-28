@@ -131,27 +131,17 @@
                         
                         <div class="mb-3">
                             <label class="form-label fw-bold"><i class="bi bi-facebook text-primary me-2"></i>Facebook Page</label>
-                            <input type="url" name="social_facebook" class="form-control" value="{{ old('social_facebook', $allSettings['social_facebook']->value ?? 'https://facebook.com/chauhanagroindustries') }}">
+                            <input type="url" name="social_facebook" class="form-control" value="{{ old('social_facebook', $allSettings['social_facebook']->value ?? 'https://www.facebook.com/share/1GpUiRYvWb/') }}">
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-bold"><i class="bi bi-youtube text-danger me-2"></i>YouTube Channel</label>
-                            <input type="url" name="social_youtube" class="form-control" value="{{ old('social_youtube', $allSettings['social_youtube']->value ?? 'https://youtube.com/@chauhanagroindustries') }}">
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label fw-bold"><i class="bi bi-linkedin text-info me-2"></i>LinkedIn Company Page</label>
-                            <input type="url" name="social_linkedin" class="form-control" value="{{ old('social_linkedin', $allSettings['social_linkedin']->value ?? 'https://linkedin.com/company/chauhan-agro-industries') }}">
+                            <input type="url" name="social_youtube" class="form-control" value="{{ old('social_youtube', $allSettings['social_youtube']->value ?? 'https://youtube.com/@chauhangroupindia?si=UnQCzy4DrxsMjZdc') }}">
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-bold"><i class="bi bi-instagram text-danger me-2"></i>Instagram Profile</label>
-                            <input type="url" name="social_instagram" class="form-control" value="{{ old('social_instagram', $allSettings['social_instagram']->value ?? 'https://instagram.com/chauhanagroindustries') }}">
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label fw-bold"><i class="bi bi-twitter-x text-dark me-2"></i>Twitter / X Profile</label>
-                            <input type="url" name="social_twitter" class="form-control" value="{{ old('social_twitter', $allSettings['social_twitter']->value ?? 'https://twitter.com/chauhanagro') }}">
+                            <input type="url" name="social_instagram" class="form-control" value="{{ old('social_instagram', $allSettings['social_instagram']->value ?? 'https://www.instagram.com/chauhangroup_india?utm_source=qr&exln=dnZxdXdkYjc1Z2Vs') }}">
                         </div>
                     </div>
                 </div>
