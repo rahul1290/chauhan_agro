@@ -131,3 +131,31 @@ Route::prefix('{locale}')->where(['locale' => '[a-zA-Z]{2}'])->group(function ()
     // Dynamic CMS Pages (About Us, Dealer Network, Warranty, Privacy, etc.)
     Route::get('/{slug}', [PageController::class, 'show'])->name('pages.show');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Non-Prefixed Fallback Redirects (SEO & Direct Link Friendly)
+|--------------------------------------------------------------------------
+| Automatically redirects non-prefixed URLs like /about-us, /products to
+| /{locale}/about-us based on session/default locale instead of returning 404.
+*/
+Route::get('/products', function () {
+    $locale = session('locale', config('app.locale', 'en'));
+    $query = request()->getQueryString();
+    return redirect("/{$locale}/products" . ($query ? '?' . $query : ''));
+});
+
+Route::get('/products/{slug}', function ($slug) {
+    $locale = session('locale', config('app.locale', 'en'));
+    return redirect("/{$locale}/products/{$slug}");
+});
+
+Route::get('/contact', function () {
+    $locale = session('locale', config('app.locale', 'en'));
+    return redirect("/{$locale}/contact");
+});
+
+Route::get('/{slug}', function ($slug) {
+    $locale = session('locale', config('app.locale', 'en'));
+    return redirect("/{$locale}/{$slug}");
+})->where('slug', '[a-zA-Z0-9\-_]+');

@@ -67,25 +67,23 @@ class MenuItem extends Model
         if ($this->type === 'page' && $this->target_id) {
             $page = Page::find($this->target_id);
             if ($page) {
-                return url("/{$locale}/" . ($page->slug === 'home' ? '' : $page->slug));
+                return loc_url($page->slug === 'home' ? '/' : '/' . $page->slug);
             }
         } elseif ($this->type === 'category' && $this->target_id) {
             $cat = ProductCategory::find($this->target_id);
             if ($cat) {
-                return url("/{$locale}/products?category={$cat->slug}");
+                return loc_url('/products?category=' . $cat->slug);
             }
         }
 
         $transUrl = $this->translation()?->url;
-        if (!empty($transUrl)) {
-            return $transUrl;
-        }
+        $urlToProcess = !empty($transUrl) ? $transUrl : $this->target_url;
 
-        if (!empty($this->target_url)) {
-            if (str_starts_with($this->target_url, 'http://') || str_starts_with($this->target_url, 'https://') || str_starts_with($this->target_url, '#')) {
-                return $this->target_url;
+        if (!empty($urlToProcess)) {
+            if (str_starts_with($urlToProcess, 'http://') || str_starts_with($urlToProcess, 'https://') || str_starts_with($urlToProcess, '#')) {
+                return $urlToProcess;
             }
-            return url("/{$locale}/" . ltrim($this->target_url, '/'));
+            return loc_url($urlToProcess);
         }
 
         return '#';
