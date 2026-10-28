@@ -1,26 +1,163 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 90" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 391" width="100%" height="100%">
   <defs>
-    <linearGradient id="logoOrange" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#FF6B00;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#F59E0B;stop-opacity:1" />
-    </linearGradient>
-    <linearGradient id="logoGreen" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" style="stop-color:#059669;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#10B981;stop-opacity:1" />
-    </linearGradient>
+    <style>
+      .bg { fill: #000000; }
+      .border-line { fill: none; stroke: #FEE200; stroke-width: 9; }
+      .logo-mark { fill: #FEE200; }
+    </style>
   </defs>
 
-  <!-- Emblem Icon: Stylized Gear & Wheat Sprout -->
-  <g transform="translate(10, 10)">
-    <circle cx="35" cy="35" r="32" fill="#FFFFFF" />
-    <!-- Gear teeth -->
-    <path d="M 35 7 L 35 15 M 35 55 L 35 63 M 7 35 L 15 35 M 55 35 L 63 35 M 15 15 L 21 21 M 49 49 L 55 55 M 15 55 L 21 49 M 49 21 L 55 15" stroke="#FF6B00" stroke-width="4" stroke-linecap="round"/>
-    <!-- Central Sprout / Blade -->
-    <path d="M 35 48 C 25 36 26 22 35 18 C 44 22 45 36 35 48 Z" fill="url(#logoGreen)" />
-    <path d="M 35 48 L 35 22" stroke="#FFFFFF" stroke-width="2" />
-  </g>
+  <!-- Solid Black Badge Plate with Rounded Corners -->
+  <rect width="1024" height="391" rx="20" ry="20" fill="#000000" />
+  
+  <!-- Outer Yellow Border Rim -->
+  <rect x="5.5" y="5.5" width="1013" height="380" rx="15" ry="15" class="border-line" />
 
-  <!-- Typography: Chauhan Agro Industries -->
-  <text x="92" y="44" font-family="'Outfit', 'Segoe UI', sans-serif" font-weight="900" font-size="28" fill="#FFFFFF" letter-spacing="-0.5">CHAUHAN <tspan fill="#FF6B00">AGRO</tspan></text>
-  <text x="94" y="64" font-family="'Segoe UI', sans-serif" font-weight="700" font-size="10.5" fill="#94A3B8" letter-spacing="3.5">INDUSTRIES &bull; CHAUHANAGROINDUSTRIES.COM</text>
+  <!-- The Unified CHAUHAN Graphic Mark -->
+  <g class="logo-mark">
+
+    <!-- ==============================================
+         1. TOP OVERLINE BAR + RIGHT STEM OF N
+         ============================================== -->
+    <path d="
+      M 29,33
+      L 938,33
+      A 46,46 0 0,1 984,79
+      L 984,295
+      L 945,295
+      L 945,84
+      A 12,12 0 0,0 933,72
+      L 29,72
+      Z
+    " />
+
+    <!-- ==============================================
+         2. LETTER C + BOTTOM UNDERLINE BAR
+         ============================================== -->
+    <path d="
+      M 54,95
+      L 131,95
+      L 131,137
+      L 77,137
+      A 8,8 0 0,0 69,145
+      L 69,304
+      A 10,10 0 0,0 79,314
+      L 984,314
+      L 984,354
+      L 74,354
+      A 45,45 0 0,1 29,309
+      L 29,120
+      A 25,25 0 0,1 54,95
+      Z
+    " />
+
+    <!-- ==============================================
+         3. FIRST H (x: 156..272, y: 95..295)
+         ============================================== -->
+    <path d="
+      M 164,95 L 190,95 A 8,8 0 0,1 198,103 L 198,175 L 230,175 L 230,103 A 8,8 0 0,1 238,95 L 264,95 A 8,8 0 0,1 272,103 L 272,287 A 8,8 0 0,1 264,295 L 238,295 A 8,8 0 0,1 230,287 L 230,215 L 198,215 L 198,287 A 8,8 0 0,1 190,295 L 164,295 A 8,8 0 0,1 156,287 L 156,103 A 8,8 0 0,1 164,95 Z
+    " />
+
+    <!-- ==============================================
+         4. FIRST A (x: 299..415, y: 95..295)
+         ============================================== -->
+    <path d="
+      M 346,95
+      L 368,95
+      A 12,12 0 0,1 379,102
+      L 414,284
+      A 8,8 0 0,1 406,295
+      L 380,295
+      A 8,8 0 0,1 372,288
+      L 364,233
+      L 350,233
+      L 342,288
+      A 8,8 0 0,1 334,295
+      L 308,295
+      A 8,8 0 0,1 300,284
+      L 335,102
+      A 12,12 0 0,1 346,95
+      Z
+      M 357,136
+      L 343,195
+      L 371,195
+      Z
+    " />
+
+    <!-- ==============================================
+         5. LETTER U (x: 441..553, y: 95..295)
+         ============================================== -->
+    <path d="
+      M 449,95
+      L 475,95
+      A 8,8 0 0,1 483,103
+      L 483,238
+      A 14,14 0 0,0 497,252
+      A 14,14 0 0,0 511,238
+      L 511,103
+      A 8,8 0 0,1 519,95
+      L 545,95
+      A 8,8 0 0,1 553,103
+      L 553,245
+      A 50,50 0 0,1 503,295
+      L 491,295
+      A 50,50 0 0,1 441,245
+      L 441,103
+      A 8,8 0 0,1 449,95
+      Z
+    " />
+
+    <!-- ==============================================
+         6. SECOND H (x: 579..695, y: 95..295)
+         ============================================== -->
+    <path d="
+      M 587,95 L 613,95 A 8,8 0 0,1 621,103 L 621,175 L 653,175 L 653,103 A 8,8 0 0,1 661,95 L 687,95 A 8,8 0 0,1 695,103 L 695,287 A 8,8 0 0,1 687,295 L 661,295 A 8,8 0 0,1 653,287 L 653,215 L 621,215 L 621,287 A 8,8 0 0,1 613,295 L 587,295 A 8,8 0 0,1 579,287 L 579,103 A 8,8 0 0,1 587,95 Z
+    " />
+
+    <!-- ==============================================
+         7. SECOND A (x: 722..838, y: 95..295)
+         ============================================== -->
+    <path d="
+      M 769,95
+      L 791,95
+      A 12,12 0 0,1 802,102
+      L 837,284
+      A 8,8 0 0,1 829,295
+      L 803,295
+      A 8,8 0 0,1 795,288
+      L 787,233
+      L 773,233
+      L 765,288
+      A 8,8 0 0,1 757,295
+      L 731,295
+      A 8,8 0 0,1 723,284
+      L 758,102
+      A 12,12 0 0,1 769,95
+      Z
+      M 780,136
+      L 766,195
+      L 794,195
+      Z
+    " />
+
+    <!-- ==============================================
+         8. LETTER N (Left Stem and Diagonal, merging to right stem)
+         ============================================== -->
+    <path d="
+      M 875,95
+      L 905,95
+      L 970,250
+      L 970,295
+      L 945,295
+      L 945,295
+      L 901,155
+      L 901,287
+      A 8,8 0 0,1 893,295
+      L 875,295
+      A 8,8 0 0,1 867,287
+      L 867,103
+      A 8,8 0 0,1 875,95
+      Z
+    " />
+  </g>
 </svg>
