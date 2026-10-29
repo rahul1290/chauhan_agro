@@ -33,6 +33,24 @@ Route::get('/', function () {
     return redirect("/{$locale}");
 });
 
+// Client Preview Access Unlock
+Route::post('/client-access', function (\Illuminate\Http\Request $request) {
+    $secretKey = \App\Models\Setting::get('under_construction_secret', 'chauhan2026');
+    if ($request->filled('passkey') && trim($request->input('passkey')) === trim($secretKey)) {
+        session(['client_preview_access' => true]);
+        cookie()->queue('client_preview_access', $secretKey, 60 * 24 * 30);
+        $locale = session('locale', config('app.locale', 'en'));
+        return redirect("/{$locale}")->with('success', 'Client preview access unlocked successfully!');
+    }
+    return back()->with('error', 'Invalid access passkey. Please check with administrator.');
+})->name('client.access');
+
+Route::get('/client-logout', function () {
+    session()->forget('client_preview_access');
+    cookie()->queue(cookie()->forget('client_preview_access'));
+    return redirect('/');
+})->name('client.logout');
+
 /*
 |--------------------------------------------------------------------------
 | Admin Authentication Routes
@@ -113,6 +131,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::post('/users/{user}/toggle-active', [UserController::class, 'toggleActive'])->name('users.toggle-active');
             Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
             Route::post('/settings', [SettingController::class, 'update'])->name('settings.update');
+            Route::post('/settings/toggle-under-construction', [SettingController::class, 'toggleUnderConstruction'])->name('settings.toggleUnderConstruction');
         });
     });
 });

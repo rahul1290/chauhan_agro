@@ -19,6 +19,11 @@ class SettingController extends Controller
     {
         $inputs = $request->except(['_token', '_method']);
 
+        // Handle under_construction_enabled checkbox correctly
+        if ($request->has('under_construction_section_present')) {
+            $inputs['under_construction_enabled'] = $request->boolean('under_construction_enabled') ? '1' : '0';
+        }
+
         foreach ($inputs as $key => $value) {
             Setting::set($key, $value);
         }
@@ -26,5 +31,20 @@ class SettingController extends Controller
         ActivityLog::log('update_settings', "Updated website settings and business information");
 
         return back()->with('success', 'Website settings updated successfully.');
+    }
+
+    /**
+     * Quick toggle for Under Construction mode.
+     */
+    public function toggleUnderConstruction(Request $request)
+    {
+        $current = (bool) Setting::get('under_construction_enabled', false);
+        $newVal = $current ? '0' : '1';
+        Setting::set('under_construction_enabled', $newVal, 'maintenance');
+
+        $statusMsg = $newVal === '1' ? 'activated (general visitors see Under Construction page)' : 'deactivated (website is now live for all visitors)';
+        ActivityLog::log('toggle_under_construction', "Under Construction mode {$statusMsg}");
+
+        return back()->with('success', "Under Construction mode {$statusMsg}.");
     }
 }

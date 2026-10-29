@@ -32,14 +32,16 @@
             $slides = collect([$customSlide]);
         }
     }
+
+    $carouselId = 'agroHeroCarousel_' . (isset($section) && $section->id ? $section->id : 'main');
 @endphp
 
 @if($slides->isNotEmpty())
-    <div id="agroHeroCarousel" class="carousel slide agro-hero-carousel" data-bs-ride="carousel">
+    <div id="{{ $carouselId }}" class="carousel slide agro-hero-carousel position-relative" data-bs-ride="carousel" data-bs-interval="5000">
         @if($slides->count() > 1)
-            <div class="carousel-indicators">
+            <div class="carousel-indicators" style="z-index: 25;">
                 @foreach($slides as $index => $banner)
-                    <button type="button" data-bs-target="#agroHeroCarousel" data-bs-slide-to="{{ $index }}" class="{{ $index === 0 ? 'active' : '' }}" aria-current="{{ $index === 0 ? 'true' : 'false' }}" aria-label="Slide {{ $index + 1 }}"></button>
+                    <button type="button" data-bs-target="#{{ $carouselId }}" data-bs-slide-to="{{ $index }}" class="{{ $index === 0 ? 'active' : '' }}" aria-current="{{ $index === 0 ? 'true' : 'false' }}" aria-label="Slide {{ $index + 1 }}"></button>
                 @endforeach
             </div>
         @endif
@@ -49,7 +51,7 @@
                 <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
                     <div class="agro-hero-slide" style="background-image: url('{{ asset($banner->image_path) }}?v=2');">
                         <div class="agro-hero-overlay"></div>
-                        <div class="container position-relative py-5" style="z-index: 2;">
+                        <div class="container position-relative py-5 hero-content-container" style="z-index: 2;">
                             <div class="row align-items-center">
                                 <div class="col-lg-8">
                                     @if(!empty($banner->badge_text))
@@ -84,14 +86,113 @@
         </div>
 
         @if($slides->count() > 1)
-            <button class="carousel-control-prev" type="button" data-bs-target="#agroHeroCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
+            <button class="carousel-control-prev agro-carousel-btn agro-carousel-prev" type="button" data-bs-target="#{{ $carouselId }}" data-bs-slide="prev" aria-label="Previous Slide">
+                <i class="bi bi-chevron-left"></i>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#agroHeroCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
+            <button class="carousel-control-next agro-carousel-btn agro-carousel-next" type="button" data-bs-target="#{{ $carouselId }}" data-bs-slide="next" aria-label="Next Slide">
+                <i class="bi bi-chevron-right"></i>
             </button>
         @endif
     </div>
+
+    <style>
+    /* Hero Carousel Control Buttons Fix & Styling */
+    .agro-hero-carousel .agro-carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 52px;
+        height: 52px;
+        background: rgba(15, 23, 42, 0.7);
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        border-radius: 50%;
+        color: #ffffff;
+        font-size: 1.35rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 30 !important;
+        opacity: 0.85;
+        cursor: pointer;
+        padding: 0;
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        transition: all 0.22s ease-in-out;
+    }
+    .agro-hero-carousel .agro-carousel-btn:hover,
+    .agro-hero-carousel .agro-carousel-btn:focus {
+        background: var(--agro-secondary, #ea580c);
+        border-color: var(--agro-secondary, #ea580c);
+        color: #ffffff;
+        opacity: 1;
+        transform: translateY(-50%) scale(1.12);
+        outline: none;
+        box-shadow: 0 6px 20px rgba(234, 88, 12, 0.45);
+    }
+    .agro-hero-carousel .agro-carousel-prev {
+        left: 24px;
+        right: auto;
+    }
+    .agro-hero-carousel .agro-carousel-next {
+        right: 24px;
+        left: auto;
+    }
+    @media (max-width: 576px) {
+        .agro-hero-carousel .agro-carousel-btn {
+            width: 40px;
+            height: 40px;
+            font-size: 1.05rem;
+        }
+        .agro-hero-carousel .agro-carousel-prev {
+            left: 10px;
+        }
+        .agro-hero-carousel .agro-carousel-next {
+            right: 10px;
+        }
+    }
+    </style>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const carouselEl = document.getElementById('{{ $carouselId }}');
+        if (!carouselEl) return;
+
+        // Initialize or get Bootstrap carousel instance
+        let bsCarousel = null;
+        if (window.bootstrap && window.bootstrap.Carousel) {
+            bsCarousel = window.bootstrap.Carousel.getOrCreateInstance(carouselEl, {
+                interval: 5000,
+                ride: 'carousel',
+                wrap: true
+            });
+        }
+
+        const prevBtn = carouselEl.querySelector('.agro-carousel-prev');
+        const nextBtn = carouselEl.querySelector('.agro-carousel-next');
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (bsCarousel) {
+                    bsCarousel.prev();
+                } else if (window.bootstrap && window.bootstrap.Carousel) {
+                    window.bootstrap.Carousel.getOrCreateInstance(carouselEl).prev();
+                }
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (bsCarousel) {
+                    bsCarousel.next();
+                } else if (window.bootstrap && window.bootstrap.Carousel) {
+                    window.bootstrap.Carousel.getOrCreateInstance(carouselEl).next();
+                }
+            });
+        }
+    });
+    </script>
 @endif
