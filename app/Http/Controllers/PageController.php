@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\Page;
 use Illuminate\Http\Request;
 
@@ -31,6 +32,15 @@ class PageController extends Controller
             return redirect()->route('contact.show', ['locale' => app()->getLocale()]);
         }
 
-        return view('frontend.pages.show', compact('page'));
+        $banners = Banner::where('is_active', true)
+            ->where(function ($q) use ($page) {
+                $q->where('page_slug', $page->slug)
+                  ->orWhere('page_slug', 'home');
+            })
+            ->with('translations')
+            ->orderBy('order', 'asc')
+            ->get();
+
+        return view('frontend.pages.show', compact('page', 'banners'));
     }
 }
