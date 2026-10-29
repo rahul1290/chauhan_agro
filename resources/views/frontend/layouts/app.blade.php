@@ -374,6 +374,9 @@
         </div>
     </div>
 
+    <!-- Promotional First-Load Popup Modal -->
+    @include('frontend.partials.popup_modal')
+
     <!-- Scripts: Bootstrap 5 JS Bundle -->
     <script src="{{ asset('assets/vendor/js/bootstrap.bundle.min.js') }}"></script>
 

@@ -31,6 +31,7 @@ class PageSectionController extends Controller
             'testimonials' => 'Customer Testimonials',
             'cta_banner' => 'Call to Action (CTA) Banner',
             'faq_accordion' => 'FAQ Accordion',
+            'promo_popup' => 'Promotional Popup Modal / Banner',
             'rich_text' => 'Rich Text Editorial Content',
             'contact_info' => 'Contact Info & Map Coordinates',
         ];

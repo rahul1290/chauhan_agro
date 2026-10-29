@@ -57,6 +57,12 @@
                     </a>
                 </li>
                 <li class="admin-menu-item">
+                    <a href="{{ route('admin.popup.index') }}" class="admin-menu-link {{ request()->routeIs('admin.popup.*') ? 'active' : '' }}">
+                        <i class="bi bi-window-fullscreen"></i>
+                        <span>Promotional Popup</span>
+                    </a>
+                </li>
+                <li class="admin-menu-item">
                     <a href="{{ route('admin.menus.index') }}" class="admin-menu-link {{ request()->routeIs('admin.menus.*') ? 'active' : '' }}">
                         <i class="bi bi-menu-button-wide"></i>
                         <span>Navigation Menus</span>

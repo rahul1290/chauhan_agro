@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\PageController as AdminPageController;
 use App\Http\Controllers\Admin\PageSectionController;
+use App\Http\Controllers\Admin\PopupController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
@@ -74,6 +75,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
             // Banners & Sliders
             Route::resource('banners', BannerController::class);
+
+            // Promotional Popup
+            Route::get('/popup', [PopupController::class, 'index'])->name('popup.index');
+            Route::post('/popup', [PopupController::class, 'update'])->name('popup.update');
 
             // Menus
             Route::get('/menus', [MenuController::class, 'index'])->name('menus.index');

@@ -1,0 +1,68 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
+use App\Models\PromotionalPopup;
+use Illuminate\Http\Request;
+
+class PopupController extends Controller
+{
+    /**
+     * Display promotional popup settings.
+     */
+    public function index()
+    {
+        $popup = PromotionalPopup::firstOrCreate([], [
+            'title' => 'EIMA International Agricultural Machinery Exhibition 2026',
+            'image_path' => 'assets/images/popups/exhibition-banner.jpg',
+            'link_url' => '/en/contact-us',
+            'target_blank' => false,
+            'border_color' => '#16a34a',
+            'display_frequency' => 'session',
+            'display_delay' => 1,
+            'is_active' => true,
+        ]);
+
+        return view('admin.popup.index', compact('popup'));
+    }
+
+    /**
+     * Update promotional popup settings.
+     */
+    public function update(Request $request)
+    {
+        $popup = PromotionalPopup::first();
+        if (!$popup) {
+            $popup = new PromotionalPopup();
+        }
+
+        $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
+            'link_url' => ['nullable', 'string', 'max:500'],
+            'border_color' => ['required', 'string', 'max:30'],
+            'display_frequency' => ['required', 'in:session,always,daily'],
+            'display_delay' => ['required', 'integer', 'min:0', 'max:60'],
+        ]);
+
+        if ($request->hasFile('image')) {
+            $imagePath = 'storage/' . $request->file('image')->store('popups', 'public');
+            $popup->image_path = $imagePath;
+        }
+
+        $popup->title = $request->input('title');
+        $popup->link_url = $request->input('link_url');
+        $popup->target_blank = $request->boolean('target_blank');
+        $popup->border_color = $request->input('border_color', '#16a34a');
+        $popup->display_frequency = $request->input('display_frequency', 'session');
+        $popup->display_delay = (int) $request->input('display_delay', 1);
+        $popup->is_active = $request->boolean('is_active');
+        $popup->save();
+
+        ActivityLog::log('update_popup', "Updated promotional popup settings: '{$popup->title}'");
+
+        return back()->with('success', 'Promotional popup settings updated successfully!');
+    }
+}
