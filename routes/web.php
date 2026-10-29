@@ -79,6 +79,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             // Promotional Popup
             Route::get('/popup', [PopupController::class, 'index'])->name('popup.index');
             Route::post('/popup', [PopupController::class, 'update'])->name('popup.update');
+            Route::post('/popup/toggle-status', [PopupController::class, 'toggleStatus'])->name('popup.toggleStatus');
 
             // Menus
             Route::get('/menus', [MenuController::class, 'index'])->name('menus.index');

@@ -20,7 +20,7 @@ class PopupController extends Controller
             'link_url' => '/en/contact-us',
             'target_blank' => false,
             'border_color' => '#16a34a',
-            'display_frequency' => 'session',
+            'display_frequency' => 'always',
             'display_delay' => 1,
             'is_active' => true,
         ]);
@@ -43,7 +43,7 @@ class PopupController extends Controller
             'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
             'link_url' => ['nullable', 'string', 'max:500'],
             'border_color' => ['required', 'string', 'max:30'],
-            'display_frequency' => ['required', 'in:session,always,daily'],
+            'display_frequency' => ['required', 'in:always,session,daily'],
             'display_delay' => ['required', 'integer', 'min:0', 'max:60'],
         ]);
 
@@ -56,7 +56,7 @@ class PopupController extends Controller
         $popup->link_url = $request->input('link_url');
         $popup->target_blank = $request->boolean('target_blank');
         $popup->border_color = $request->input('border_color', '#16a34a');
-        $popup->display_frequency = $request->input('display_frequency', 'session');
+        $popup->display_frequency = $request->input('display_frequency', 'always');
         $popup->display_delay = (int) $request->input('display_delay', 1);
         $popup->is_active = $request->boolean('is_active');
         $popup->save();
@@ -64,5 +64,33 @@ class PopupController extends Controller
         ActivityLog::log('update_popup', "Updated promotional popup settings: '{$popup->title}'");
 
         return back()->with('success', 'Promotional popup settings updated successfully!');
+    }
+
+    /**
+     * Quick toggle active / inactive status.
+     */
+    public function toggleStatus(Request $request)
+    {
+        $popup = PromotionalPopup::first();
+        if (!$popup) {
+            $popup = PromotionalPopup::create([
+                'title' => 'EIMA International Agricultural Machinery Exhibition 2026',
+                'image_path' => 'assets/images/popups/exhibition-banner.jpg',
+                'link_url' => '/en/contact-us',
+                'target_blank' => false,
+                'border_color' => '#16a34a',
+                'display_frequency' => 'always',
+                'display_delay' => 1,
+                'is_active' => true,
+            ]);
+        }
+
+        $popup->is_active = !$popup->is_active;
+        $popup->save();
+
+        $stateMsg = $popup->is_active ? 'activated (now displaying on every refresh)' : 'deactivated (hidden from website)';
+        ActivityLog::log('toggle_popup', "Popup was {$stateMsg}");
+
+        return back()->with('success', "Popup {$stateMsg} successfully.");
     }
 }

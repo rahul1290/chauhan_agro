@@ -150,10 +150,11 @@
     (function () {
         const STORAGE_KEY_SESSION = 'agro_promo_popup_viewed_session';
         const STORAGE_KEY_DAILY = 'agro_promo_popup_viewed_daily';
-        const frequency = '{{ $promoPopup->display_frequency ?? "session" }}';
+        const frequency = '{{ $promoPopup->display_frequency ?? "always" }}';
         const delaySeconds = {{ (int) ($promoPopup->display_delay ?? 1) }};
 
         function shouldShowPopup() {
+            // When frequency is 'always' (default), it displays on every refresh/page load
             if (frequency === 'always') {
                 return true;
             }
@@ -170,15 +171,18 @@
                 return (now - parseInt(lastShown, 10)) > oneDayMs;
             }
 
-            return !sessionStorage.getItem(STORAGE_KEY_SESSION);
+            return true;
         }
 
         function recordPopupShown() {
             try {
-                sessionStorage.setItem(STORAGE_KEY_SESSION, '1');
-                localStorage.setItem(STORAGE_KEY_DAILY, new Date().getTime().toString());
+                if (frequency === 'session') {
+                    sessionStorage.setItem(STORAGE_KEY_SESSION, '1');
+                } else if (frequency === 'daily') {
+                    localStorage.setItem(STORAGE_KEY_DAILY, new Date().getTime().toString());
+                }
             } catch (e) {
-                // Ignore storage quota/permission exceptions
+                // Ignore storage exceptions
             }
         }
 
@@ -199,7 +203,11 @@
 
             modal.classList.remove('show');
             document.body.classList.remove('agro-popup-open');
-            recordPopupShown();
+
+            // Record dismissal only if not configured for every refresh
+            if (frequency !== 'always') {
+                recordPopupShown();
+            }
 
             setTimeout(function () {
                 modal.style.display = 'none';
@@ -240,7 +248,9 @@
             const link = document.getElementById('agroPopupImgLink');
             if (link) {
                 link.addEventListener('click', function () {
-                    recordPopupShown();
+                    if (frequency !== 'always') {
+                        recordPopupShown();
+                    }
                 });
             }
         });

@@ -3,10 +3,10 @@
 @section('title', 'Promotional Popup Modal')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-4">
+<div class="d-flex justify-content-between align-items-center mb-3">
     <div>
         <h2 class="fw-bold text-dark mb-1">Promotional Popup Banner</h2>
-        <p class="text-muted small mb-0">Manage the promotional trade exhibition and announcement popup shown to visitors on their first page visit.</p>
+        <p class="text-muted small mb-0">Manage the promotional trade exhibition and announcement popup shown to visitors.</p>
     </div>
     <div class="d-flex gap-2">
         <button type="button" class="btn btn-outline-dark btn-sm" onclick="previewAdminPopup()">
@@ -15,6 +15,33 @@
         <a href="{{ url('/') }}" target="_blank" class="btn btn-agro-outline btn-sm">
             <i class="bi bi-box-arrow-up-right me-1"></i> View Live Site
         </a>
+    </div>
+</div>
+
+{{-- Quick Active/Deactive Banner --}}
+<div class="card mb-4 border-0 shadow-sm {{ $popup->is_active ? 'border-start border-success border-4' : 'border-start border-secondary border-4' }}" style="background: {{ $popup->is_active ? '#f0fdf4' : '#f8fafc' }};">
+    <div class="card-body p-3 d-flex flex-wrap justify-content-between align-items-center gap-3">
+        <div class="d-flex align-items-center gap-3">
+            <span class="badge {{ $popup->is_active ? 'bg-success' : 'bg-secondary' }} fs-6 px-3 py-2 text-uppercase">
+                <i class="bi {{ $popup->is_active ? 'bi-check-circle-fill' : 'bi-slash-circle' }} me-1"></i>
+                {{ $popup->is_active ? 'Popup Active (Shows On Every Refresh)' : 'Popup Deactivated (Hidden)' }}
+            </span>
+            <span class="text-muted small">
+                {{ $popup->is_active ? 'Visitors will see this popup on every page refresh or load.' : 'The popup is currently turned off and will not appear to any visitors on the site.' }}
+            </span>
+        </div>
+        <form action="{{ route('admin.popup.toggleStatus') }}" method="POST" class="m-0">
+            @csrf
+            @if($popup->is_active)
+                <button type="submit" class="btn btn-outline-danger btn-sm fw-bold">
+                    <i class="bi bi-power me-1"></i> Deactivate Popup
+                </button>
+            @else
+                <button type="submit" class="btn btn-success btn-sm fw-bold">
+                    <i class="bi bi-play-circle-fill me-1"></i> Activate Popup
+                </button>
+            @endif
+        </form>
     </div>
 </div>
 
@@ -50,7 +77,7 @@
                         <input class="form-check-input" type="checkbox" role="switch" id="is_active" name="is_active" value="1" {{ old('is_active', $popup->is_active) ? 'checked' : '' }}>
                         <label class="form-check-label fs-6 fw-bold ms-1" for="is_active">
                             <span id="activeStatusLabel" class="{{ $popup->is_active ? 'text-success' : 'text-muted' }}">
-                                {{ $popup->is_active ? 'Popup Enabled' : 'Popup Disabled' }}
+                                {{ $popup->is_active ? 'Active (Visible)' : 'Deactivated (Hidden)' }}
                             </span>
                         </label>
                     </div>
@@ -123,32 +150,32 @@
                             <input type="number" name="display_delay" class="form-control" min="0" max="30" value="{{ old('display_delay', $popup->display_delay) }}" required>
                             <span class="input-group-text">sec</span>
                         </div>
-                        <div class="form-text">Wait time before displaying popup after page loads (1-2s recommended).</div>
+                        <div class="form-text">Delay before showing popup after page load (1 sec recommended).</div>
                     </div>
 
                     {{-- Display Frequency --}}
                     <div class="col-12">
-                        <label class="form-label fw-bold">Display Frequency</label>
+                        <label class="form-label fw-bold">Display Trigger Frequency</label>
                         <div class="row g-2">
                             <div class="col-md-4">
-                                <label class="border rounded-3 p-3 d-block cursor-pointer h-100 bg-white">
+                                <label class="border rounded-3 p-3 d-block cursor-pointer h-100 bg-white {{ old('display_frequency', $popup->display_frequency) === 'always' ? 'border-success bg-success bg-opacity-10' : '' }}">
+                                    <input type="radio" name="display_frequency" value="always" {{ old('display_frequency', $popup->display_frequency) === 'always' ? 'checked' : '' }} class="form-check-input me-2">
+                                    <strong class="d-block text-dark">Every Page Refresh</strong>
+                                    <small class="text-muted">Shows on every page visit and browser refresh whenever popup is Active.</small>
+                                </label>
+                            </div>
+                            <div class="col-md-4">
+                                <label class="border rounded-3 p-3 d-block cursor-pointer h-100 bg-white {{ old('display_frequency', $popup->display_frequency) === 'session' ? 'border-primary' : '' }}">
                                     <input type="radio" name="display_frequency" value="session" {{ old('display_frequency', $popup->display_frequency) === 'session' ? 'checked' : '' }} class="form-check-input me-2">
                                     <strong class="d-block text-dark">Once per Session</strong>
-                                    <small class="text-muted">Shows on first visit. Does not bother visitor on subsequent page clicks until browser is reopened.</small>
+                                    <small class="text-muted">Shows on first visit. Dismisses until browser is closed and reopened.</small>
                                 </label>
                             </div>
                             <div class="col-md-4">
-                                <label class="border rounded-3 p-3 d-block cursor-pointer h-100 bg-white">
-                                    <input type="radio" name="display_frequency" value="always" {{ old('display_frequency', $popup->display_frequency) === 'always' ? 'checked' : '' }} class="form-check-input me-2">
-                                    <strong class="d-block text-dark">Every Page Visit</strong>
-                                    <small class="text-muted">Shows on every page load. Ideal for testing or critical urgent alerts.</small>
-                                </label>
-                            </div>
-                            <div class="col-md-4">
-                                <label class="border rounded-3 p-3 d-block cursor-pointer h-100 bg-white">
+                                <label class="border rounded-3 p-3 d-block cursor-pointer h-100 bg-white {{ old('display_frequency', $popup->display_frequency) === 'daily' ? 'border-primary' : '' }}">
                                     <input type="radio" name="display_frequency" value="daily" {{ old('display_frequency', $popup->display_frequency) === 'daily' ? 'checked' : '' }} class="form-check-input me-2">
                                     <strong class="d-block text-dark">Once per 24 Hours</strong>
-                                    <small class="text-muted">Shows once every 24 hours per visitor using local storage.</small>
+                                    <small class="text-muted">Shows once per 24 hours per visitor.</small>
                                 </label>
                             </div>
                         </div>
@@ -174,27 +201,20 @@
 
                 <ul class="list-group list-group-flush small mb-3">
                     <li class="list-group-item px-0 d-flex justify-content-between align-items-center">
-                        <span class="text-muted"><i class="bi bi-check2 text-success me-1"></i> Responsive Layout:</span>
-                        <span class="fw-bold">Mobile, Tablet & Desktop</span>
+                        <span class="text-muted"><i class="bi bi-check2 text-success me-1"></i> Current Mode:</span>
+                        <span class="fw-bold {{ $popup->is_active ? 'text-success' : 'text-danger' }}">
+                            {{ $popup->is_active ? 'Active on Every Refresh' : 'Deactivated' }}
+                        </span>
                     </li>
                     <li class="list-group-item px-0 d-flex justify-content-between align-items-center">
                         <span class="text-muted"><i class="bi bi-check2 text-success me-1"></i> Dismiss Trigger:</span>
                         <span class="fw-bold">Circular Close Button, Backdrop Click, or Escape key</span>
                     </li>
                     <li class="list-group-item px-0 d-flex justify-content-between align-items-center">
-                        <span class="text-muted"><i class="bi bi-check2 text-success me-1"></i> Storage Engine:</span>
-                        <span class="fw-bold">Session / Local Storage</span>
+                        <span class="text-muted"><i class="bi bi-check2 text-success me-1"></i> Responsive:</span>
+                        <span class="fw-bold">Mobile, Tablet & Desktop</span>
                     </li>
                 </ul>
-
-                <div class="p-3 bg-light rounded-3 border">
-                    <h6 class="fw-bold text-dark mb-2"><i class="bi bi-lightning-charge text-warning me-1"></i>Need to test on live site?</h6>
-                    <p class="text-muted small mb-2">If you have closed the popup previously in your browser, clear your browser session storage or click the button below to test:</p>
-                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="resetSessionStorage()">
-                        <i class="bi bi-arrow-counterclockwise me-1"></i> Reset Browser Test Cookie
-                    </button>
-                    <span id="resetAlert" class="small text-success ms-2 d-none fw-bold">Cleared!</span>
-                </div>
             </div>
 
             <div class="admin-card text-center p-4">
@@ -227,7 +247,6 @@
 </div>
 
 <style>
-/* Admin Popup Preview Styles matching frontend */
 .admin-popup-overlay {
     position: fixed;
     top: 0;
@@ -328,10 +347,10 @@ function setColor(hex) {
 if (activeSwitch && activeStatusLabel) {
     activeSwitch.addEventListener('change', function() {
         if (this.checked) {
-            activeStatusLabel.textContent = 'Popup Enabled';
+            activeStatusLabel.textContent = 'Active (Visible)';
             activeStatusLabel.className = 'text-success';
         } else {
-            activeStatusLabel.textContent = 'Popup Disabled';
+            activeStatusLabel.textContent = 'Deactivated (Hidden)';
             activeStatusLabel.className = 'text-muted';
         }
     });
@@ -360,16 +379,6 @@ if (adminBackdrop) {
             closeAdminPopup();
         }
     });
-}
-
-function resetSessionStorage() {
-    sessionStorage.removeItem('agro_promo_popup_viewed');
-    localStorage.removeItem('agro_promo_popup_viewed_at');
-    const alertSpan = document.getElementById('resetAlert');
-    if (alertSpan) {
-        alertSpan.classList.remove('d-none');
-        setTimeout(() => alertSpan.classList.add('d-none'), 3000);
-    }
 }
 </script>
 @endsection
