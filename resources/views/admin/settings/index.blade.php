@@ -381,6 +381,93 @@
                             </div>
                         </div>
 
+                        <!-- Section-Wise Animation Manager Matrix -->
+                        <div class="card border mb-4 shadow-xs">
+                            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h6 class="fw-bold mb-0 text-dark">
+                                        <i class="bi bi-sliders2-vertical text-success me-2"></i>Section-Wise Animation Manager
+                                    </h6>
+                                    <small class="text-muted">Assign customized transitions to individual sections on the website.</small>
+                                </div>
+                                @if(isset($homePage))
+                                    <a href="{{ route('admin.pages.sections.index', $homePage) }}" class="btn btn-sm btn-outline-secondary" target="_blank">
+                                        <i class="bi bi-layers me-1"></i> Open Section Builder
+                                    </a>
+                                @endif
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th style="width: 70px;">Order</th>
+                                            <th>Section Type</th>
+                                            <th>Headline</th>
+                                            <th style="min-width: 200px;">Transition Effect</th>
+                                            <th style="min-width: 160px;">Speed / Duration</th>
+                                            <th class="text-end" style="width: 80px;">Edit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse($homeSections as $sec)
+                                            @php
+                                                $secAnim = $sec->settings_json['animation_effect'] ?? '';
+                                                $secSpeed = $sec->settings_json['animation_duration'] ?? '';
+                                            @endphp
+                                            <tr>
+                                                <td class="fw-bold text-muted text-center">#{{ $sec->order }}</td>
+                                                <td>
+                                                    <span class="badge bg-dark bg-opacity-10 text-dark font-monospace fw-semibold px-2 py-1">
+                                                        {{ $sec->type }}
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <div class="fw-bold text-dark text-truncate" style="max-width: 200px;">
+                                                        {{ $sec->title ?: ucfirst(str_replace('_', ' ', $sec->type)) }}
+                                                    </div>
+                                                    <small class="text-muted d-block text-truncate" style="max-width: 200px;">
+                                                        {{ $sec->subtitle ?: 'Standard Layout' }}
+                                                    </small>
+                                                </td>
+                                                <td>
+                                                    <select name="section_animations[{{ $sec->id }}][effect]" class="form-select form-select-sm">
+                                                        <option value="" {{ empty($secAnim) ? 'selected' : '' }}>Global Default ({{ ucfirst(site_setting('animation_effect', 'fade-up')) }})</option>
+                                                        <option value="fade-up" {{ $secAnim === 'fade-up' ? 'selected' : '' }}>Smooth Glide Up (Fade-Up)</option>
+                                                        <option value="scale-up" {{ $secAnim === 'scale-up' ? 'selected' : '' }}>Fluid Zoom / Scale In</option>
+                                                        <option value="slide-left" {{ $secAnim === 'slide-left' ? 'selected' : '' }}>Slide In From Left</option>
+                                                        <option value="slide-right" {{ $secAnim === 'slide-right' ? 'selected' : '' }}>Slide In From Right</option>
+                                                        <option value="flip-up" {{ $secAnim === 'flip-up' ? 'selected' : '' }}>Modern 3D Tilt / Flip Up</option>
+                                                        <option value="bounce-soft" {{ $secAnim === 'bounce-soft' ? 'selected' : '' }}>Soft Elastic Bounce</option>
+                                                        <option value="float-glow" {{ $secAnim === 'float-glow' ? 'selected' : '' }}>Ambient Floating Glow</option>
+                                                        <option value="none" {{ $secAnim === 'none' ? 'selected' : '' }}>None (Instant / Static)</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select name="section_animations[{{ $sec->id }}][duration]" class="form-select form-select-sm">
+                                                        <option value="" {{ empty($secSpeed) ? 'selected' : '' }}>Global Default ({{ ucfirst(site_setting('animation_duration', 'normal')) }})</option>
+                                                        <option value="fast" {{ $secSpeed === 'fast' ? 'selected' : '' }}>Fast (0.4s)</option>
+                                                        <option value="normal" {{ $secSpeed === 'normal' ? 'selected' : '' }}>Normal (0.75s)</option>
+                                                        <option value="relaxed" {{ $secSpeed === 'relaxed' ? 'selected' : '' }}>Relaxed (1.1s)</option>
+                                                    </select>
+                                                </td>
+                                                <td class="text-end">
+                                                    @if(isset($homePage))
+                                                        <a href="{{ route('admin.pages.sections.edit', [$homePage, $sec]) }}" class="btn btn-sm btn-light border py-1 px-2" title="Edit Full Section" target="_blank">
+                                                            <i class="bi bi-pencil"></i>
+                                                        </a>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="6" class="text-center py-3 text-muted">No sections found on the Home page.</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
                         <!-- Live Real-Time Interactive Playground -->
                         <div class="p-4 rounded-4 border bg-white shadow-xs">
                             <div class="d-flex justify-content-between align-items-center mb-3">

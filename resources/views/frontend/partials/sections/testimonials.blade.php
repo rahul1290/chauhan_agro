@@ -1,6 +1,6 @@
-<section class="py-5" style="background-color: var(--agro-light-bg);">
+<section class="py-5" style="background-color: var(--agro-light-bg);" @if(!empty($section->settings_json['animation_effect'])) data-section-anim="{{ $section->settings_json['animation_effect'] }}" @endif>
     <div class="container py-4">
-        <div class="text-center mb-5">
+        <div class="text-center mb-5 agro-reveal">
             <span class="section-badge">{{ $currentLocale === 'hi' ? 'किसानों का अनुभव' : 'CUSTOMER TESTIMONIALS' }}</span>
             <h2 class="section-title">{{ $section->title ?? ($currentLocale === 'hi' ? 'किसानों की जुबानी' : 'Voices From The Field') }}</h2>
             @if($section->subtitle)
@@ -42,7 +42,7 @@
                 @php
                     $cleanQuote = str_ireplace('AgroVision', 'Chauhan Agro', $rev['quote'] ?? '');
                 @endphp
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-4 col-md-6 agro-reveal stagger-{{ ($loop->index % 3) + 1 }}">
                     <div class="testimonial-card">
                         <div class="testimonial-stars">
                             @for($i = 0; $i < ($rev['rating'] ?? 5); $i++)

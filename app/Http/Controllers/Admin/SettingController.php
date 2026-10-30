@@ -12,7 +12,10 @@ class SettingController extends Controller
     public function index()
     {
         $allSettings = Setting::all()->keyBy('key');
-        return view('admin.settings.index', compact('allSettings'));
+        $homePage = \App\Models\Page::where('slug', 'home')->first();
+        $homeSections = $homePage ? $homePage->sections()->with('translations')->orderBy('order')->get() : collect();
+
+        return view('admin.settings.index', compact('allSettings', 'homeSections', 'homePage'));
     }
 
     public function update(Request $request)
@@ -29,6 +32,21 @@ class SettingController extends Controller
             $inputs['animations_enabled'] = $request->boolean('animations_enabled') ? '1' : '0';
             $inputs['animation_stagger_enabled'] = $request->boolean('animation_stagger_enabled') ? '1' : '0';
             $inputs['admin_animations_enabled'] = $request->boolean('admin_animations_enabled') ? '1' : '0';
+        }
+
+        // Handle section-wise animation settings
+        if ($request->has('section_animations') && is_array($request->section_animations)) {
+            foreach ($request->section_animations as $secId => $secData) {
+                $sec = \App\Models\PageSection::find($secId);
+                if ($sec) {
+                    $settings = $sec->settings_json ?? [];
+                    $settings['animation_effect'] = $secData['effect'] ?? '';
+                    $settings['animation_duration'] = $secData['duration'] ?? '';
+                    $sec->settings_json = $settings;
+                    $sec->save();
+                }
+            }
+            unset($inputs['section_animations']);
         }
 
         foreach ($inputs as $key => $value) {

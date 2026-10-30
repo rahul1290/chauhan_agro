@@ -1055,8 +1055,10 @@ body[data-anim-stagger="false"] [class*="stagger-"] {
     transition-delay: 0s !important;
 }
 
-/* When animations are disabled globally in Admin Panel */
+/* When animations are disabled globally or on a specific section */
 body[data-anim-enabled="false"] .agro-reveal,
+[data-section-anim="none"],
+[data-section-anim="none"] *,
 [data-section-anim="none"] .agro-reveal {
     opacity: 1 !important;
     transform: none !important;

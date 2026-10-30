@@ -29,6 +29,7 @@
                         <th style="width: 80px;">Order</th>
                         <th>Component Type</th>
                         <th>Title / Headline</th>
+                        <th>Animation Effect</th>
                         <th>Status</th>
                         <th class="text-end">Actions</th>
                     </tr>
@@ -58,6 +59,22 @@
                                 <div class="fw-bold text-dark">{{ $sec->title ?: 'Untitled Section' }}</div>
                                 @if($sec->subtitle)
                                     <small class="text-muted">{{ Str::limit($sec->subtitle, 60) }}</small>
+                                @endif
+                            </td>
+                            <td>
+                                @php
+                                    $secAnim = $sec->settings_json['animation_effect'] ?? '';
+                                @endphp
+                                @if(empty($secAnim))
+                                    <span class="badge bg-light text-muted border px-2 py-1">
+                                        <i class="bi bi-globe me-1"></i> Global ({{ ucfirst(site_setting('animation_effect', 'fade-up')) }})
+                                    </span>
+                                @elseif($secAnim === 'none')
+                                    <span class="badge bg-secondary bg-opacity-10 text-secondary px-2 py-1">None / Off</span>
+                                @else
+                                    <span class="badge bg-primary bg-opacity-10 text-primary fw-semibold px-2 py-1">
+                                        <i class="bi bi-magic me-1"></i> {{ ucfirst(str_replace('-', ' ', $secAnim)) }}
+                                    </span>
                                 @endif
                             </td>
                             <td>
