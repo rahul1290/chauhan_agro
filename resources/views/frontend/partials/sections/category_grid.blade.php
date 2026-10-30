@@ -1,4 +1,4 @@
-<section class="py-5 bg-white">
+<section class="py-5 bg-white" @if(!empty($section->settings_json['animation_effect'])) data-section-anim="{{ $section->settings_json['animation_effect'] }}" @endif>
     <div class="container py-4">
         <div class="text-center mb-5 agro-reveal">
             <span class="section-badge">{{ $currentLocale === 'hi' ? 'कृषि उपकरण श्रेणियां' : 'PRODUCT CATEGORIES' }}</span>

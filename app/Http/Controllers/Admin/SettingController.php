@@ -24,6 +24,13 @@ class SettingController extends Controller
             $inputs['under_construction_enabled'] = $request->boolean('under_construction_enabled') ? '1' : '0';
         }
 
+        // Handle animation settings checkboxes correctly
+        if ($request->has('animation_settings_present')) {
+            $inputs['animations_enabled'] = $request->boolean('animations_enabled') ? '1' : '0';
+            $inputs['animation_stagger_enabled'] = $request->boolean('animation_stagger_enabled') ? '1' : '0';
+            $inputs['admin_animations_enabled'] = $request->boolean('admin_animations_enabled') ? '1' : '0';
+        }
+
         foreach ($inputs as $key => $value) {
             Setting::set($key, $value);
         }

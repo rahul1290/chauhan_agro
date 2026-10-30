@@ -34,7 +34,20 @@
 
     @stack('styles')
 </head>
-<body>
+@php
+    $animEnabled = (bool) site_setting('animations_enabled', '1');
+    $animEffect = site_setting('animation_effect', 'fade-up');
+    $animDuration = site_setting('animation_duration', 'normal');
+    $animStagger = (bool) site_setting('animation_stagger_enabled', '1');
+    $cardHover = site_setting('card_hover_effect', 'lift-float');
+@endphp
+<body 
+    data-anim-enabled="{{ $animEnabled ? 'true' : 'false' }}"
+    data-anim-effect="{{ $animEffect }}"
+    data-anim-duration="{{ $animDuration }}"
+    data-anim-stagger="{{ $animStagger ? 'true' : 'false' }}"
+    data-card-hover="{{ $cardHover }}"
+>
 
     <!-- ==============================================
          Top Contact & Language Bar
@@ -380,22 +393,41 @@
     <!-- Scripts: Bootstrap 5 JS Bundle -->
     <script src="{{ asset('assets/vendor/js/bootstrap.bundle.min.js') }}"></script>
 
-    <!-- Scroll Reveal & Section Animations Observer -->
+    <!-- Scroll Reveal & Section Animations Observer (Controlled by Admin Panel) -->
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            const isEnabled = document.body.getAttribute('data-anim-enabled') !== 'false';
+            const isStagger = document.body.getAttribute('data-anim-stagger') !== 'false';
+            const defaultEffect = document.body.getAttribute('data-anim-effect') || 'fade-up';
             const targets = document.querySelectorAll('.agro-reveal, .agro-reveal-left, .agro-reveal-right, .agro-reveal-scale, section, .feature-card, .category-card, .product-card, .stat-item');
-            
+
+            if (!isEnabled) {
+                // If animations disabled in Admin Settings, reveal everything instantly
+                targets.forEach(el => el.classList.add('is-revealed'));
+                return;
+            }
+
             if ('IntersectionObserver' in window) {
                 const observer = new IntersectionObserver((entries, obs) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
-                            entry.target.classList.add('is-revealed');
-                            // Stagger animate child cards if parent section intersects
-                            const childCards = entry.target.querySelectorAll('.feature-card, .category-card, .product-card, .stat-item, .agro-reveal');
-                            childCards.forEach((c, i) => {
-                                setTimeout(() => c.classList.add('is-revealed'), i * 90);
-                            });
-                            obs.unobserve(entry.target);
+                            const target = entry.target;
+                            target.classList.add('is-revealed');
+
+                            // Check if this section has a custom override
+                            const sectionAnim = target.getAttribute('data-section-anim');
+                            const childCards = target.querySelectorAll('.feature-card, .category-card, .product-card, .stat-item, .agro-reveal');
+
+                            if (childCards.length > 0) {
+                                childCards.forEach((c, i) => {
+                                    if (sectionAnim && sectionAnim !== 'none') {
+                                        c.classList.add('effect-' + sectionAnim);
+                                    }
+                                    const delay = isStagger ? (i * 90) : 0;
+                                    setTimeout(() => c.classList.add('is-revealed'), delay);
+                                });
+                            }
+                            obs.unobserve(target);
                         }
                     });
                 }, {

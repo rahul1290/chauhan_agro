@@ -16,7 +16,7 @@
 
     @stack('styles')
 </head>
-<body class="admin-body">
+<body class="admin-body" data-admin-anim="{{ site_setting('admin_animations_enabled', '1') === '1' ? 'true' : 'false' }}">
 
     <!-- ==============================================
          Admin Sidebar

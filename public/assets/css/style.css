@@ -955,73 +955,133 @@ i.bi-tractor::before {
 }
 
 /* ==========================================================================
-   Section Scroll Reveal Animations & Fluid Micro-Interactions
+   Section Scroll Reveal Animations & Multi-Effect Transition Engine
+   Configured and Controlled via Admin Panel
    ========================================================================== */
 
-/* Reveal base transitions */
+/* Base initial state for reveal elements */
 .agro-reveal {
     opacity: 0;
-    transform: translateY(32px);
-    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity, transform;
+    will-change: opacity, transform, filter;
+    transition-property: opacity, transform, filter;
+    transition-duration: 0.75s;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* 1. Effect: Smooth Glide Up (fade-up - default) */
+body[data-anim-effect="fade-up"] .agro-reveal,
+.agro-reveal.effect-fade-up,
+.agro-reveal {
+    transform: translateY(38px);
+}
+
+/* 2. Effect: Fluid Zoom / Scale In (scale-up) */
+body[data-anim-effect="scale-up"] .agro-reveal,
+.agro-reveal.effect-scale-up,
+.agro-reveal-scale,
+[data-section-anim="scale-up"] .agro-reveal {
+    transform: scale(0.88) translateY(24px);
+}
+
+/* 3. Effect: Dynamic Slide from Left (slide-left) */
+body[data-anim-effect="slide-left"] .agro-reveal,
+.agro-reveal.effect-slide-left,
+.agro-reveal-left,
+[data-section-anim="slide-left"] .agro-reveal {
+    transform: translateX(-48px);
+}
+
+/* 4. Effect: Dynamic Slide from Right (slide-right) */
+body[data-anim-effect="slide-right"] .agro-reveal,
+.agro-reveal.effect-slide-right,
+.agro-reveal-right,
+[data-section-anim="slide-right"] .agro-reveal {
+    transform: translateX(48px);
+}
+
+/* 5. Effect: Modern 3D Tilt / Flip Up (flip-up) */
+body[data-anim-effect="flip-up"] .agro-reveal,
+.agro-reveal.effect-flip-up,
+[data-section-anim="flip-up"] .agro-reveal {
+    transform: perspective(1000px) rotateX(25deg) translateY(32px);
+    transform-origin: bottom center;
+}
+
+/* 6. Effect: Soft Elastic Bounce & Pop (bounce-soft) */
+body[data-anim-effect="bounce-soft"] .agro-reveal,
+.agro-reveal.effect-bounce-soft,
+[data-section-anim="bounce-soft"] .agro-reveal {
+    transform: translateY(40px) scale(0.92);
+    transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* 7. Effect: Ambient Floating Glow (float-glow) */
+body[data-anim-effect="float-glow"] .agro-reveal,
+.agro-reveal.effect-float-glow,
+[data-section-anim="float-glow"] .agro-reveal {
+    transform: translateY(24px);
+    filter: drop-shadow(0 0 18px rgba(4, 120, 87, 0.45));
+}
+
+/* Common Revealed State */
 .agro-reveal.is-revealed {
     opacity: 1 !important;
-    transform: translateY(0) !important;
+    transform: none !important;
+    filter: none !important;
 }
 
-.agro-reveal-left {
-    opacity: 0;
-    transform: translateX(-35px);
-    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+/* Motion Speeds / Durations controlled by Admin */
+body[data-anim-duration="fast"] .agro-reveal {
+    transition-duration: 0.42s !important;
 }
 
-.agro-reveal-left.is-revealed {
-    opacity: 1 !important;
-    transform: translateX(0) !important;
+body[data-anim-duration="normal"] .agro-reveal {
+    transition-duration: 0.75s !important;
 }
 
-.agro-reveal-right {
-    opacity: 0;
-    transform: translateX(35px);
-    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.agro-reveal-right.is-revealed {
-    opacity: 1 !important;
-    transform: translateX(0) !important;
-}
-
-.agro-reveal-scale {
-    opacity: 0;
-    transform: scale(0.93) translateY(20px);
-    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.agro-reveal-scale.is-revealed {
-    opacity: 1 !important;
-    transform: scale(1) translateY(0) !important;
+body[data-anim-duration="relaxed"] .agro-reveal {
+    transition-duration: 1.15s !important;
 }
 
 /* Stagger delay classes for cascading section cards */
-.stagger-1 { transition-delay: 0.08s !important; }
-.stagger-2 { transition-delay: 0.16s !important; }
-.stagger-3 { transition-delay: 0.24s !important; }
-.stagger-4 { transition-delay: 0.32s !important; }
-.stagger-5 { transition-delay: 0.40s !important; }
-.stagger-6 { transition-delay: 0.48s !important; }
+body[data-anim-stagger="true"] .stagger-1 { transition-delay: 0.08s !important; }
+body[data-anim-stagger="true"] .stagger-2 { transition-delay: 0.16s !important; }
+body[data-anim-stagger="true"] .stagger-3 { transition-delay: 0.24s !important; }
+body[data-anim-stagger="true"] .stagger-4 { transition-delay: 0.32s !important; }
+body[data-anim-stagger="true"] .stagger-5 { transition-delay: 0.40s !important; }
+body[data-anim-stagger="true"] .stagger-6 { transition-delay: 0.48s !important; }
 
-/* Enhanced Feature Cards with Glow & Micro-interactions */
-.feature-card {
+body[data-anim-stagger="false"] [class*="stagger-"] {
+    transition-delay: 0s !important;
+}
+
+/* When animations are disabled globally in Admin Panel */
+body[data-anim-enabled="false"] .agro-reveal,
+[data-section-anim="none"] .agro-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+}
+
+/* ==========================================================================
+   Card Styles & Micro-Interactions
+   ========================================================================== */
+
+.feature-card,
+.category-card,
+.product-card {
     position: relative;
     overflow: hidden;
     background: #ffffff;
     border: 1px solid var(--agro-border);
     border-radius: 18px;
-    padding: 34px 28px;
     box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+
+.feature-card {
+    padding: 34px 28px;
 }
 
 .feature-card::before {
@@ -1036,10 +1096,37 @@ i.bi-tractor::before {
     transition: opacity 0.3s ease, height 0.3s ease;
 }
 
-.feature-card:hover {
+/* Hover style 1: Modern Elevation Lift (lift-float - default) */
+body[data-card-hover="lift-float"] .feature-card:hover,
+body[data-card-hover="lift-float"] .category-card:hover,
+body[data-card-hover="lift-float"] .product-card:hover {
     transform: translateY(-8px) scale(1.01);
     box-shadow: 0 20px 35px -8px rgba(15, 23, 42, 0.12), 0 8px 16px -4px rgba(4, 120, 87, 0.08);
     border-color: rgba(4, 120, 87, 0.35);
+}
+
+/* Hover style 2: Emerald Glow Accent (glow-border) */
+body[data-card-hover="glow-border"] .feature-card:hover,
+body[data-card-hover="glow-border"] .category-card:hover,
+body[data-card-hover="glow-border"] .product-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--agro-primary);
+    box-shadow: 0 10px 25px -4px rgba(4, 120, 87, 0.35), 0 0 15px rgba(16, 185, 129, 0.2);
+}
+
+/* Hover style 3: Gentle Zoom Scale (subtle-scale) */
+body[data-card-hover="subtle-scale"] .feature-card:hover,
+body[data-card-hover="subtle-scale"] .category-card:hover,
+body[data-card-hover="subtle-scale"] .product-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 12px 28px -5px rgba(15, 23, 42, 0.1);
+}
+
+/* Hover style 4: Static (none) */
+body[data-card-hover="none"] .feature-card:hover,
+body[data-card-hover="none"] .category-card:hover,
+body[data-card-hover="none"] .product-card:hover {
+    transform: none;
 }
 
 .feature-card:hover::before {
@@ -1068,32 +1155,12 @@ i.bi-tractor::before {
     box-shadow: 0 8px 20px rgba(4, 120, 87, 0.35);
 }
 
-/* Category Cards Lift & Zoom */
-.category-card {
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
-}
-
-.category-card:hover {
-    transform: translateY(-8px) scale(1.01);
-    box-shadow: 0 20px 35px -8px rgba(15, 23, 42, 0.12);
-}
-
 .category-icon-badge {
     transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .category-card:hover .category-icon-badge {
     transform: scale(1.12) rotate(-5deg);
-}
-
-/* Product Machinery Cards Lift */
-.product-card {
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease, border-color 0.35s ease;
-}
-
-.product-card:hover {
-    transform: translateY(-8px) scale(1.01);
-    box-shadow: 0 20px 35px -8px rgba(15, 23, 42, 0.12);
 }
 
 /* Stats Counter Pulse & Shine */
@@ -1112,4 +1179,5 @@ i.bi-tractor::before {
 .stat-item:hover .stat-icon {
     transform: scale(1.15);
 }
+
 

@@ -89,6 +89,9 @@
                 <a class="list-group-item list-group-item-action py-3 fw-semibold" id="tab-seo-link" data-bs-toggle="list" href="#tab-seo">
                     <i class="bi bi-search me-2"></i> Default SEO & Meta
                 </a>
+                <a class="list-group-item list-group-item-action py-3 fw-semibold text-primary" id="tab-animations-link" data-bs-toggle="list" href="#tab-animations">
+                    <i class="bi bi-magic me-2"></i> Animations & Transitions
+                </a>
             </div>
         </div>
 
@@ -294,6 +297,129 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Visual Effects & Animations Tab -->
+                <div class="tab-pane fade" id="tab-animations">
+                    <div class="card border-0 shadow-sm p-4 mb-4">
+                        <input type="hidden" name="animation_settings_present" value="1">
+
+                        <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+                            <div>
+                                <h5 class="fw-bold text-dark mb-1"><i class="bi bi-magic me-2 text-primary"></i>Visual Effects, Transitions & Motion Control</h5>
+                                <p class="text-muted small mb-0">Control scroll entrance transitions, card hover dynamics, speed, and cascading effects across the website.</p>
+                            </div>
+                            <div class="form-check form-switch fs-4 mb-0">
+                                <input class="form-check-input" type="checkbox" role="switch" id="animations_enabled" name="animations_enabled" value="1" {{ old('animations_enabled', site_setting('animations_enabled', '1')) === '1' ? 'checked' : '' }}>
+                            </div>
+                        </div>
+
+                        <!-- Global Transition Effect -->
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Primary Scroll Transition Effect</label>
+                                @php $currentEffect = old('animation_effect', site_setting('animation_effect', 'fade-up')); @endphp
+                                <select name="animation_effect" id="animEffectSelector" class="form-select form-select-lg" onchange="triggerTestAnimation()">
+                                    <option value="fade-up" {{ $currentEffect === 'fade-up' ? 'selected' : '' }}>Smooth Glide Up (Fade-Up)</option>
+                                    <option value="scale-up" {{ $currentEffect === 'scale-up' ? 'selected' : '' }}>Fluid Zoom / Scale In</option>
+                                    <option value="slide-left" {{ $currentEffect === 'slide-left' ? 'selected' : '' }}>Dynamic Slide from Left</option>
+                                    <option value="slide-right" {{ $currentEffect === 'slide-right' ? 'selected' : '' }}>Dynamic Slide from Right</option>
+                                    <option value="flip-up" {{ $currentEffect === 'flip-up' ? 'selected' : '' }}>Modern 3D Tilt / Flip Up</option>
+                                    <option value="bounce-soft" {{ $currentEffect === 'bounce-soft' ? 'selected' : '' }}>Soft Elastic Bounce & Pop</option>
+                                    <option value="float-glow" {{ $currentEffect === 'float-glow' ? 'selected' : '' }}>Ambient Floating Glow</option>
+                                </select>
+                                <div class="form-text">Choose the primary motion personality applied to sections and cards as visitors scroll.</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Motion Speed / Duration</label>
+                                @php $currentDuration = old('animation_duration', site_setting('animation_duration', 'normal')); @endphp
+                                <select name="animation_duration" id="animDurationSelector" class="form-select form-select-lg">
+                                    <option value="fast" {{ $currentDuration === 'fast' ? 'selected' : '' }}>Fast & Snappy (0.4s) — Instant feedback</option>
+                                    <option value="normal" {{ $currentDuration === 'normal' ? 'selected' : '' }}>Smooth Standard (0.75s) — Recommended</option>
+                                    <option value="relaxed" {{ $currentDuration === 'relaxed' ? 'selected' : '' }}>Cinematic & Gentle (1.1s) — Ultra smooth</option>
+                                </select>
+                                <div class="form-text">Controls how quickly elements transition into full visibility.</div>
+                            </div>
+                        </div>
+
+                        <!-- Card Hover Dynamics & Stagger -->
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Card Hover & Micro-Interactions</label>
+                                @php $currentCardHover = old('card_hover_effect', site_setting('card_hover_effect', 'lift-float')); @endphp
+                                <select name="card_hover_effect" id="cardHoverSelector" class="form-select">
+                                    <option value="lift-float" {{ $currentCardHover === 'lift-float' ? 'selected' : '' }}>Modern Elevation Lift & Soft Deep Shadow</option>
+                                    <option value="glow-border" {{ $currentCardHover === 'glow-border' ? 'selected' : '' }}>Emerald Glow Accent & Top Line</option>
+                                    <option value="subtle-scale" {{ $currentCardHover === 'subtle-scale' ? 'selected' : '' }}>Gentle Zoom Scale (1.025x)</option>
+                                    <option value="none" {{ $currentCardHover === 'none' ? 'selected' : '' }}>Static / No Hover Transformation</option>
+                                </select>
+                                <div class="form-text">Visual response when hovering on feature cards, machinery models, or categories.</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Child Element Staggering</label>
+                                <div class="p-3 bg-light rounded-3 border">
+                                    <div class="form-check form-switch mb-0">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="animation_stagger_enabled" name="animation_stagger_enabled" value="1" {{ old('animation_stagger_enabled', site_setting('animation_stagger_enabled', '1')) === '1' ? 'checked' : '' }}>
+                                        <label class="form-check-label fw-semibold" for="animation_stagger_enabled">Enable Cascading Stagger</label>
+                                    </div>
+                                    <small class="text-muted d-block mt-1">Cards in a grid glide in sequentially one after another instead of all at once.</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Admin Panel Motion Setting -->
+                        <div class="p-3 bg-light rounded-3 border mb-4">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <div class="fw-bold text-dark">Admin Panel Transitions</div>
+                                    <small class="text-muted">Enable smooth page fade-in and stat-card elevation inside this admin panel.</small>
+                                </div>
+                                <div class="form-check form-switch fs-5 mb-0">
+                                    <input class="form-check-input" type="checkbox" role="switch" id="admin_animations_enabled" name="admin_animations_enabled" value="1" {{ old('admin_animations_enabled', site_setting('admin_animations_enabled', '1')) === '1' ? 'checked' : '' }}>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Live Real-Time Interactive Playground -->
+                        <div class="p-4 rounded-4 border bg-white shadow-xs">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <h6 class="fw-bold mb-0 text-dark"><i class="bi bi-play-circle-fill text-success me-2"></i>Live Effect Playground</h6>
+                                    <small class="text-muted">Test the selected transition effect in real-time right now.</small>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-outline-primary fw-semibold px-3 rounded-pill" onclick="triggerTestAnimation()">
+                                    <i class="bi bi-arrow-repeat me-1"></i> Play Animation
+                                </button>
+                            </div>
+
+                            <div class="row g-3" id="previewContainer">
+                                <div class="col-md-4">
+                                    <div class="p-3 rounded-3 border bg-light text-center preview-card">
+                                        <i class="bi bi-tractor fs-2 text-success mb-2 d-block"></i>
+                                        <div class="fw-bold small">Rotary Tillers</div>
+                                        <small class="text-muted">Sample Card 1</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="p-3 rounded-3 border bg-light text-center preview-card">
+                                        <i class="bi bi-cpu fs-2 text-warning mb-2 d-block"></i>
+                                        <div class="fw-bold small">Laser Leveller</div>
+                                        <small class="text-muted">Sample Card 2</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="p-3 rounded-3 border bg-light text-center preview-card">
+                                        <i class="bi bi-shield-check fs-2 text-primary mb-2 d-block"></i>
+                                        <div class="fw-bold small">Heavy Implements</div>
+                                        <small class="text-muted">Sample Card 3</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
 
             <div class="d-flex justify-content-end mb-5">
@@ -320,5 +446,47 @@ function copyClientLink(url) {
         }
     }
 }
+
+function triggerTestAnimation() {
+    const effect = document.getElementById('animEffectSelector').value;
+    const cards = document.querySelectorAll('.preview-card');
+    cards.forEach((card, i) => {
+        card.style.animation = 'none';
+        card.offsetHeight; // trigger reflow
+        card.style.animation = `animPreview_${effect} 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.1}s both`;
+    });
+}
 </script>
+
+<style>
+@keyframes animPreview_fade-up {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes animPreview_scale-up {
+    from { opacity: 0; transform: scale(0.85) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes animPreview_slide-left {
+    from { opacity: 0; transform: translateX(-40px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes animPreview_slide-right {
+    from { opacity: 0; transform: translateX(40px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+@keyframes animPreview_flip-up {
+    from { opacity: 0; transform: perspective(800px) rotateX(30deg) translateY(25px); }
+    to { opacity: 1; transform: perspective(800px) rotateX(0deg) translateY(0); }
+}
+@keyframes animPreview_bounce-soft {
+    0% { opacity: 0; transform: translateY(35px) scale(0.9); }
+    60% { opacity: 1; transform: translateY(-6px) scale(1.02); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes animPreview_float-glow {
+    0% { opacity: 0; transform: translateY(20px); box-shadow: 0 0 20px rgba(4, 120, 87, 0.5); }
+    100% { opacity: 1; transform: translateY(0); box-shadow: none; }
+}
+</style>
 @endsection

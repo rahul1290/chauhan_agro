@@ -534,6 +534,12 @@ i.bi-tractor::before {
     animation: adminFadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
+body[data-admin-anim="false"] *,
+body[data-admin-anim="false"] .animate-fade-in-up {
+    animation: none !important;
+    transition: none !important;
+}
+
 .delay-1 { animation-delay: 0.08s; }
 .delay-2 { animation-delay: 0.16s; }
 .delay-3 { animation-delay: 0.24s; }

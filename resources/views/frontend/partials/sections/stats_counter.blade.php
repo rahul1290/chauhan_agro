@@ -1,4 +1,4 @@
-<section class="stats-section">
+<section class="stats-section" @if(!empty($section->settings_json['animation_effect'])) data-section-anim="{{ $section->settings_json['animation_effect'] }}" @endif>
     <div class="container">
         @if($section->title)
             <div class="text-center mb-5">

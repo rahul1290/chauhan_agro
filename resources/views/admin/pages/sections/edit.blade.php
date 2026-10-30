@@ -84,6 +84,23 @@
                             <input type="text" class="form-control bg-light" value="{{ $section->type }}" disabled>
                         </div>
 
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">Section Scroll Animation</label>
+                            @php $secAnim = $section->settings_json['animation_effect'] ?? ''; @endphp
+                            <select name="settings[animation_effect]" class="form-select">
+                                <option value="" {{ empty($secAnim) ? 'selected' : '' }}>Inherit Global ({{ ucfirst(site_setting('animation_effect', 'fade-up')) }})</option>
+                                <option value="fade-up" {{ $secAnim === 'fade-up' ? 'selected' : '' }}>Smooth Glide Up (Fade-Up)</option>
+                                <option value="scale-up" {{ $secAnim === 'scale-up' ? 'selected' : '' }}>Fluid Zoom / Scale In</option>
+                                <option value="slide-left" {{ $secAnim === 'slide-left' ? 'selected' : '' }}>Slide In From Left</option>
+                                <option value="slide-right" {{ $secAnim === 'slide-right' ? 'selected' : '' }}>Slide In From Right</option>
+                                <option value="flip-up" {{ $secAnim === 'flip-up' ? 'selected' : '' }}>Modern 3D Tilt / Flip Up</option>
+                                <option value="bounce-soft" {{ $secAnim === 'bounce-soft' ? 'selected' : '' }}>Soft Elastic Bounce & Pop</option>
+                                <option value="float-glow" {{ $secAnim === 'float-glow' ? 'selected' : '' }}>Ambient Floating Glow</option>
+                                <option value="none" {{ $secAnim === 'none' ? 'selected' : '' }}>None (Instant / Static)</option>
+                            </select>
+                            <small class="text-muted d-block mt-1">Override the global animation effect for this specific section.</small>
+                        </div>
+
                         <div class="form-check form-switch mb-4">
                             <input class="form-check-input" type="checkbox" name="is_active" id="secActive" value="1" {{ old('is_active', $section->is_active) ? 'checked' : '' }}>
                             <label class="form-check-label fw-semibold small" for="secActive">Active & Visible on Page</label>
