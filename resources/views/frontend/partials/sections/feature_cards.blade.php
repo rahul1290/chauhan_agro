@@ -1,6 +1,6 @@
 <section class="py-5 bg-white">
     <div class="container py-4">
-        <div class="text-center mb-5">
+        <div class="text-center mb-5 agro-reveal">
             <span class="section-badge">{{ $currentLocale === 'hi' ? 'हमारी विशेषताएं' : 'UNCOMPROMISING EXCELLENCE' }}</span>
             <h2 class="section-title">{{ $section->title ?? ($currentLocale === 'hi' ? 'चौहान एग्रो ही क्यों चुनें?' : 'Why Choose Chauhan Agro') }}</h2>
             @if($section->subtitle)
@@ -22,13 +22,13 @@
 
         <div class="row g-4">
             @foreach($cards as $c)
-                <div class="col-lg-3 col-md-6">
-                    <div class="feature-card">
+                <div class="col-lg-3 col-md-6 agro-reveal stagger-{{ ($loop->index % 4) + 1 }}">
+                    <div class="feature-card h-100">
                         <div class="feature-icon-box">
                             <i class="bi {{ $c['icon'] ?? 'bi-star-fill' }}"></i>
                         </div>
                         <h4>{{ $c['title'] ?? '' }}</h4>
-                        <p>{{ $c['description'] ?? '' }}</p>
+                        <p class="text-muted mb-0">{{ $c['description'] ?? '' }}</p>
                     </div>
                 </div>
             @endforeach

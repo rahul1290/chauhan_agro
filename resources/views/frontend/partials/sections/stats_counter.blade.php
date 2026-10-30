@@ -21,7 +21,7 @@
             @endphp
 
             @foreach($statsData as $item)
-                <div class="col-lg-3 col-md-6 col-6">
+                <div class="col-lg-3 col-md-6 col-6 agro-reveal stagger-{{ ($loop->index % 4) + 1 }}">
                     <div class="stat-item">
                         <div class="stat-icon">
                             @if(($item['icon'] ?? '') === 'bi-tractor')

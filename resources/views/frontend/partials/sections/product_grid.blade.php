@@ -1,6 +1,6 @@
 <section class="py-5" style="background-color: var(--agro-light-bg);">
     <div class="container py-4">
-        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-5">
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-5 agro-reveal">
             <div>
                 <span class="section-badge">{{ $currentLocale === 'hi' ? 'विशेष मशीनरी' : 'ENGINEERED FOR HEAVY DUTY' }}</span>
                 <h2 class="section-title mb-0">{{ $section->title ?? ($currentLocale === 'hi' ? 'प्रमुख कृषि मशीनरी' : 'Featured Machinery Showcase') }}</h2>
@@ -23,7 +23,7 @@
 
         <div class="row g-4">
             @foreach($displayProducts as $prod)
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-4 col-md-6 agro-reveal stagger-{{ ($loop->index % 3) + 1 }}">
                     <div class="product-card">
                         <div class="product-thumb-wrapper">
                             <img src="{{ asset($prod->featured_image ?? 'assets/images/products/gold-rotary-tiller.jpg') }}?v=2" alt="{{ $prod->name }}" loading="lazy">

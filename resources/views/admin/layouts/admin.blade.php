@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/bootstrap-icons.min.css') }}">
 
     <!-- Admin Panel Stylesheet -->
-    <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/admin.css') }}?v={{ filemtime(public_path('assets/css/admin.css')) }}">
 
     @stack('styles')
 </head>
@@ -223,6 +223,24 @@
 
     <!-- Scripts: Bootstrap 5 JS Bundle -->
     <script src="{{ asset('assets/vendor/js/bootstrap.bundle.min.js') }}"></script>
+
+    <!-- Admin Section Animations Observer -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const adminCards = document.querySelectorAll('.admin-card, .admin-stat-card');
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-revealed');
+                            obs.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 });
+                adminCards.forEach(c => observer.observe(c));
+            }
+        });
+    </script>
 
     @stack('scripts')
 </body>

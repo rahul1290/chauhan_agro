@@ -1,6 +1,6 @@
 <section class="py-5 bg-white">
     <div class="container py-4">
-        <div class="text-center mb-5">
+        <div class="text-center mb-5 agro-reveal">
             <span class="section-badge">{{ $currentLocale === 'hi' ? 'कृषि उपकरण श्रेणियां' : 'PRODUCT CATEGORIES' }}</span>
             <h2 class="section-title">{{ $section->title ?? ($currentLocale === 'hi' ? 'उत्पाद श्रेणियां' : 'Explore Machinery Lines') }}</h2>
             @if($section->subtitle)
@@ -19,7 +19,7 @@
 
         <div class="row g-4">
             @foreach($displayCategories as $cat)
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-4 col-md-6 agro-reveal stagger-{{ ($loop->index % 3) + 1 }}">
                     <div class="category-card">
                         <div class="category-img-wrapper">
                             <img src="{{ asset($cat->image ?? 'assets/images/categories/rotary-tiller.jpg') }}?v=2" alt="{{ $cat->name }}" loading="lazy">

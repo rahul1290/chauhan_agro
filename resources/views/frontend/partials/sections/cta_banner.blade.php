@@ -1,6 +1,6 @@
 <section class="py-5 bg-white">
     <div class="container py-2">
-        <div class="agro-cta-banner">
+        <div class="agro-cta-banner agro-reveal-scale">
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <h2>{{ $section->title ?? ($currentLocale === 'hi' ? 'क्या आप कृषि पैदावार बढ़ाने के लिए तैयार हैं?' : 'Ready To Transform Your Agricultural Productivity?') }}</h2>

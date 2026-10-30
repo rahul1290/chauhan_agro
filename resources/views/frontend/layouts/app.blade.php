@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/css/bootstrap-icons.min.css') }}">
 
     <!-- Custom Industrial Stylesheet -->
-    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}?v={{ filemtime(public_path('assets/css/style.css')) }}">
 
     @stack('styles')
 </head>
@@ -379,6 +379,36 @@
 
     <!-- Scripts: Bootstrap 5 JS Bundle -->
     <script src="{{ asset('assets/vendor/js/bootstrap.bundle.min.js') }}"></script>
+
+    <!-- Scroll Reveal & Section Animations Observer -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const targets = document.querySelectorAll('.agro-reveal, .agro-reveal-left, .agro-reveal-right, .agro-reveal-scale, section, .feature-card, .category-card, .product-card, .stat-item');
+            
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-revealed');
+                            // Stagger animate child cards if parent section intersects
+                            const childCards = entry.target.querySelectorAll('.feature-card, .category-card, .product-card, .stat-item, .agro-reveal');
+                            childCards.forEach((c, i) => {
+                                setTimeout(() => c.classList.add('is-revealed'), i * 90);
+                            });
+                            obs.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    threshold: 0.12,
+                    rootMargin: '0px 0px -40px 0px'
+                });
+
+                targets.forEach(el => observer.observe(el));
+            } else {
+                targets.forEach(el => el.classList.add('is-revealed'));
+            }
+        });
+    </script>
 
     @stack('scripts')
 </body>
