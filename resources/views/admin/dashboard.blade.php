@@ -10,7 +10,7 @@
             <h2 class="fw-bold text-dark mb-1">Executive Dashboard</h2>
             <p class="text-muted small mb-0">Overview of website content, agricultural catalogue performance, and customer enquiries.</p>
         </div>
-        <div class="d-flex align-items-center gap-2">
+        <div class="d-flex flex-wrap align-items-center gap-2">
             <a href="{{ route('admin.products.create') }}" class="btn btn-agro-primary btn-sm">
                 <i class="bi bi-plus-circle me-1"></i> Add Machinery
             </a>

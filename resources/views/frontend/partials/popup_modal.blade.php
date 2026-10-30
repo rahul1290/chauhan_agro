@@ -38,8 +38,8 @@
     .agro-popup-backdrop {
         position: fixed;
         inset: 0;
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
         background: rgba(0, 0, 0, 0.72);
         backdrop-filter: blur(3px);
         -webkit-backdrop-filter: blur(3px);
@@ -51,6 +51,7 @@
         opacity: 0;
         visibility: hidden;
         transition: opacity 0.3s ease, visibility 0.3s ease;
+        box-sizing: border-box;
     }
 
     .agro-popup-backdrop.show {
@@ -139,17 +140,23 @@
 
     @media (max-width: 576px) {
         .agro-popup-backdrop {
-            padding: 0.85rem;
+            padding: 12px;
         }
         .agro-popup-wrapper {
-            max-width: 95vw;
+            max-width: 100%;
+            width: 100%;
+        }
+        .agro-popup-dialog {
+            border-width: 2.5px !important;
+            border-radius: 10px;
         }
         .agro-popup-close {
-            top: -12px;
-            right: -10px;
+            top: 8px;
+            right: 8px;
             width: 34px;
             height: 34px;
             font-size: 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
         }
     }
     </style>

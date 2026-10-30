@@ -15,6 +15,12 @@
     --admin-border: #e2e8f0;
 }
 
+html, body.admin-body {
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
+}
+
 body.admin-body {
     background-color: var(--admin-body-bg);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -317,13 +323,76 @@ body.admin-body {
 
 @media (max-width: 991.98px) {
     .admin-sidebar {
-        margin-left: calc(-1 * var(--admin-sidebar-width));
+        left: 0;
+        transform: translateX(-100%);
+        margin-left: 0;
+        box-shadow: none;
+        z-index: 1050;
     }
     .admin-sidebar.show {
-        margin-left: 0;
+        transform: translateX(0);
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.4);
+    }
+    .admin-sidebar-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.6);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        z-index: 1040;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+    .admin-sidebar-backdrop.show {
+        opacity: 1;
+        visibility: visible;
     }
     .admin-main-wrapper {
         margin-left: 0;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+    .admin-header {
+        padding: 0 16px;
+        height: 60px;
+    }
+    .admin-content {
+        padding: 20px 14px;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+    .admin-stat-card {
+        padding: 16px 14px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .admin-content {
+        padding: 16px 10px;
+    }
+    .admin-card {
+        padding: 16px 12px;
+        border-radius: 10px;
+    }
+    .badge {
+        white-space: normal !important;
+        line-height: 1.4;
+        text-align: left;
+    }
+    .admin-table {
+        display: block;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    .btn-agro-primary,
+    .btn-agro-secondary,
+    .btn-agro-outline {
+        white-space: normal;
+        text-align: center;
     }
 }
 

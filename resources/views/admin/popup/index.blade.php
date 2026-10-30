@@ -3,12 +3,12 @@
 @section('title', 'Promotional Popup Modal')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-3">
+<div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center mb-3 gap-2">
     <div>
         <h2 class="fw-bold text-dark mb-1">Promotional Popup Banner</h2>
         <p class="text-muted small mb-0">Manage the promotional trade exhibition and announcement popup shown to visitors.</p>
     </div>
-    <div class="d-flex gap-2">
+    <div class="d-flex flex-wrap gap-2">
         <button type="button" class="btn btn-outline-dark btn-sm" onclick="previewAdminPopup()">
             <i class="bi bi-eye me-1"></i> Live Preview Popup
         </button>
@@ -21,8 +21,8 @@
 {{-- Quick Active/Deactive Banner --}}
 <div class="card mb-4 border-0 shadow-sm {{ $popup->is_active ? 'border-start border-success border-4' : 'border-start border-secondary border-4' }}" style="background: {{ $popup->is_active ? '#f0fdf4' : '#f8fafc' }};">
     <div class="card-body p-3 d-flex flex-wrap justify-content-between align-items-center gap-3">
-        <div class="d-flex align-items-center gap-3">
-            <span class="badge {{ $popup->is_active ? 'bg-success' : 'bg-secondary' }} fs-6 px-3 py-2 text-uppercase">
+        <div class="d-flex flex-wrap align-items-center gap-2">
+            <span class="badge {{ $popup->is_active ? 'bg-success' : 'bg-secondary' }} fs-6 px-3 py-2 text-uppercase text-wrap text-start" style="max-width: 100%;">
                 <i class="bi {{ $popup->is_active ? 'bi-check-circle-fill' : 'bi-slash-circle' }} me-1"></i>
                 {{ $popup->is_active ? 'Popup Active (Shows On Homepage On Refresh)' : 'Popup Deactivated (Hidden)' }}
             </span>
@@ -276,10 +276,9 @@
 <style>
 .admin-popup-overlay {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    inset: 0;
+    width: 100%;
+    height: 100%;
     background: rgba(0, 0, 0, 0.78);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
@@ -287,13 +286,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px;
+    padding: 16px;
+    box-sizing: border-box;
     animation: popupFadeIn 0.25s ease-out;
 }
 .admin-popup-wrapper {
     position: relative;
     max-width: 680px;
     width: 100%;
+    box-sizing: border-box;
 }
 .admin-popup-container {
     position: relative;
@@ -329,6 +330,15 @@
     color: #111827;
     font-size: 16px;
     font-weight: bold;
+}
+@media (max-width: 576px) {
+    .admin-popup-close-btn {
+        top: 8px;
+        right: 8px;
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+    }
 }
 .admin-popup-close-btn:hover {
     transform: scale(1.12);

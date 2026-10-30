@@ -143,13 +143,15 @@
         </div>
     </aside>
 
+    <div class="admin-sidebar-backdrop d-lg-none" id="adminSidebarBackdrop" onclick="document.getElementById('adminSidebar').classList.remove('show'); this.classList.remove('show');"></div>
+
     <!-- ==============================================
          Admin Main Content Wrapper
          ============================================== -->
     <div class="admin-main-wrapper">
         <!-- Top Navbar -->
         <header class="admin-header">
-            <button class="btn btn-light d-lg-none" type="button" onclick="document.getElementById('adminSidebar').classList.toggle('show')">
+            <button class="btn btn-light d-lg-none" type="button" aria-label="Toggle admin navigation menu" onclick="document.getElementById('adminSidebar').classList.toggle('show'); document.getElementById('adminSidebarBackdrop').classList.toggle('show');">
                 <i class="bi bi-list fs-5"></i>
             </button>
 
@@ -163,11 +165,11 @@
                 </a>
             </div>
 
-            <div class="d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center gap-2">
                 <!-- User dropdown -->
                 <div class="dropdown">
                     <button class="btn btn-light dropdown-toggle d-flex align-items-center gap-2 rounded-pill px-3 py-1" type="button" id="userMenuDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="fw-bold small">{{ auth()->user()->name }}</span>
+                        <span class="fw-bold small text-truncate" style="max-width: 140px;">{{ auth()->user()->name }}</span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0" aria-labelledby="userMenuDropdown">
                         <li>
