@@ -40,7 +40,11 @@
             <div class="admin-stat-card">
                 <div class="d-flex align-items-center justify-content-between mb-2">
                     <span class="text-muted small fw-bold">MACHINERY</span>
-                    <div class="stat-icon-wrapper stat-icon-secondary"><i class="bi bi-tractor"></i></div>
+                    <div class="stat-icon-wrapper stat-icon-secondary">
+                        <i class="bi bi-tractor">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 640 512" style="vertical-align: -0.125em; display: inline-block;"><path d="M528 256c53 0 96 43 96 96s-43 96-96 96c-48.4 0-88.3-35.8-95-82.3l-59.5 29.8c-1.8 17.5-9.1 33.6-20.7 46.5H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H320c-17.7 0-32-14.3-32-32s14.3-32 32-32h14.2c2.9-7.2 6.9-13.8 11.8-19.6l-50.5-25.2c-15.6 19.3-39.3 31.7-65.6 31.7c-47.5 0-86.2-38-87.9-85.3l-45.7 18.3c-2.3 8.3-9.9 14.3-18.7 14.3H48c-11 0-20-9-20-20s9-20 20-20h23.1l60.2-24.1c1.5-8.5 4.8-16.5 9.7-23.4L81.6 280.9C73.8 281.6 65 288 64 288c-17.7 0-32-14.3-32-32s14.3-32 32-32h41.4l52.1-52.1C164.2 165.2 173 160 182.2 160H288V64c0-17.7 14.3-32 32-32s32 14.3 32 32v96h96c17.7 0 32 14.3 32 32v64h48zm-160 96c0-35.3 28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64s-64-28.7-64-64zm-192 48c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48z"/></svg>
+                        </i>
+                    </div>
                 </div>
                 <h3 class="fw-bold text-dark mb-0">{{ $stats['total_products'] }}</h3>
                 <small class="text-muted" style="font-size: 0.75rem;">Active Models</small>
