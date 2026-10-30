@@ -26,7 +26,8 @@ body.admin-body {
 .admin-sidebar {
     width: var(--admin-sidebar-width);
     background-color: var(--admin-sidebar-bg);
-    min-height: 100vh;
+    height: 100vh;
+    max-height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
@@ -34,15 +35,17 @@ body.admin-body {
     color: #94a3b8;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
     transition: all 0.3s ease;
 }
 
 .admin-brand {
-    padding: 22px 20px;
+    padding: 20px 20px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     display: flex;
     align-items: center;
     gap: 12px;
+    flex-shrink: 0;
 }
 
 .admin-brand h4 {
@@ -63,10 +66,36 @@ body.admin-body {
 
 .admin-menu {
     list-style: none;
-    padding: 16px 12px;
+    padding: 14px 12px;
     margin: 0;
-    flex: 1;
+    flex: 1 1 auto;
     overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(148, 163, 184, 0.35) transparent;
+}
+
+.admin-menu::-webkit-scrollbar {
+    width: 6px;
+}
+
+.admin-menu::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.admin-menu::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.35);
+    border-radius: 4px;
+}
+
+.admin-menu::-webkit-scrollbar-thumb:hover {
+    background: rgba(148, 163, 184, 0.65);
+}
+
+.admin-sidebar-footer {
+    flex-shrink: 0;
+    background-color: rgba(15, 23, 42, 0.95);
 }
 
 .admin-menu-header {
@@ -296,4 +325,105 @@ body.admin-body {
     .admin-main-wrapper {
         margin-left: 0;
     }
+}
+
+/* ==========================================================================
+   Agro Admin Action & Save Button Styles
+   ========================================================================== */
+.btn-agro-primary {
+    background-color: #047857 !important;
+    border: 1px solid #047857 !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    padding: 10px 24px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 10px rgba(4, 120, 87, 0.35);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-agro-primary:hover,
+.btn-agro-primary:focus {
+    background-color: #065f46 !important;
+    border-color: #065f46 !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(4, 120, 87, 0.45);
+}
+
+.btn-agro-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(4, 120, 87, 0.3);
+}
+
+.btn-agro-primary.btn-sm {
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    border-radius: 6px;
+}
+
+.btn-agro-primary.btn-lg {
+    padding: 12px 30px;
+    font-size: 1.05rem;
+    border-radius: 10px;
+}
+
+.btn-agro-secondary {
+    background-color: #ea580c !important;
+    border: 1px solid #ea580c !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    padding: 10px 24px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 4px 10px rgba(234, 88, 12, 0.35);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-agro-secondary:hover,
+.btn-agro-secondary:focus {
+    background-color: #c2410c !important;
+    border-color: #c2410c !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(234, 88, 12, 0.45);
+}
+
+.btn-agro-outline {
+    background-color: transparent !important;
+    border: 1.5px solid #047857 !important;
+    color: #047857 !important;
+    font-weight: 600 !important;
+    padding: 8px 18px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-agro-outline:hover,
+.btn-agro-outline:focus {
+    background-color: #047857 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(4, 120, 87, 0.3);
+}
+
+.btn-agro-outline.btn-sm {
+    padding: 5px 12px;
+    font-size: 0.82rem;
+    border-radius: 6px;
 }

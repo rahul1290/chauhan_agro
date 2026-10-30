@@ -132,7 +132,7 @@
             @endif
         </ul>
 
-        <div class="p-3 border-top border-secondary border-opacity-25">
+        <div class="admin-sidebar-footer p-3 border-top border-secondary border-opacity-25">
             <div class="d-flex align-items-center gap-2 text-white small">
                 <i class="bi bi-person-circle fs-5 text-warning"></i>
                 <div class="overflow-hidden">
