@@ -64,6 +64,7 @@
                             <td>
                                 @php
                                     $secAnim = $sec->settings_json['animation_effect'] ?? '';
+                                    $secDur = $sec->settings_json['animation_duration'] ?? '';
                                 @endphp
                                 @if(empty($secAnim))
                                     <span class="badge bg-light text-muted border px-2 py-1">
@@ -74,6 +75,11 @@
                                 @else
                                     <span class="badge bg-primary bg-opacity-10 text-primary fw-semibold px-2 py-1">
                                         <i class="bi bi-magic me-1"></i> {{ ucfirst(str_replace('-', ' ', $secAnim)) }}
+                                    </span>
+                                @endif
+                                @if(!empty($secDur))
+                                    <span class="badge bg-info bg-opacity-10 text-info fw-semibold px-2 py-1 ms-1" title="Animation Duration">
+                                        <i class="bi bi-speedometer2 me-1"></i>{{ ucfirst($secDur) }}
                                     </span>
                                 @endif
                             </td>

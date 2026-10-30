@@ -1,6 +1,6 @@
-<section class="py-5" style="background-color: var(--agro-light-bg);">
+<section class="py-5" style="background-color: var(--agro-light-bg);" @if(!empty($section->settings_json['animation_effect'])) data-section-anim="{{ $section->settings_json['animation_effect'] }}" @endif @if(!empty($section->settings_json['animation_duration'])) data-section-duration="{{ $section->settings_json['animation_duration'] }}" @endif>
     <div class="container py-4">
-        <div class="text-center mb-5">
+        <div class="text-center mb-5 agro-reveal">
             <span class="section-badge">{{ $currentLocale === 'hi' ? 'सामान्य प्रश्न' : 'FREQUENTLY ASKED QUESTIONS' }}</span>
             <h2 class="section-title">{{ $section->title ?? ($currentLocale === 'hi' ? 'अक्सर पूछे जाने वाले प्रश्न' : 'Frequently Asked Questions') }}</h2>
             @if($section->subtitle)
@@ -20,7 +20,7 @@
         @endphp
 
         <div class="row justify-content-center">
-            <div class="col-lg-8">
+            <div class="col-lg-8 agro-reveal">
                 <div class="accordion shadow-sm rounded-4 overflow-hidden" id="faqAccordion{{ $section->id }}">
                     @foreach($faqs as $idx => $f)
                         @php

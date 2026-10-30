@@ -968,82 +968,124 @@ i.bi-tractor::before {
     transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* 1. Effect: Smooth Glide Up (fade-up - default) */
+/* 1. Global Default Effects (based on body attribute) */
 body[data-anim-effect="fade-up"] .agro-reveal,
-.agro-reveal.effect-fade-up,
 .agro-reveal {
     transform: translateY(38px);
 }
-
-/* 2. Effect: Fluid Zoom / Scale In (scale-up) */
-body[data-anim-effect="scale-up"] .agro-reveal,
-.agro-reveal.effect-scale-up,
-.agro-reveal-scale,
-[data-section-anim="scale-up"] .agro-reveal {
+body[data-anim-effect="scale-up"] .agro-reveal {
     transform: scale(0.88) translateY(24px);
 }
-
-/* 3. Effect: Dynamic Slide from Left (slide-left) */
-body[data-anim-effect="slide-left"] .agro-reveal,
-.agro-reveal.effect-slide-left,
-.agro-reveal-left,
-[data-section-anim="slide-left"] .agro-reveal {
+body[data-anim-effect="slide-left"] .agro-reveal {
     transform: translateX(-48px);
 }
-
-/* 4. Effect: Dynamic Slide from Right (slide-right) */
-body[data-anim-effect="slide-right"] .agro-reveal,
-.agro-reveal.effect-slide-right,
-.agro-reveal-right,
-[data-section-anim="slide-right"] .agro-reveal {
+body[data-anim-effect="slide-right"] .agro-reveal {
     transform: translateX(48px);
 }
-
-/* 5. Effect: Modern 3D Tilt / Flip Up (flip-up) */
-body[data-anim-effect="flip-up"] .agro-reveal,
-.agro-reveal.effect-flip-up,
-[data-section-anim="flip-up"] .agro-reveal {
+body[data-anim-effect="flip-up"] .agro-reveal {
     transform: perspective(1000px) rotateX(25deg) translateY(32px);
     transform-origin: bottom center;
 }
-
-/* 6. Effect: Soft Elastic Bounce & Pop (bounce-soft) */
-body[data-anim-effect="bounce-soft"] .agro-reveal,
-.agro-reveal.effect-bounce-soft,
-[data-section-anim="bounce-soft"] .agro-reveal {
+body[data-anim-effect="bounce-soft"] .agro-reveal {
     transform: translateY(40px) scale(0.92);
     transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
-
-/* 7. Effect: Ambient Floating Glow (float-glow) */
-body[data-anim-effect="float-glow"] .agro-reveal,
-.agro-reveal.effect-float-glow,
-[data-section-anim="float-glow"] .agro-reveal {
-    transform: translateY(24px);
-    filter: drop-shadow(0 0 18px rgba(4, 120, 87, 0.45));
+body[data-anim-effect="float-glow"] .agro-reveal {
+    transform: translateY(28px);
+    filter: drop-shadow(0 0 20px rgba(4, 120, 87, 0.55));
 }
 
-/* Common Revealed State */
-.agro-reveal.is-revealed {
-    opacity: 1 !important;
-    transform: none !important;
+/* 2. Section-Wise Specific Overrides (Higher Priority than Global Body) */
+/* Applied to elements that are NOT YET revealed (:not(.is-revealed)) */
+body [data-section-anim="fade-up"] .agro-reveal:not(.is-revealed),
+body .agro-reveal.effect-fade-up:not(.is-revealed) {
+    transform: translateY(38px) !important;
     filter: none !important;
 }
 
-/* Motion Speeds / Durations controlled by Admin */
+body [data-section-anim="scale-up"] .agro-reveal:not(.is-revealed),
+body .agro-reveal.effect-scale-up:not(.is-revealed) {
+    transform: scale(0.88) translateY(24px) !important;
+    filter: none !important;
+}
+
+body [data-section-anim="slide-left"] .agro-reveal:not(.is-revealed),
+body .agro-reveal.effect-slide-left:not(.is-revealed) {
+    transform: translateX(-48px) !important;
+    filter: none !important;
+}
+
+body [data-section-anim="slide-right"] .agro-reveal:not(.is-revealed),
+body .agro-reveal.effect-slide-right:not(.is-revealed) {
+    transform: translateX(48px) !important;
+    filter: none !important;
+}
+
+body [data-section-anim="flip-up"] .agro-reveal:not(.is-revealed),
+body .agro-reveal.effect-flip-up:not(.is-revealed) {
+    transform: perspective(1000px) rotateX(25deg) translateY(32px) !important;
+    transform-origin: bottom center !important;
+    filter: none !important;
+}
+
+body [data-section-anim="bounce-soft"] .agro-reveal:not(.is-revealed),
+body .agro-reveal.effect-bounce-soft:not(.is-revealed) {
+    transform: translateY(40px) scale(0.92) !important;
+    transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+    filter: none !important;
+}
+
+body [data-section-anim="float-glow"] .agro-reveal:not(.is-revealed),
+body .agro-reveal.effect-float-glow:not(.is-revealed) {
+    transform: translateY(28px) !important;
+    filter: drop-shadow(0 0 20px rgba(4, 120, 87, 0.55)) !important;
+}
+
+/* None / Instant / Static Section */
+body [data-section-anim="none"] .agro-reveal,
+body [data-section-anim="none"],
+body [data-section-anim="none"] *,
+body .agro-reveal.effect-none {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+}
+
+/* 3. Revealed State (Applied when scrolled into viewport) */
+body .agro-reveal.is-revealed,
+body [data-section-anim] .agro-reveal.is-revealed {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: drop-shadow(0 0 0 rgba(0, 0, 0, 0)) !important;
+}
+
+/* 4. Motion Speeds / Durations */
 body[data-anim-duration="fast"] .agro-reveal {
     transition-duration: 0.42s !important;
 }
-
 body[data-anim-duration="normal"] .agro-reveal {
     transition-duration: 0.75s !important;
 }
-
 body[data-anim-duration="relaxed"] .agro-reveal {
     transition-duration: 1.15s !important;
 }
 
-/* Stagger delay classes for cascading section cards */
+/* Section Specific Durations */
+body [data-section-duration="fast"] .agro-reveal,
+body .agro-reveal.duration-fast {
+    transition-duration: 0.42s !important;
+}
+body [data-section-duration="normal"] .agro-reveal,
+body .agro-reveal.duration-normal {
+    transition-duration: 0.75s !important;
+}
+body [data-section-duration="relaxed"] .agro-reveal,
+body .agro-reveal.duration-relaxed {
+    transition-duration: 1.15s !important;
+}
+
+/* 5. Stagger Cascading Delays */
 body[data-anim-stagger="true"] .stagger-1 { transition-delay: 0.08s !important; }
 body[data-anim-stagger="true"] .stagger-2 { transition-delay: 0.16s !important; }
 body[data-anim-stagger="true"] .stagger-3 { transition-delay: 0.24s !important; }
@@ -1055,11 +1097,9 @@ body[data-anim-stagger="false"] [class*="stagger-"] {
     transition-delay: 0s !important;
 }
 
-/* When animations are disabled globally or on a specific section */
+/* 6. Globally Disabled */
 body[data-anim-enabled="false"] .agro-reveal,
-[data-section-anim="none"],
-[data-section-anim="none"] *,
-[data-section-anim="none"] .agro-reveal {
+body[data-anim-enabled="false"] * {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;

@@ -398,36 +398,61 @@
         document.addEventListener('DOMContentLoaded', function () {
             const isEnabled = document.body.getAttribute('data-anim-enabled') !== 'false';
             const isStagger = document.body.getAttribute('data-anim-stagger') !== 'false';
-            const defaultEffect = document.body.getAttribute('data-anim-effect') || 'fade-up';
-            const targets = document.querySelectorAll('.agro-reveal, .agro-reveal-left, .agro-reveal-right, .agro-reveal-scale, section, .feature-card, .category-card, .product-card, .stat-item');
+            const globalEffect = document.body.getAttribute('data-anim-effect') || 'fade-up';
+            const revealElements = document.querySelectorAll('.agro-reveal');
 
             if (!isEnabled) {
                 // If animations disabled in Admin Settings, reveal everything instantly
-                targets.forEach(el => el.classList.add('is-revealed'));
+                revealElements.forEach(el => el.classList.add('is-revealed'));
                 return;
             }
 
+            // Step 1: Assign section-specific or global effect/duration classes prior to intersection
+            revealElements.forEach(el => {
+                const parentSec = el.closest('[data-section-anim], [data-section-duration]');
+                const effect = (parentSec && parentSec.getAttribute('data-section-anim'))
+                    ? parentSec.getAttribute('data-section-anim')
+                    : globalEffect;
+
+                if (effect === 'none') {
+                    el.classList.add('is-revealed');
+                    return;
+                }
+
+                el.classList.add('effect-' + effect);
+
+                if (parentSec && parentSec.hasAttribute('data-section-duration')) {
+                    const dur = parentSec.getAttribute('data-section-duration');
+                    if (dur) {
+                        el.classList.add('duration-' + dur);
+                    }
+                }
+            });
+
+            // Step 2: Use IntersectionObserver to cascade reveals when scrolled into view
             if ('IntersectionObserver' in window) {
                 const observer = new IntersectionObserver((entries, obs) => {
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
-                            const target = entry.target;
-                            target.classList.add('is-revealed');
+                            const el = entry.target;
 
-                            // Check if this section has a custom override
-                            const sectionAnim = target.getAttribute('data-section-anim');
-                            const childCards = target.querySelectorAll('.feature-card, .category-card, .product-card, .stat-item, .agro-reveal');
-
-                            if (childCards.length > 0) {
-                                childCards.forEach((c, i) => {
-                                    if (sectionAnim && sectionAnim !== 'none') {
-                                        c.classList.add('effect-' + sectionAnim);
-                                    }
-                                    const delay = isStagger ? (i * 90) : 0;
-                                    setTimeout(() => c.classList.add('is-revealed'), delay);
-                                });
+                            let delay = 0;
+                            if (isStagger) {
+                                const match = el.className.match(/stagger-(\d+)/);
+                                if (match) {
+                                    delay = parseInt(match[1], 10) * 80;
+                                }
                             }
-                            obs.unobserve(target);
+
+                            if (delay > 0) {
+                                setTimeout(() => {
+                                    el.classList.add('is-revealed');
+                                }, delay);
+                            } else {
+                                el.classList.add('is-revealed');
+                            }
+
+                            obs.unobserve(el);
                         }
                     });
                 }, {
@@ -435,9 +460,13 @@
                     rootMargin: '0px 0px -40px 0px'
                 });
 
-                targets.forEach(el => observer.observe(el));
+                revealElements.forEach(el => {
+                    if (!el.classList.contains('is-revealed')) {
+                        observer.observe(el);
+                    }
+                });
             } else {
-                targets.forEach(el => el.classList.add('is-revealed'));
+                revealElements.forEach(el => el.classList.add('is-revealed'));
             }
         });
     </script>

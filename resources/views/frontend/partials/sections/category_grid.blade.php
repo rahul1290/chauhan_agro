@@ -1,4 +1,4 @@
-<section class="py-5 bg-white" @if(!empty($section->settings_json['animation_effect'])) data-section-anim="{{ $section->settings_json['animation_effect'] }}" @endif>
+<section class="py-5 bg-white" @if(!empty($section->settings_json['animation_effect'])) data-section-anim="{{ $section->settings_json['animation_effect'] }}" @endif @if(!empty($section->settings_json['animation_duration'])) data-section-duration="{{ $section->settings_json['animation_duration'] }}" @endif>
     <div class="container py-4">
         <div class="text-center mb-5 agro-reveal">
             <span class="section-badge">{{ $currentLocale === 'hi' ? 'कृषि उपकरण श्रेणियां' : 'PRODUCT CATEGORIES' }}</span>
@@ -41,7 +41,7 @@
         </div>
 
         @if($section->button_text)
-            <div class="text-center mt-5">
+            <div class="text-center mt-5 agro-reveal">
                 <a href="{{ loc_url($section->button_url ?? '/products') }}" class="btn btn-agro-outline px-4 py-2">
                     {{ $section->button_text }} <i class="bi bi-arrow-right ms-1"></i>
                 </a>

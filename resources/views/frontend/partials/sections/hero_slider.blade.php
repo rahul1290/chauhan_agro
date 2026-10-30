@@ -37,7 +37,9 @@
 @endphp
 
 @if($slides->isNotEmpty())
-    <div id="{{ $carouselId }}" class="carousel slide agro-hero-carousel position-relative" data-bs-ride="carousel" data-bs-interval="5000">
+    <div id="{{ $carouselId }}" class="carousel slide agro-hero-carousel position-relative" data-bs-ride="carousel" data-bs-interval="5000"
+        @if(!empty($section->settings_json['animation_effect'])) data-section-anim="{{ $section->settings_json['animation_effect'] }}" @endif
+        @if(!empty($section->settings_json['animation_duration'])) data-section-duration="{{ $section->settings_json['animation_duration'] }}" @endif>
         @if($slides->count() > 1)
             <div class="carousel-indicators" style="z-index: 25;">
                 @foreach($slides as $index => $banner)

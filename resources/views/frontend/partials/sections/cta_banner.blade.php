@@ -1,6 +1,6 @@
-<section class="py-5 bg-white">
+<section class="py-5 bg-white" @if(!empty($section->settings_json['animation_effect'])) data-section-anim="{{ $section->settings_json['animation_effect'] }}" @endif @if(!empty($section->settings_json['animation_duration'])) data-section-duration="{{ $section->settings_json['animation_duration'] }}" @endif>
     <div class="container py-2">
-        <div class="agro-cta-banner agro-reveal-scale">
+        <div class="agro-cta-banner agro-reveal">
             <div class="row align-items-center">
                 <div class="col-lg-8">
                     <h2>{{ $section->title ?? ($currentLocale === 'hi' ? 'क्या आप कृषि पैदावार बढ़ाने के लिए तैयार हैं?' : 'Ready To Transform Your Agricultural Productivity?') }}</h2>

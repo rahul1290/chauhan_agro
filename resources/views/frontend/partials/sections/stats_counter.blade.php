@@ -1,7 +1,7 @@
-<section class="stats-section" @if(!empty($section->settings_json['animation_effect'])) data-section-anim="{{ $section->settings_json['animation_effect'] }}" @endif>
+<section class="stats-section" @if(!empty($section->settings_json['animation_effect'])) data-section-anim="{{ $section->settings_json['animation_effect'] }}" @endif @if(!empty($section->settings_json['animation_duration'])) data-section-duration="{{ $section->settings_json['animation_duration'] }}" @endif>
     <div class="container">
         @if($section->title)
-            <div class="text-center mb-5">
+            <div class="text-center mb-5 agro-reveal">
                 <span class="text-warning fw-bold text-uppercase" style="font-size: 0.82rem; letter-spacing: 0.1em;">{{ $section->subtitle ?? 'GLOBAL REACH' }}</span>
                 <h2 class="text-white fw-bold mb-2">{{ $section->title }}</h2>
             </div>

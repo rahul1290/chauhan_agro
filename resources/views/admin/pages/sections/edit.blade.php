@@ -86,8 +86,11 @@
 
                         <div class="mb-3">
                             <label class="form-label fw-semibold small">Section Scroll Animation</label>
-                            @php $secAnim = $section->settings_json['animation_effect'] ?? ''; @endphp
-                            <select name="settings[animation_effect]" class="form-select">
+                            @php 
+                                $secAnim = $section->settings_json['animation_effect'] ?? ''; 
+                                $secDur = $section->settings_json['animation_duration'] ?? '';
+                            @endphp
+                            <select name="settings[animation_effect]" class="form-select mb-2">
                                 <option value="" {{ empty($secAnim) ? 'selected' : '' }}>Inherit Global ({{ ucfirst(site_setting('animation_effect', 'fade-up')) }})</option>
                                 <option value="fade-up" {{ $secAnim === 'fade-up' ? 'selected' : '' }}>Smooth Glide Up (Fade-Up)</option>
                                 <option value="scale-up" {{ $secAnim === 'scale-up' ? 'selected' : '' }}>Fluid Zoom / Scale In</option>
@@ -98,7 +101,15 @@
                                 <option value="float-glow" {{ $secAnim === 'float-glow' ? 'selected' : '' }}>Ambient Floating Glow</option>
                                 <option value="none" {{ $secAnim === 'none' ? 'selected' : '' }}>None (Instant / Static)</option>
                             </select>
-                            <small class="text-muted d-block mt-1">Override the global animation effect for this specific section.</small>
+
+                            <label class="form-label fw-semibold small">Animation Speed / Duration</label>
+                            <select name="settings[animation_duration]" class="form-select">
+                                <option value="" {{ empty($secDur) ? 'selected' : '' }}>Inherit Global ({{ ucfirst(site_setting('animation_duration', 'normal')) }})</option>
+                                <option value="fast" {{ $secDur === 'fast' ? 'selected' : '' }}>Fast (0.4s)</option>
+                                <option value="normal" {{ $secDur === 'normal' ? 'selected' : '' }}>Normal (0.75s)</option>
+                                <option value="relaxed" {{ $secDur === 'relaxed' ? 'selected' : '' }}>Relaxed (1.1s)</option>
+                            </select>
+                            <small class="text-muted d-block mt-1">Override the global animation effect and duration for this specific section.</small>
                         </div>
 
                         <div class="form-check form-switch mb-4">

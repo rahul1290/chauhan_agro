@@ -1,7 +1,7 @@
-<section class="py-5 bg-white">
+<section class="py-5 bg-white" @if(!empty($section->settings_json['animation_effect'])) data-section-anim="{{ $section->settings_json['animation_effect'] }}" @endif @if(!empty($section->settings_json['animation_duration'])) data-section-duration="{{ $section->settings_json['animation_duration'] }}" @endif>
     <div class="container py-4">
         <div class="row align-items-center g-5">
-            <div class="col-lg-6">
+            <div class="col-lg-6 agro-reveal">
                 @if($section->subtitle)
                     <span class="section-badge">{{ $section->subtitle }}</span>
                 @endif
@@ -15,7 +15,7 @@
                     </a>
                 @endif
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6 agro-reveal">
                 @php
                     $imgUrl = $section->getSetting('image') ?? asset('assets/images/products/gold-rotary-tiller.jpg');
                 @endphp

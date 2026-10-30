@@ -100,7 +100,8 @@ class PageSectionController extends Controller
 
         $section->is_active = $request->boolean('is_active', true);
         if ($request->has('settings')) {
-            $section->settings_json = $request->settings;
+            $currentSettings = $section->settings_json ?? [];
+            $section->settings_json = array_merge($currentSettings, $request->settings);
         }
         $section->save();
 
