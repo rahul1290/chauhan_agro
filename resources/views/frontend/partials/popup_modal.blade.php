@@ -1,8 +1,16 @@
 @php
     $promoPopup = \App\Models\PromotionalPopup::getActivePopup();
+    $isHomePage = request()->routeIs('home') || 
+                  request()->path() === '/' || 
+                  request()->is('en') || 
+                  request()->is('hi') || 
+                  request()->is('/') || 
+                  (isset($page) && $page->slug === 'home');
+    $targetPages = \App\Models\Setting::get('promo_popup_target_pages', 'home');
+    $shouldShowOnThisPage = ($targetPages === 'all') || $isHomePage;
 @endphp
 
-@if($promoPopup && $promoPopup->image_path)
+@if($promoPopup && $promoPopup->image_path && $shouldShowOnThisPage)
     <div id="agroPromoModal" class="agro-popup-backdrop" style="display: none;" role="dialog" aria-modal="true" aria-label="{{ $promoPopup->title }}">
         <div class="agro-popup-wrapper">
             <div class="agro-popup-dialog" style="border: 3.5px solid {{ $promoPopup->border_color ?? '#16a34a' }};">

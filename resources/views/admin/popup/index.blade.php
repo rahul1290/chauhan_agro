@@ -24,10 +24,10 @@
         <div class="d-flex align-items-center gap-3">
             <span class="badge {{ $popup->is_active ? 'bg-success' : 'bg-secondary' }} fs-6 px-3 py-2 text-uppercase">
                 <i class="bi {{ $popup->is_active ? 'bi-check-circle-fill' : 'bi-slash-circle' }} me-1"></i>
-                {{ $popup->is_active ? 'Popup Active (Shows On Every Refresh)' : 'Popup Deactivated (Hidden)' }}
+                {{ $popup->is_active ? 'Popup Active (Shows On Homepage On Refresh)' : 'Popup Deactivated (Hidden)' }}
             </span>
             <span class="text-muted small">
-                {{ $popup->is_active ? 'Visitors will see this popup on every page refresh or load.' : 'The popup is currently turned off and will not appear to any visitors on the site.' }}
+                {{ $popup->is_active ? 'Visitors will see this popup on every refresh of the Homepage.' : 'The popup is currently turned off and will not appear to any visitors on the site.' }}
             </span>
         </div>
         <form action="{{ route('admin.popup.toggleStatus') }}" method="POST" class="m-0">
@@ -180,6 +180,27 @@
                             </div>
                         </div>
                     </div>
+
+                    {{-- Target Display Pages --}}
+                    <div class="col-12">
+                        <label class="form-label fw-bold">Display Target Pages</label>
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <label class="border rounded-3 p-3 d-block cursor-pointer h-100 bg-white {{ ($targetPages ?? 'home') === 'home' ? 'border-success bg-success bg-opacity-10' : '' }}">
+                                    <input type="radio" name="target_pages" value="home" {{ ($targetPages ?? 'home') === 'home' ? 'checked' : '' }} class="form-check-input me-2">
+                                    <strong class="d-block text-dark"><i class="bi bi-house-door-fill text-success me-1"></i> Homepage Only (Recommended)</strong>
+                                    <small class="text-muted">Popup triggers only on Home page refreshes. Other pages (about, products, contact) will never show the popup.</small>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="border rounded-3 p-3 d-block cursor-pointer h-100 bg-white {{ ($targetPages ?? 'home') === 'all' ? 'border-primary' : '' }}">
+                                    <input type="radio" name="target_pages" value="all" {{ ($targetPages ?? 'home') === 'all' ? 'checked' : '' }} class="form-check-input me-2">
+                                    <strong class="d-block text-dark"><i class="bi bi-window-stack text-primary me-1"></i> All Pages Across Website</strong>
+                                    <small class="text-muted">Popup triggers on every page across the entire website on refresh.</small>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="mt-4 pt-3 border-top">
@@ -200,6 +221,12 @@
                 </p>
 
                 <ul class="list-group list-group-flush small mb-3">
+                    <li class="list-group-item px-0 d-flex justify-content-between align-items-center">
+                        <span class="text-muted"><i class="bi bi-check2 text-success me-1"></i> Target Page:</span>
+                        <span class="fw-bold text-success">
+                            <i class="bi bi-house-door-fill me-1"></i> {{ ($targetPages ?? 'home') === 'home' ? 'Homepage Only' : 'All Pages' }}
+                        </span>
+                    </li>
                     <li class="list-group-item px-0 d-flex justify-content-between align-items-center">
                         <span class="text-muted"><i class="bi bi-check2 text-success me-1"></i> Current Mode:</span>
                         <span class="fw-bold {{ $popup->is_active ? 'text-success' : 'text-danger' }}">

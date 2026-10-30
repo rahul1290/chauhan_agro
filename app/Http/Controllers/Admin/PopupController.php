@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\ActivityLog;
 use App\Models\PromotionalPopup;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class PopupController extends Controller
@@ -25,7 +26,9 @@ class PopupController extends Controller
             'is_active' => true,
         ]);
 
-        return view('admin.popup.index', compact('popup'));
+        $targetPages = Setting::get('promo_popup_target_pages', 'home');
+
+        return view('admin.popup.index', compact('popup', 'targetPages'));
     }
 
     /**
@@ -45,6 +48,7 @@ class PopupController extends Controller
             'border_color' => ['required', 'string', 'max:30'],
             'display_frequency' => ['required', 'in:always,session,daily'],
             'display_delay' => ['required', 'integer', 'min:0', 'max:60'],
+            'target_pages' => ['nullable', 'in:home,all'],
         ]);
 
         if ($request->hasFile('image')) {
@@ -61,7 +65,10 @@ class PopupController extends Controller
         $popup->is_active = $request->boolean('is_active');
         $popup->save();
 
-        ActivityLog::log('update_popup', "Updated promotional popup settings: '{$popup->title}'");
+        // Save target display location (home vs all)
+        Setting::set('promo_popup_target_pages', $request->input('target_pages', 'home'), 'popup');
+
+        ActivityLog::log('update_popup', "Updated promotional popup settings: '{$popup->title}' (target: {$request->input('target_pages', 'home')})");
 
         return back()->with('success', 'Promotional popup settings updated successfully!');
     }
@@ -88,9 +95,11 @@ class PopupController extends Controller
         $popup->is_active = !$popup->is_active;
         $popup->save();
 
-        $stateMsg = $popup->is_active ? 'activated (now displaying on every refresh)' : 'deactivated (hidden from website)';
+        $target = Setting::get('promo_popup_target_pages', 'home');
+        $targetDesc = $target === 'home' ? 'Homepage' : 'all pages';
+        $stateMsg = $popup->is_active ? "activated (now displaying on {$targetDesc} on every refresh)" : 'deactivated (hidden from website)';
         ActivityLog::log('toggle_popup', "Popup was {$stateMsg}");
 
-        return back()->with('success', "Popup {$stateMsg} successfully.");
+        return back()->with('success', "Popup was {$stateMsg} successfully.");
     }
 }
