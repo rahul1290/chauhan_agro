@@ -107,7 +107,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         // Product & Category Management
         Route::middleware('role:super-admin,product-manager')->group(function () {
+            Route::post('/categories/update-order', [CategoryController::class, 'updateOrder'])->name('categories.update-order');
+            Route::post('/categories/{category}/reorder/{direction}', [CategoryController::class, 'reorder'])->name('categories.reorder');
             Route::resource('categories', CategoryController::class);
+
+            Route::post('/products/update-order', [AdminProductController::class, 'updateOrder'])->name('products.update-order');
+            Route::post('/products/{product}/reorder/{direction}', [AdminProductController::class, 'reorder'])->name('products.reorder');
             Route::resource('products', AdminProductController::class);
         });
 

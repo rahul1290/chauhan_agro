@@ -799,4 +799,69 @@ body[data-admin-anim="false"] .animate-fade-in-up {
     }
 }
 
+/* ==========================================================================
+   Admin Sorting & Drag-and-Drop Reordering Components
+   ========================================================================== */
+.cursor-grab {
+    cursor: grab;
+    user-select: none;
+}
+
+.cursor-grab:active {
+    cursor: grabbing;
+}
+
+.drag-handle {
+    transition: color 0.15s ease, transform 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.is-reorderable:hover .drag-handle {
+    color: var(--admin-primary) !important;
+    transform: scale(1.1);
+}
+
+tr.is-reorderable {
+    transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+tr.is-dragging {
+    opacity: 0.45;
+    background-color: #ecfdf5 !important;
+    box-shadow: 0 4px 12px rgba(4, 120, 87, 0.15);
+}
+
+tr.drag-over-top td {
+    border-top: 3px solid #047857 !important;
+    background-color: #f0fdf4 !important;
+}
+
+tr.drag-over-bottom td {
+    border-bottom: 3px solid #047857 !important;
+    background-color: #f0fdf4 !important;
+}
+
+.order-badge {
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+    min-width: 32px;
+    text-align: center;
+}
+
+.btn-move {
+    line-height: 1;
+    color: #64748b;
+    border-color: #e2e8f0;
+    transition: all 0.15s ease;
+}
+
+.btn-move:hover {
+    color: #047857;
+    background-color: #ecfdf5;
+    border-color: #a7f3d0;
+}
+
+
 

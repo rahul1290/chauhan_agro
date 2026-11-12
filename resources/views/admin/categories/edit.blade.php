@@ -91,6 +91,12 @@
                         </div>
 
                         <div class="mb-3">
+                            <label class="form-label fw-semibold small">Display Order / Sequence</label>
+                            <input type="number" name="order" class="form-control" value="{{ old('order', $category->order) }}" min="0">
+                            <small class="text-muted">Numeric display sequence (1 = first, 2 = second).</small>
+                        </div>
+
+                        <div class="mb-3">
                             <label class="form-label fw-semibold small">Cover / Banner Image</label>
                             @if($category->image)
                                 <div class="mb-2 rounded border overflow-hidden" style="max-height: 100px;">

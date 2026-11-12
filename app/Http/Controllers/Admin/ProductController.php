@@ -18,7 +18,7 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Product::with(['category', 'translations']);
+        $query = Product::with(['category.translations', 'translations']);
 
         if ($request->filled('category_id')) {
             $query->where('category_id', $request->category_id);
@@ -43,20 +43,95 @@ class ProductController extends Controller
             });
         }
 
-        $products = $query->orderBy('order', 'asc')->paginate(15);
-        $categories = ProductCategory::all();
+        // Sorting Parameters
+        $sort = $request->get('sort', 'order');
+        $direction = strtolower($request->get('direction', 'asc')) === 'desc' ? 'desc' : 'asc';
+
+        // Support compound sort parameters from dropdown e.g. hp_asc, name_desc
+        if (str_contains($sort, '_') && !in_array($sort, ['tractor_hp_min', 'tractor_hp_max', 'created_at', 'is_active', 'is_featured'])) {
+            $parts = explode('_', $sort);
+            $lastPart = end($parts);
+            if (in_array($lastPart, ['asc', 'desc'])) {
+                $direction = $lastPart;
+                $sort = implode('_', array_slice($parts, 0, -1));
+            }
+        }
+
+        $currentLocale = app()->getLocale();
+
+        switch ($sort) {
+            case 'name':
+                $query->leftJoin('product_translations', function ($join) use ($currentLocale) {
+                    $join->on('products.id', '=', 'product_translations.product_id')
+                         ->where('product_translations.locale', '=', $currentLocale);
+                })
+                ->select('products.*')
+                ->orderBy('product_translations.name', $direction);
+                break;
+
+            case 'category':
+                $query->leftJoin('product_categories', 'products.category_id', '=', 'product_categories.id')
+                      ->leftJoin('product_category_translations', function ($join) use ($currentLocale) {
+                          $join->on('product_categories.id', '=', 'product_category_translations.category_id')
+                               ->where('product_category_translations.locale', '=', $currentLocale);
+                      })
+                      ->select('products.*')
+                      ->orderBy('product_category_translations.name', $direction);
+                break;
+
+            case 'hp':
+            case 'tractor_hp_min':
+                $query->orderBy('tractor_hp_min', $direction);
+                break;
+
+            case 'sku':
+                $query->orderBy('sku', $direction);
+                break;
+
+            case 'status':
+            case 'is_active':
+                $query->orderBy('is_active', $direction);
+                break;
+
+            case 'featured':
+            case 'is_featured':
+                $query->orderBy('is_featured', $direction);
+                break;
+
+            case 'newest':
+                $query->orderBy('created_at', 'desc');
+                break;
+
+            case 'oldest':
+                $query->orderBy('created_at', 'asc');
+                break;
+
+            case 'created_at':
+                $query->orderBy('created_at', $direction);
+                break;
+
+            case 'order':
+            default:
+                $sort = 'order';
+                $query->orderBy('order', $direction)->orderBy('id', 'asc');
+                break;
+        }
+
+        $products = $query->paginate(15)->withQueryString();
+        $categories = ProductCategory::with('translations')->orderBy('order', 'asc')->get();
         $languages = Language::active()->get();
 
-        return view('admin.products.index', compact('products', 'categories', 'languages'));
+        return view('admin.products.index', compact('products', 'categories', 'languages', 'sort', 'direction'));
     }
 
     public function create()
     {
-        $categories = ProductCategory::where('is_active', true)->get();
+        $categories = ProductCategory::where('is_active', true)->with('translations')->orderBy('order', 'asc')->get();
         $languages = Language::active()->get();
-        $allProducts = Product::where('is_active', true)->get();
+        $allProducts = Product::where('is_active', true)->with('translations')->get();
+        $nextOrder = (Product::max('order') ?? 0) + 1;
 
-        return view('admin.products.create', compact('categories', 'languages', 'allProducts'));
+        return view('admin.products.create', compact('categories', 'languages', 'allProducts', 'nextOrder'));
     }
 
     public function store(Request $request)
@@ -72,6 +147,7 @@ class ProductController extends Controller
             'working_width' => ['nullable', 'string', 'max:100'],
             'weight_approx' => ['nullable', 'string', 'max:100'],
             'blades_count' => ['nullable', 'integer'],
+            'order' => ['nullable', 'integer', 'min:0'],
             'translations' => ['required', 'array'],
             'translations.*.name' => ['required', 'string', 'max:255'],
         ]);
@@ -86,6 +162,8 @@ class ProductController extends Controller
             $brochurePath = '/storage/' . $request->file('brochure_pdf')->store('brochures', 'public');
         }
 
+        $order = $request->filled('order') ? (int)$request->order : ((Product::max('order') ?? 0) + 1);
+
         $product = Product::create([
             'category_id' => $request->category_id,
             'sku' => $request->sku,
@@ -99,7 +177,7 @@ class ProductController extends Controller
             'blades_count' => $request->blades_count,
             'is_featured' => $request->boolean('is_featured', false),
             'is_active' => $request->boolean('is_active', true),
-            'order' => Product::max('order') + 1,
+            'order' => $order,
         ]);
 
         // Translations
@@ -157,9 +235,9 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        $categories = ProductCategory::where('is_active', true)->get();
+        $categories = ProductCategory::where('is_active', true)->with('translations')->orderBy('order', 'asc')->get();
         $languages = Language::active()->get();
-        $allProducts = Product::where('id', '!=', $product->id)->where('is_active', true)->get();
+        $allProducts = Product::where('id', '!=', $product->id)->where('is_active', true)->with('translations')->get();
         $translations = $product->translations->keyBy('locale');
         $specs = $product->specifications()->with('translations')->get();
 
@@ -179,6 +257,7 @@ class ProductController extends Controller
             'working_width' => ['nullable', 'string', 'max:100'],
             'weight_approx' => ['nullable', 'string', 'max:100'],
             'blades_count' => ['nullable', 'integer'],
+            'order' => ['nullable', 'integer', 'min:0'],
             'translations' => ['required', 'array'],
         ]);
 
@@ -198,6 +277,9 @@ class ProductController extends Controller
         $product->working_width = $request->working_width;
         $product->weight_approx = $request->weight_approx;
         $product->blades_count = $request->blades_count;
+        if ($request->filled('order')) {
+            $product->order = (int)$request->order;
+        }
         $product->is_featured = $request->boolean('is_featured', false);
         $product->is_active = $request->boolean('is_active', true);
         $product->save();
@@ -252,6 +334,85 @@ class ProductController extends Controller
         ActivityLog::log('update_product', "Updated product: {$product->slug}");
 
         return redirect()->route('admin.products.index')->with('success', 'Product updated successfully.');
+    }
+
+    public function reorder(Request $request, Product $product, string $direction)
+    {
+        $query = Product::query();
+
+        // If category filter was passed, reorder within that category
+        if ($request->filled('category_id')) {
+            $query->where('category_id', $request->category_id);
+        }
+
+        $all = $query->orderBy('order', 'asc')->orderBy('id', 'asc')->get();
+        $index = $all->search(fn($p) => $p->id === $product->id);
+
+        if ($index === false) {
+            return back()->with('error', 'Product not found in sequence.');
+        }
+
+        $swapIndex = $direction === 'up' ? $index - 1 : $index + 1;
+
+        if ($swapIndex >= 0 && $swapIndex < $all->count()) {
+            $target = $all[$swapIndex];
+
+            // If orders are identical or not cleanly spaced, re-sequence properly
+            if ($target->order == $product->order) {
+                foreach ($all as $i => $item) {
+                    $item->order = ($i + 1) * 10;
+                }
+                $all[$index]->order = ($swapIndex + 1) * 10;
+                $all[$swapIndex]->order = ($index + 1) * 10;
+                foreach ($all as $item) {
+                    $item->save();
+                }
+            } else {
+                $targetOrder = $target->order;
+                $target->order = $product->order;
+                $product->order = $targetOrder;
+                $target->save();
+                $product->save();
+            }
+
+            ActivityLog::log('reorder_product', "Reordered product: {$product->slug} ({$direction})");
+
+            return back()->with('success', "Machinery model '{$product->name}' order updated.");
+        }
+
+        return back()->with('info', "Machinery model is already at the " . ($direction === 'up' ? 'top' : 'bottom') . ".");
+    }
+
+    public function updateOrder(Request $request)
+    {
+        $request->validate([
+            'order' => ['nullable', 'array'],
+            'ids' => ['nullable', 'array'],
+        ]);
+
+        $ids = $request->input('ids') ?? $request->input('order');
+
+        if (is_array($ids)) {
+            foreach ($ids as $index => $id) {
+                if (is_array($id) && isset($id['id'])) {
+                    $orderVal = isset($id['order']) ? (int)$id['order'] : ($index + 1);
+                    Product::where('id', $id['id'])->update(['order' => $orderVal]);
+                } else {
+                    Product::where('id', $id)->update(['order' => $index + 1]);
+                }
+            }
+
+            ActivityLog::log('reorder_product', "Updated display sequence for products.");
+        }
+
+        if ($request->ajax() || $request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Product sequence updated successfully.'
+            ]);
+        }
+
+        return back()->with('success', 'Product sequence updated successfully.');
     }
 
     public function destroy(Product $product)

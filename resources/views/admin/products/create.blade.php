@@ -159,6 +159,12 @@
                             <input type="text" name="slug" value="{{ old('slug') }}" class="form-control" required placeholder="e.g. gold-rotary-tiller-rotavator">
                         </div>
 
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">Display Order / Sequence</label>
+                            <input type="number" name="order" value="{{ old('order', $nextOrder ?? 1) }}" class="form-control" min="0">
+                            <small class="text-muted">Numeric display sequence (1 = first, 2 = second).</small>
+                        </div>
+
                         <div class="row g-2 mb-3">
                             <div class="col-6">
                                 <label class="form-label small fw-semibold">Min HP</label>
