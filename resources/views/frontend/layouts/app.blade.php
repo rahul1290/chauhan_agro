@@ -57,11 +57,11 @@
             <div class="d-flex align-items-center gap-4">
                 <span class="contact-item">
                     <i class="bi bi-telephone-fill"></i>
-                    <span>{{ site_setting('toll_free_number', '1800-212-9000') }}</span>
+                    <span>{{ site_setting('toll_free_number', site_setting('phone_primary', '1800-212-9000')) }}</span>
                 </span>
                 <span class="contact-item d-none d-md-inline-flex">
                     <i class="bi bi-envelope-fill"></i>
-                    <a href="mailto:{{ site_setting('sales_email', 'sales@chauhanagroindustries.com') }}">{{ site_setting('sales_email', 'sales@chauhanagroindustries.com') }}</a>
+                    <a href="mailto:{{ site_setting('sales_email', site_setting('email_primary', 'sales@chauhanagroindustries.com')) }}">{{ site_setting('sales_email', site_setting('email_primary', 'sales@chauhanagroindustries.com')) }}</a>
                 </span>
                 <span class="contact-item d-none d-lg-inline-flex">
                     <i class="bi bi-shield-check"></i>
@@ -279,15 +279,15 @@
                     <h4>{{ $currentLocale === 'hi' ? 'मुख्यालय एवं संयंत्र' : 'Factory & Plant' }}</h4>
                     <p style="font-size: 0.9rem; line-height: 1.6;" class="mb-3">
                         <i class="bi bi-geo-alt-fill text-warning me-2"></i>
-                        {{ site_setting('headquarters_address', 'Chauhan Agro Industries Complex, NH-8 Highway Corridor, Phase II, Precision Engineering Zone, India') }}
+                        {{ site_setting('headquarters_address', site_setting('factory_address', 'Chauhan Agro Industries Complex, NH-8 Highway Corridor, Phase II, Precision Engineering Zone, Gujarat, India - 382010')) }}
                     </p>
                     <p style="font-size: 0.9rem;" class="mb-2">
                         <i class="bi bi-telephone-inbound-fill text-warning me-2"></i>
-                        <span class="fw-bold text-white">{{ site_setting('primary_phone', '+91 98765 43210') }}</span>
+                        <span class="fw-bold text-white">{{ site_setting('primary_phone', site_setting('phone_secondary', site_setting('toll_free_number', '+91 98765 43210'))) }}</span>
                     </p>
                     <p style="font-size: 0.9rem;" class="mb-2">
                         <i class="bi bi-envelope-at-fill text-warning me-2"></i>
-                        <a href="mailto:{{ site_setting('contact_email', 'contact@chauhanagroindustries.com') }}">{{ site_setting('contact_email', 'contact@chauhanagroindustries.com') }}</a>
+                        <a href="mailto:{{ site_setting('contact_email', site_setting('sales_email', 'contact@chauhanagroindustries.com')) }}">{{ site_setting('contact_email', site_setting('sales_email', 'contact@chauhanagroindustries.com')) }}</a>
                     </p>
                     <p style="font-size: 0.85rem;" class="text-secondary mt-3">
                         <i class="bi bi-clock-history me-1"></i> {{ site_setting('working_hours', 'Mon - Sat: 9:00 AM - 6:30 PM') }}

@@ -62,12 +62,12 @@ class CheckUnderConstruction
 
         // 6. Otherwise: display the Under Construction view to the general public
         $siteName = Setting::get('site_name', 'Chauhan Agro Industries');
-        $phone = Setting::get('under_construction_phone', Setting::get('phone_primary', '1800-212-9000'));
-        $whatsapp = Setting::get('under_construction_whatsapp', Setting::get('whatsapp_number', '+919254016570'));
-        $email = Setting::get('under_construction_email', Setting::get('email_primary', 'sales@chauhanagroindustries.com'));
+        $phone = Setting::get('under_construction_phone', Setting::get('toll_free_number', Setting::get('phone_primary', '1800-212-9000')));
+        $whatsapp = Setting::get('under_construction_whatsapp', Setting::get('whatsapp_number', '+91 98765 43210'));
+        $email = Setting::get('under_construction_email', Setting::get('sales_email', Setting::get('email_primary', 'sales@chauhanagroindustries.com')));
         $title = Setting::get('under_construction_title', 'Website Under Construction');
         $message = Setting::get('under_construction_message', 'We are currently upgrading our digital presence to serve farmers, dealers, and global agricultural partners better. Our full machinery catalogue and online portal will launch soon.');
-        $address = Setting::get('factory_address', 'Chauhan Agro Industries, GT Road, Karnal, Haryana, India');
+        $address = Setting::get('headquarters_address', Setting::get('factory_address', 'Chauhan Agro Industries Complex, NH-8 Highway Corridor, Phase II, Precision Engineering Zone, Gujarat, India - 382010'));
 
         return response()->view('frontend.under_construction', compact(
             'siteName',

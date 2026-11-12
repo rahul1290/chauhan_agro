@@ -35,7 +35,7 @@
                             </div>
                         </div>
                         <p class="text-secondary small mb-0" style="line-height: 1.7;">
-                            {{ site_setting('headquarters_address', 'Chauhan Agro Industries Complex, NH-8 Highway Corridor, Phase II, Precision Engineering Zone, India') }}
+                            {{ site_setting('headquarters_address', site_setting('factory_address', 'Chauhan Agro Industries Complex, NH-8 Highway Corridor, Phase II, Precision Engineering Zone, Gujarat, India - 382010')) }}
                         </p>
                     </div>
                 </div>
@@ -50,10 +50,10 @@
                             </div>
                         </div>
                         <p class="text-secondary small mb-1">
-                            <span class="text-muted">Toll-Free:</span> <strong class="text-dark">{{ site_setting('toll_free_number', '1800-212-9000') }}</strong>
+                            <span class="text-muted">Toll-Free:</span> <strong class="text-dark">{{ site_setting('toll_free_number', site_setting('phone_primary', '1800-212-9000')) }}</strong>
                         </p>
                         <p class="text-secondary small mb-0">
-                            <span class="text-muted">Sales Office:</span> <strong class="text-dark">{{ site_setting('primary_phone', '+91 98765 43210') }}</strong>
+                            <span class="text-muted">Sales Office:</span> <strong class="text-dark">{{ site_setting('primary_phone', site_setting('phone_secondary', '+91 98765 43210')) }}</strong>
                         </p>
                     </div>
                 </div>
@@ -68,10 +68,10 @@
                             </div>
                         </div>
                         <p class="text-secondary small mb-1">
-                            <span class="text-muted">Sales:</span> <a href="mailto:{{ site_setting('sales_email') }}">{{ site_setting('sales_email') }}</a>
+                            <span class="text-muted">Sales:</span> <a href="mailto:{{ site_setting('sales_email', site_setting('email_primary', 'sales@chauhanagroindustries.com')) }}">{{ site_setting('sales_email', site_setting('email_primary', 'sales@chauhanagroindustries.com')) }}</a>
                         </p>
                         <p class="text-secondary small mb-0">
-                            <span class="text-muted">Support:</span> <a href="mailto:{{ site_setting('contact_email') }}">{{ site_setting('contact_email') }}</a>
+                            <span class="text-muted">Support:</span> <a href="mailto:{{ site_setting('contact_email', site_setting('sales_email', 'contact@chauhanagroindustries.com')) }}">{{ site_setting('contact_email', site_setting('sales_email', 'contact@chauhanagroindustries.com')) }}</a>
                         </p>
                     </div>
                 </div>

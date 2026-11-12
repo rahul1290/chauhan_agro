@@ -7,6 +7,14 @@
     $isUnderConstruction = (bool) site_setting('under_construction_enabled', false);
     $clientSecret = $allSettings['under_construction_secret']->value ?? 'chauhan2026';
     $clientShareUrl = url('/') . '?client_access=' . $clientSecret;
+
+    // Detect active tab from session, flash, request query, or default
+    $rawTab = old('active_tab', session('active_tab', request('tab', '#tab-general')));
+    $activeTab = str_starts_with($rawTab, '#') ? $rawTab : '#' . $rawTab;
+    $validTabs = ['#tab-general', '#tab-construction', '#tab-contact', '#tab-map', '#tab-social', '#tab-seo', '#tab-animations'];
+    if (!in_array($activeTab, $validTabs)) {
+        $activeTab = '#tab-general';
+    }
 @endphp
 
 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -17,10 +25,10 @@
 </div>
 
 @if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show d-flex align-items-center gap-2 mb-3" role="alert">
-        <i class="bi bi-check-circle-fill fs-5"></i>
+    <div class="alert alert-success alert-dismissible fade show d-flex align-items-center gap-2 mb-3 shadow-sm border-0" role="alert">
+        <i class="bi bi-check-circle-fill text-success fs-5"></i>
         <div>{{ session('success') }}</div>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
 @endif
 
@@ -62,34 +70,37 @@
     </div>
 </div>
 
-<form action="{{ route('admin.settings.update') }}" method="POST">
+<form action="{{ route('admin.settings.update') }}" method="POST" id="adminSettingsForm">
     @csrf
+
+    <!-- Active Tab Hidden Input to retain active tab on submit and refresh -->
+    <input type="hidden" name="active_tab" id="activeTabInput" value="{{ $activeTab }}">
 
     <div class="row">
         <div class="col-lg-3 mb-4">
             <div class="list-group shadow-sm border-0 sticky-top" style="top: 100px;">
-                <a class="list-group-item list-group-item-action active py-3 fw-semibold" id="tab-general-link" data-bs-toggle="list" href="#tab-general">
+                <a class="list-group-item list-group-item-action {{ $activeTab === '#tab-general' ? 'active' : '' }} py-3 fw-semibold" id="tab-general-link" data-bs-toggle="list" href="#tab-general">
                     <i class="bi bi-building me-2"></i> Company & Brand
                 </a>
-                <a class="list-group-item list-group-item-action py-3 fw-semibold text-warning" id="tab-construction-link" data-bs-toggle="list" href="#tab-construction">
+                <a class="list-group-item list-group-item-action {{ $activeTab === '#tab-construction' ? 'active' : '' }} py-3 fw-semibold text-warning" id="tab-construction-link" data-bs-toggle="list" href="#tab-construction">
                     <i class="bi bi-cone-striped me-2"></i> Under Construction
                     @if($isUnderConstruction)
                         <span class="badge bg-danger ms-1 small">ON</span>
                     @endif
                 </a>
-                <a class="list-group-item list-group-item-action py-3 fw-semibold" id="tab-contact-link" data-bs-toggle="list" href="#tab-contact">
+                <a class="list-group-item list-group-item-action {{ $activeTab === '#tab-contact' ? 'active' : '' }} py-3 fw-semibold" id="tab-contact-link" data-bs-toggle="list" href="#tab-contact">
                     <i class="bi bi-telephone me-2"></i> Contact & Toll-Free
                 </a>
-                <a class="list-group-item list-group-item-action py-3 fw-semibold" id="tab-map-link" data-bs-toggle="list" href="#tab-map">
+                <a class="list-group-item list-group-item-action {{ $activeTab === '#tab-map' ? 'active' : '' }} py-3 fw-semibold" id="tab-map-link" data-bs-toggle="list" href="#tab-map">
                     <i class="bi bi-geo-alt me-2"></i> Factory Map & Address
                 </a>
-                <a class="list-group-item list-group-item-action py-3 fw-semibold" id="tab-social-link" data-bs-toggle="list" href="#tab-social">
+                <a class="list-group-item list-group-item-action {{ $activeTab === '#tab-social' ? 'active' : '' }} py-3 fw-semibold" id="tab-social-link" data-bs-toggle="list" href="#tab-social">
                     <i class="bi bi-share me-2"></i> Social Media Links
                 </a>
-                <a class="list-group-item list-group-item-action py-3 fw-semibold" id="tab-seo-link" data-bs-toggle="list" href="#tab-seo">
+                <a class="list-group-item list-group-item-action {{ $activeTab === '#tab-seo' ? 'active' : '' }} py-3 fw-semibold" id="tab-seo-link" data-bs-toggle="list" href="#tab-seo">
                     <i class="bi bi-search me-2"></i> Default SEO & Meta
                 </a>
-                <a class="list-group-item list-group-item-action py-3 fw-semibold text-primary" id="tab-animations-link" data-bs-toggle="list" href="#tab-animations">
+                <a class="list-group-item list-group-item-action {{ $activeTab === '#tab-animations' ? 'active' : '' }} py-3 fw-semibold text-primary" id="tab-animations-link" data-bs-toggle="list" href="#tab-animations">
                     <i class="bi bi-magic me-2"></i> Animations & Transitions
                 </a>
             </div>
@@ -98,7 +109,7 @@
         <div class="col-lg-9">
             <div class="tab-content">
                 <!-- General Tab -->
-                <div class="tab-pane fade show active" id="tab-general">
+                <div class="tab-pane fade {{ $activeTab === '#tab-general' ? 'show active' : '' }}" id="tab-general">
                     <div class="card border-0 shadow-sm p-4 mb-4">
                         <h5 class="fw-bold text-agro-forest mb-3"><i class="bi bi-building me-2"></i>Company & Brand Identity</h5>
                         
@@ -131,11 +142,17 @@
                                 <input type="text" name="iso_certification" class="form-control" value="{{ old('iso_certification', $allSettings['iso_certification']->value ?? 'ISO 9001:2015 & CE Certified') }}">
                             </div>
                         </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Footer About / Company Summary</label>
+                            <textarea name="footer_about_text" class="form-control" rows="3">{{ old('footer_about_text', $allSettings['footer_about_text']->value ?? 'Chauhan Agro Industries is a premier global manufacturer of advanced farm machinery, agricultural implements, and tillage equipment engineered with robotic precision and high-tensile boron steel.') }}</textarea>
+                            <div class="form-text">Brief synopsis displayed in the public website footer across all pages.</div>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Under Construction Tab -->
-                <div class="tab-pane fade" id="tab-construction">
+                <div class="tab-pane fade {{ $activeTab === '#tab-construction' ? 'show active' : '' }}" id="tab-construction">
                     <div class="card border-0 shadow-sm p-4 mb-4">
                         <input type="hidden" name="under_construction_section_present" value="1">
                         
@@ -187,80 +204,106 @@
                         <div class="row g-3">
                             <div class="col-md-4">
                                 <label class="form-label fw-bold">Support Phone</label>
-                                <input type="text" name="under_construction_phone" class="form-control" value="{{ old('under_construction_phone', $allSettings['under_construction_phone']->value ?? ($allSettings['phone_primary']->value ?? '1800-212-9000')) }}">
+                                <input type="text" name="under_construction_phone" class="form-control" value="{{ old('under_construction_phone', $allSettings['under_construction_phone']->value ?? ($allSettings['toll_free_number']->value ?? ($allSettings['phone_primary']->value ?? '1800-212-9000'))) }}">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label fw-bold">WhatsApp Number</label>
-                                <input type="text" name="under_construction_whatsapp" class="form-control" value="{{ old('under_construction_whatsapp', $allSettings['under_construction_whatsapp']->value ?? ($allSettings['whatsapp_number']->value ?? '+919254016570')) }}">
+                                <input type="text" name="under_construction_whatsapp" class="form-control" value="{{ old('under_construction_whatsapp', $allSettings['under_construction_whatsapp']->value ?? ($allSettings['whatsapp_number']->value ?? '+91 98765 43210')) }}">
                             </div>
                             <div class="col-md-4">
                                 <label class="form-label fw-bold">Support Email</label>
-                                <input type="email" name="under_construction_email" class="form-control" value="{{ old('under_construction_email', $allSettings['under_construction_email']->value ?? ($allSettings['email_primary']->value ?? 'sales@chauhanagroindustries.com')) }}">
+                                <input type="email" name="under_construction_email" class="form-control" value="{{ old('under_construction_email', $allSettings['under_construction_email']->value ?? ($allSettings['sales_email']->value ?? ($allSettings['email_primary']->value ?? 'sales@chauhanagroindustries.com'))) }}">
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Contact Tab -->
-                <div class="tab-pane fade" id="tab-contact">
+                <div class="tab-pane fade {{ $activeTab === '#tab-contact' ? 'show active' : '' }}" id="tab-contact">
                     <div class="card border-0 shadow-sm p-4 mb-4">
                         <h5 class="fw-bold text-agro-forest mb-3"><i class="bi bi-telephone me-2"></i>Contact Numbers & Email Desks</h5>
                         
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Toll-Free / Primary Phone</label>
-                                <input type="text" name="phone_primary" class="form-control" value="{{ old('phone_primary', $allSettings['phone_primary']->value ?? '1800-212-9000') }}">
+                                <label class="form-label fw-bold">
+                                    <i class="bi bi-telephone-inbound-fill text-success me-1"></i> Toll-Free Number
+                                </label>
+                                <input type="text" name="toll_free_number" class="form-control font-monospace" placeholder="e.g. 1800-212-9000" value="{{ old('toll_free_number', $allSettings['toll_free_number']->value ?? ($allSettings['phone_primary']->value ?? '1800-212-9000')) }}">
+                                <div class="form-text">Displayed in website topbar, contact page header, and customer support.</div>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Secondary / Sales Phone</label>
-                                <input type="text" name="phone_secondary" class="form-control" value="{{ old('phone_secondary', $allSettings['phone_secondary']->value ?? '+91-9254016570') }}">
+                                <label class="form-label fw-bold">
+                                    <i class="bi bi-telephone me-1 text-primary"></i> Primary / Sales Office Phone
+                                </label>
+                                <input type="text" name="primary_phone" class="form-control font-monospace" placeholder="e.g. +91 98765 43210" value="{{ old('primary_phone', $allSettings['primary_phone']->value ?? ($allSettings['phone_secondary']->value ?? '+91 98765 43210')) }}">
+                                <div class="form-text">Direct phone number for sales advisors and customer care.</div>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">WhatsApp Number (with Country Code)</label>
-                                <input type="text" name="whatsapp_number" class="form-control" value="{{ old('whatsapp_number', $allSettings['whatsapp_number']->value ?? '+919254016570') }}">
+                                <label class="form-label fw-bold">
+                                    <i class="bi bi-whatsapp text-success me-1"></i> WhatsApp Number (with Country Code)
+                                </label>
+                                <input type="text" name="whatsapp_number" class="form-control font-monospace" placeholder="e.g. +919254016570" value="{{ old('whatsapp_number', $allSettings['whatsapp_number']->value ?? '+919254016570') }}">
+                                <div class="form-text">Used for direct WhatsApp chat buttons on the website.</div>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Primary Sales Email</label>
-                                <input type="email" name="email_primary" class="form-control" value="{{ old('email_primary', $allSettings['email_primary']->value ?? 'sales@chauhanagroindustries.com') }}">
+                                <label class="form-label fw-bold">
+                                    <i class="bi bi-envelope me-1 text-primary"></i> Primary Sales Email
+                                </label>
+                                <input type="email" name="sales_email" class="form-control" placeholder="sales@chauhanagroindustries.com" value="{{ old('sales_email', $allSettings['sales_email']->value ?? ($allSettings['email_primary']->value ?? 'sales@chauhanagroindustries.com')) }}">
+                                <div class="form-text">Displayed on the topbar and used for quotes and customer inquiries.</div>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Export / International Desk Email</label>
-                                <input type="email" name="email_export" class="form-control" value="{{ old('email_export', $allSettings['email_export']->value ?? 'export@chauhanagroindustries.com') }}">
+                                <label class="form-label fw-bold">
+                                    <i class="bi bi-envelope-at me-1 text-secondary"></i> General / Support Email
+                                </label>
+                                <input type="email" name="contact_email" class="form-control" placeholder="contact@chauhanagroindustries.com" value="{{ old('contact_email', $allSettings['contact_email']->value ?? 'contact@chauhanagroindustries.com') }}">
+                                <div class="form-text">Displayed in the footer and contact desk.</div>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label class="form-label fw-bold">Working Hours</label>
-                                <input type="text" name="working_hours" class="form-control" value="{{ old('working_hours', $allSettings['working_hours']->value ?? 'Mon - Sat: 9:00 AM - 7:00 PM IST') }}">
+                                <label class="form-label fw-bold">
+                                    <i class="bi bi-globe2 me-1 text-info"></i> Export Desk Email
+                                </label>
+                                <input type="email" name="email_export" class="form-control" placeholder="export@chauhanagroindustries.com" value="{{ old('email_export', $allSettings['email_export']->value ?? 'export@chauhanagroindustries.com') }}">
+                                <div class="form-text">For international container shipments and overseas dealers.</div>
                             </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">
+                                <i class="bi bi-clock-history me-1 text-dark"></i> Working Hours
+                            </label>
+                            <input type="text" name="working_hours" class="form-control" value="{{ old('working_hours', $allSettings['working_hours']->value ?? 'Monday - Saturday: 9:00 AM - 6:30 PM IST') }}">
                         </div>
                     </div>
                 </div>
 
                 <!-- Map & Address Tab -->
-                <div class="tab-pane fade" id="tab-map">
+                <div class="tab-pane fade {{ $activeTab === '#tab-map' ? 'show active' : '' }}" id="tab-map">
                     <div class="card border-0 shadow-sm p-4 mb-4">
                         <h5 class="fw-bold text-agro-forest mb-3"><i class="bi bi-geo-alt me-2"></i>Manufacturing Plant Address & Google Map</h5>
                         
                         <div class="mb-3">
-                            <label class="form-label fw-bold">Factory / Plant Full Address</label>
-                            <textarea name="factory_address" class="form-control" rows="3">{{ old('factory_address', $allSettings['factory_address']->value ?? 'Chauhan Agro Industries, Industrial Area, GT Road, Karnal, Haryana - 132001, India') }}</textarea>
+                            <label class="form-label fw-bold">Factory / Headquarters Full Address</label>
+                            <textarea name="headquarters_address" class="form-control" rows="3">{{ old('headquarters_address', $allSettings['headquarters_address']->value ?? ($allSettings['factory_address']->value ?? 'Chauhan Agro Industries Complex, NH-8 Highway Corridor, Phase II, Precision Engineering Zone, Gujarat, India - 382010')) }}</textarea>
+                            <div class="form-text">Displayed on the Contact Us page and in the website footer.</div>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Google Maps Embed URL / Iframe src</label>
-                            <input type="text" name="google_map_embed" class="form-control" value="{{ old('google_map_embed', $allSettings['google_map_embed']->value ?? 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d111000!2d76.9897!3d29.6857!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390e703998f45a75%3A0xe5f9be282f183ec9!2sKarnal%2C%20Haryana!5e0!3m2!1sen!2sin!4v1698000000000!5m2!1sen!2sin') }}">
+                            <input type="text" name="google_map_embed" class="form-control" value="{{ old('google_map_embed', $allSettings['google_map_embed']->value ?? 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117506.97341393664!2d72.49397669466551!3d23.020497771783387!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e848aba5bd449%3A0x4fcedd11614f6516!2sAhmedabad%2C%20Gujarat!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin') }}">
                             <div class="form-text">Paste the <code>src="..."</code> attribute from Google Maps Share -> Embed Map.</div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Social Media Tab -->
-                <div class="tab-pane fade" id="tab-social">
+                <div class="tab-pane fade {{ $activeTab === '#tab-social' ? 'show active' : '' }}" id="tab-social">
                     <div class="card border-0 shadow-sm p-4 mb-4">
                         <h5 class="fw-bold text-agro-forest mb-3"><i class="bi bi-share me-2"></i>Official Social Media Profiles</h5>
                         
@@ -282,24 +325,24 @@
                 </div>
 
                 <!-- SEO Tab -->
-                <div class="tab-pane fade" id="tab-seo">
+                <div class="tab-pane fade {{ $activeTab === '#tab-seo' ? 'show active' : '' }}" id="tab-seo">
                     <div class="card border-0 shadow-sm p-4 mb-4">
                         <h5 class="fw-bold text-agro-forest mb-3"><i class="bi bi-search me-2"></i>Global SEO & Search Indexing Defaults</h5>
                         
                         <div class="mb-3">
                             <label class="form-label fw-bold">Default SEO Meta Title</label>
-                            <input type="text" name="default_meta_title" class="form-control" value="{{ old('default_meta_title', $allSettings['default_meta_title']->value ?? 'Chauhan Agro Industries | Heavy-Duty Agricultural Machinery, Rotary Tillers & Implements') }}">
+                            <input type="text" name="meta_title_default" class="form-control" value="{{ old('meta_title_default', $allSettings['meta_title_default']->value ?? ($allSettings['default_meta_title']->value ?? 'Chauhan Agro Industries | Heavy-Duty Agricultural Machinery, Rotary Tillers & Implements')) }}">
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Default SEO Meta Description</label>
-                            <textarea name="default_meta_description" class="form-control" rows="3">{{ old('default_meta_description', $allSettings['default_meta_description']->value ?? 'Discover industry-leading agricultural machinery from Chauhan Agro Industries (chauhanagroindustries.com): Multi-Speed Rotary Tillers, Heavy-Duty Disc Harrows, Laser Land Levellers, Seed Drills, and MB Ploughs engineered for maximum farm productivity.') }}</textarea>
+                            <textarea name="meta_description_default" class="form-control" rows="3">{{ old('meta_description_default', $allSettings['meta_description_default']->value ?? ($allSettings['default_meta_description']->value ?? 'Discover industry-leading agricultural machinery from Chauhan Agro Industries (chauhanagroindustries.com): Multi-Speed Rotary Tillers, Heavy-Duty Disc Harrows, Laser Land Levellers, Seed Drills, and MB Ploughs engineered for maximum farm productivity.')) }}</textarea>
                         </div>
                     </div>
                 </div>
 
                 <!-- Visual Effects & Animations Tab -->
-                <div class="tab-pane fade" id="tab-animations">
+                <div class="tab-pane fade {{ $activeTab === '#tab-animations' ? 'show active' : '' }}" id="tab-animations">
                     <div class="card border-0 shadow-sm p-4 mb-4">
                         <input type="hidden" name="animation_settings_present" value="1">
 
@@ -510,7 +553,7 @@
             </div>
 
             <div class="d-flex justify-content-end mb-5">
-                <button type="submit" class="btn btn-agro-primary btn-lg px-5 shadow-sm">
+                <button type="submit" class="btn btn-agro-primary btn-lg px-5 shadow-sm fw-bold">
                     <i class="bi bi-save2 me-2"></i> Save All Settings
                 </button>
             </div>
@@ -519,6 +562,51 @@
 </form>
 
 <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const activeTabInput = document.getElementById('activeTabInput');
+    const tabLinks = document.querySelectorAll('.list-group-item[data-bs-toggle="list"]');
+
+    function activateTab(tabHash) {
+        if (!tabHash) return;
+        if (!tabHash.startsWith('#')) tabHash = '#' + tabHash;
+
+        const link = document.querySelector(`.list-group-item[href="${tabHash}"]`);
+        if (link) {
+            const tabInstance = bootstrap.Tab.getOrCreateInstance(link);
+            tabInstance.show();
+            if (activeTabInput) activeTabInput.value = tabHash;
+            sessionStorage.setItem('admin_settings_active_tab', tabHash);
+        }
+    }
+
+    // Keep hidden input, sessionStorage, and window hash synced whenever any tab is selected
+    tabLinks.forEach(link => {
+        link.addEventListener('shown.bs.tab', function (e) {
+            const targetHash = e.target.getAttribute('href');
+            if (activeTabInput) activeTabInput.value = targetHash;
+            sessionStorage.setItem('admin_settings_active_tab', targetHash);
+            if (history.replaceState) {
+                history.replaceState(null, null, targetHash);
+            } else {
+                location.hash = targetHash;
+            }
+        });
+    });
+
+    // Check for saved / requested tab on load
+    const urlHash = window.location.hash;
+    const inputVal = activeTabInput ? activeTabInput.value : '';
+    const storedTab = sessionStorage.getItem('admin_settings_active_tab');
+
+    if (urlHash && document.querySelector(`.list-group-item[href="${urlHash}"]`)) {
+        activateTab(urlHash);
+    } else if (inputVal && inputVal !== '#tab-general' && document.querySelector(`.list-group-item[href="${inputVal}"]`)) {
+        activateTab(inputVal);
+    } else if (storedTab && document.querySelector(`.list-group-item[href="${storedTab}"]`)) {
+        activateTab(storedTab);
+    }
+});
+
 function copyClientLink(url) {
     if (navigator.clipboard) {
         navigator.clipboard.writeText(url).then(function() {

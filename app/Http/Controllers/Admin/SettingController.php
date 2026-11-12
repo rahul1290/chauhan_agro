@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ActivityLog;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class SettingController extends Controller
 {
@@ -21,6 +22,8 @@ class SettingController extends Controller
     public function update(Request $request)
     {
         $inputs = $request->except(['_token', '_method']);
+        $activeTab = $request->input('active_tab', '#tab-general');
+        unset($inputs['active_tab']);
 
         // Handle under_construction_enabled checkbox correctly
         if ($request->has('under_construction_section_present')) {
@@ -49,13 +52,64 @@ class SettingController extends Controller
             unset($inputs['section_animations']);
         }
 
+        // Bi-directional alias syncing to guarantee full alignment between admin form and frontend
+        if (isset($inputs['toll_free_number'])) {
+            $inputs['phone_primary'] = $inputs['toll_free_number'];
+        } elseif (isset($inputs['phone_primary'])) {
+            $inputs['toll_free_number'] = $inputs['phone_primary'];
+        }
+
+        if (isset($inputs['primary_phone'])) {
+            $inputs['phone_secondary'] = $inputs['primary_phone'];
+        } elseif (isset($inputs['phone_secondary'])) {
+            $inputs['primary_phone'] = $inputs['phone_secondary'];
+        }
+
+        if (isset($inputs['sales_email'])) {
+            $inputs['email_primary'] = $inputs['sales_email'];
+        } elseif (isset($inputs['email_primary'])) {
+            $inputs['sales_email'] = $inputs['email_primary'];
+        }
+
+        if (isset($inputs['headquarters_address'])) {
+            $inputs['factory_address'] = $inputs['headquarters_address'];
+        } elseif (isset($inputs['factory_address'])) {
+            $inputs['headquarters_address'] = $inputs['factory_address'];
+        }
+
+        if (isset($inputs['meta_title_default'])) {
+            $inputs['default_meta_title'] = $inputs['meta_title_default'];
+        } elseif (isset($inputs['default_meta_title'])) {
+            $inputs['meta_title_default'] = $inputs['default_meta_title'];
+        }
+
+        if (isset($inputs['meta_description_default'])) {
+            $inputs['default_meta_description'] = $inputs['meta_description_default'];
+        } elseif (isset($inputs['default_meta_description'])) {
+            $inputs['meta_description_default'] = $inputs['default_meta_description'];
+        }
+
         foreach ($inputs as $key => $value) {
             Setting::set($key, $value);
         }
 
+        // Clear view and application cache so changes take effect immediately on frontend
+        try {
+            Artisan::call('view:clear');
+            Artisan::call('cache:clear');
+        } catch (\Throwable $e) {
+            // Ignore if cache clear fails in restricted sandbox
+        }
+
         ActivityLog::log('update_settings', "Updated website settings and business information");
 
-        return back()->with('success', 'Website settings updated successfully.');
+        if (!str_starts_with($activeTab, '#')) {
+            $activeTab = '#' . $activeTab;
+        }
+
+        return redirect(route('admin.settings.index') . $activeTab)
+            ->with('success', 'Website settings updated successfully.')
+            ->with('active_tab', $activeTab);
     }
 
     /**
