@@ -95,7 +95,7 @@ class BannerController extends Controller
 
         $banner->button_url = $request->button_url;
         $banner->secondary_button_url = $request->secondary_button_url;
-        $banner->is_active = $request->boolean('is_active', true);
+        $banner->is_active = $request->boolean('is_active');
         $banner->save();
 
         foreach ($request->translations as $locale => $tData) {

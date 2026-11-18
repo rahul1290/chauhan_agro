@@ -37,6 +37,18 @@ class SettingController extends Controller
             $inputs['admin_animations_enabled'] = $request->boolean('admin_animations_enabled') ? '1' : '0';
         }
 
+        // Handle social & sticky floating bar checkboxes correctly
+        if ($request->has('social_settings_present')) {
+            $inputs['floating_social_enabled'] = $request->boolean('floating_social_enabled') ? '1' : '0';
+            $inputs['floating_whatsapp_enabled'] = $request->boolean('floating_whatsapp_enabled') ? '1' : '0';
+            $inputs['floating_facebook_enabled'] = $request->boolean('floating_facebook_enabled') ? '1' : '0';
+            $inputs['floating_instagram_enabled'] = $request->boolean('floating_instagram_enabled') ? '1' : '0';
+            $inputs['floating_youtube_enabled'] = $request->boolean('floating_youtube_enabled') ? '1' : '0';
+            $inputs['floating_phone_enabled'] = $request->boolean('floating_phone_enabled') ? '1' : '0';
+            $inputs['floating_linkedin_enabled'] = $request->boolean('floating_linkedin_enabled') ? '1' : '0';
+            $inputs['floating_twitter_enabled'] = $request->boolean('floating_twitter_enabled') ? '1' : '0';
+        }
+
         // Handle section-wise animation settings
         if ($request->has('section_animations') && is_array($request->section_animations)) {
             foreach ($request->section_animations as $secId => $secData) {

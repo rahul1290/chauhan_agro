@@ -112,7 +112,7 @@ class PageController extends Controller
 
         $page->slug = Str::slug($request->slug);
         $page->template = $request->template;
-        $page->is_published = $request->boolean('is_published', true);
+        $page->is_published = $request->boolean('is_published');
         $page->show_in_nav = $request->boolean('show_in_nav', false);
         $page->save();
 

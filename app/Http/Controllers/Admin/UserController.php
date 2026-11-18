@@ -70,7 +70,7 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->role_id = $request->role_id;
         $user->phone = $request->phone;
-        $user->is_active = $request->boolean('is_active', true);
+        $user->is_active = $request->boolean('is_active');
 
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);

@@ -19,7 +19,7 @@ class HomeController extends Controller
             ->get();
 
         $page = Page::where('slug', 'home')
-            ->with(['translations', 'activeSections.translations'])
+            ->with(['translations', 'sections', 'activeSections.translations'])
             ->first();
 
         $featuredCategories = ProductCategory::where('is_active', true)

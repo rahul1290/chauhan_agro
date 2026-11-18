@@ -84,11 +84,13 @@
                                 @endif
                             </td>
                             <td>
-                                @if($sec->is_active)
-                                    <span class="badge bg-success bg-opacity-10 text-success fw-bold px-2 py-1">Active</span>
-                                @else
-                                    <span class="badge bg-secondary bg-opacity-10 text-secondary fw-bold px-2 py-1">Disabled</span>
-                                @endif
+                                <form action="{{ route('admin.pages.sections.toggle', [$page, $sec]) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    <button type="submit" class="btn btn-sm {{ $sec->is_active ? 'btn-success text-white' : 'btn-outline-secondary' }} py-0 px-2 rounded-pill fw-semibold" style="font-size: 0.78rem;" title="Click to {{ $sec->is_active ? 'Deactivate' : 'Activate' }}">
+                                        <i class="bi {{ $sec->is_active ? 'bi-check-circle-fill' : 'bi-x-circle' }} me-1"></i>
+                                        {{ $sec->is_active ? 'Active' : 'Disabled' }}
+                                    </button>
+                                </form>
                             </td>
                             <td class="text-end">
                                 <div class="d-inline-flex gap-2">

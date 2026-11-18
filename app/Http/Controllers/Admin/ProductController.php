@@ -281,7 +281,7 @@ class ProductController extends Controller
             $product->order = (int)$request->order;
         }
         $product->is_featured = $request->boolean('is_featured', false);
-        $product->is_active = $request->boolean('is_active', true);
+        $product->is_active = $request->boolean('is_active');
         $product->save();
 
         foreach ($request->translations as $locale => $tData) {

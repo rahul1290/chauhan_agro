@@ -6,7 +6,7 @@
 @section('content')
 
     {{-- Render dynamic sections configured for Home page --}}
-    @if(isset($page) && $page->activeSections->isNotEmpty())
+    @if(isset($page) && $page->sections->isNotEmpty())
         @foreach($page->activeSections as $section)
             @php
                 $partialPath = 'frontend.partials.sections.' . $section->type;
@@ -15,7 +15,7 @@
                 @include($partialPath, ['section' => $section, 'banners' => $banners ?? []])
             @endif
         @endforeach
-    @else
+    @elseif(!isset($page) || $page->sections->isEmpty())
         {{-- Fallback default layout if no sections are enabled in admin --}}
         @include('frontend.partials.sections.hero_slider', ['banners' => $banners ?? []])
         @include('frontend.partials.sections.category_grid', ['section' => new \App\Models\PageSection()])

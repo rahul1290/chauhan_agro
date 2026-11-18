@@ -304,22 +304,176 @@
 
                 <!-- Social Media Tab -->
                 <div class="tab-pane fade {{ $activeTab === '#tab-social' ? 'show active' : '' }}" id="tab-social">
+                    <input type="hidden" name="social_settings_present" value="1">
+
+                    <!-- Floating Sticky Social Media Icons Bar -->
                     <div class="card border-0 shadow-sm p-4 mb-4">
-                        <h5 class="fw-bold text-agro-forest mb-3"><i class="bi bi-share me-2"></i>Official Social Media Profiles</h5>
+                        <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+                            <div>
+                                <h5 class="fw-bold text-agro-forest mb-1">
+                                    <i class="bi bi-pin-angle-fill me-2 text-danger"></i>Floating Sticky Social Icons (Right-Middle)
+                                </h5>
+                                <p class="text-muted small mb-0">
+                                    Fixed vertical social bar pinned on the right-middle of the website with authentic brand colors and smooth expand-on-hover effect.
+                                </p>
+                            </div>
+                            <div class="form-check form-switch fs-4 mb-0">
+                                <input class="form-check-input" type="checkbox" role="switch" id="floating_social_enabled" name="floating_social_enabled" value="1" {{ old('floating_social_enabled', site_setting('floating_social_enabled', '1')) === '1' ? 'checked' : '' }}>
+                            </div>
+                        </div>
+
+                        <!-- Genuine Brand Colors Live Preview -->
+                        <div class="p-3 bg-light rounded-3 mb-4 border">
+                            <div class="small fw-bold text-muted text-uppercase mb-2">Live Preview of Authentic Brand Colored Sticky Bar:</div>
+                            <div class="d-flex flex-wrap gap-2 align-items-center">
+                                <div class="badge rounded-pill text-white px-3 py-2 fw-semibold" style="background-color: #25D366; font-size: 0.85rem;">
+                                    <i class="bi bi-whatsapp me-1"></i> WhatsApp (#25D366)
+                                </div>
+                                <div class="badge rounded-pill text-white px-3 py-2 fw-semibold" style="background-color: #1877F2; font-size: 0.85rem;">
+                                    <i class="bi bi-facebook me-1"></i> Facebook (#1877F2)
+                                </div>
+                                <div class="badge rounded-pill text-white px-3 py-2 fw-semibold" style="background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); font-size: 0.85rem;">
+                                    <i class="bi bi-instagram me-1"></i> Instagram (Official Gradient)
+                                </div>
+                                <div class="badge rounded-pill text-white px-3 py-2 fw-semibold" style="background-color: #FF0000; font-size: 0.85rem;">
+                                    <i class="bi bi-youtube me-1"></i> YouTube (#FF0000)
+                                </div>
+                                <div class="badge rounded-pill text-white px-3 py-2 fw-semibold" style="background-color: #059669; font-size: 0.85rem;">
+                                    <i class="bi bi-telephone-fill me-1"></i> Call Toll-Free (#059669)
+                                </div>
+                                <div class="badge rounded-pill text-white px-3 py-2 fw-semibold" style="background-color: #0A66C2; font-size: 0.85rem;">
+                                    <i class="bi bi-linkedin me-1"></i> LinkedIn (#0A66C2)
+                                </div>
+                                <div class="badge rounded-pill text-white px-3 py-2 fw-semibold" style="background-color: #000000; font-size: 0.85rem;">
+                                    <i class="bi bi-twitter-x me-1"></i> X / Twitter (#000000)
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sticky Channels Toggles -->
+                        <h6 class="fw-bold text-dark mb-3">Visible Channels in Sticky Bar</h6>
+                        <div class="row g-3 mb-2">
+                            <div class="col-md-4 col-sm-6">
+                                <div class="card p-3 border h-100">
+                                    <div class="form-check form-switch mb-0">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="floating_whatsapp_enabled" name="floating_whatsapp_enabled" value="1" {{ old('floating_whatsapp_enabled', site_setting('floating_whatsapp_enabled', '1')) === '1' ? 'checked' : '' }}>
+                                        <label class="form-check-label fw-bold small text-dark ms-1" for="floating_whatsapp_enabled">
+                                            <i class="bi bi-whatsapp text-success me-1"></i> WhatsApp
+                                        </label>
+                                    </div>
+                                    <small class="text-muted d-block mt-1">Direct click-to-chat link</small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-6">
+                                <div class="card p-3 border h-100">
+                                    <div class="form-check form-switch mb-0">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="floating_facebook_enabled" name="floating_facebook_enabled" value="1" {{ old('floating_facebook_enabled', site_setting('floating_facebook_enabled', '1')) === '1' ? 'checked' : '' }}>
+                                        <label class="form-check-label fw-bold small text-dark ms-1" for="floating_facebook_enabled">
+                                            <i class="bi bi-facebook text-primary me-1"></i> Facebook
+                                        </label>
+                                    </div>
+                                    <small class="text-muted d-block mt-1">Official Facebook page</small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-6">
+                                <div class="card p-3 border h-100">
+                                    <div class="form-check form-switch mb-0">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="floating_instagram_enabled" name="floating_instagram_enabled" value="1" {{ old('floating_instagram_enabled', site_setting('floating_instagram_enabled', '1')) === '1' ? 'checked' : '' }}>
+                                        <label class="form-check-label fw-bold small text-dark ms-1" for="floating_instagram_enabled">
+                                            <i class="bi bi-instagram text-danger me-1"></i> Instagram
+                                        </label>
+                                    </div>
+                                    <small class="text-muted d-block mt-1">Official Instagram feed</small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-6">
+                                <div class="card p-3 border h-100">
+                                    <div class="form-check form-switch mb-0">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="floating_youtube_enabled" name="floating_youtube_enabled" value="1" {{ old('floating_youtube_enabled', site_setting('floating_youtube_enabled', '1')) === '1' ? 'checked' : '' }}>
+                                        <label class="form-check-label fw-bold small text-dark ms-1" for="floating_youtube_enabled">
+                                            <i class="bi bi-youtube text-danger me-1"></i> YouTube
+                                        </label>
+                                    </div>
+                                    <small class="text-muted d-block mt-1">Machinery field demo videos</small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-6">
+                                <div class="card p-3 border h-100">
+                                    <div class="form-check form-switch mb-0">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="floating_phone_enabled" name="floating_phone_enabled" value="1" {{ old('floating_phone_enabled', site_setting('floating_phone_enabled', '1')) === '1' ? 'checked' : '' }}>
+                                        <label class="form-check-label fw-bold small text-dark ms-1" for="floating_phone_enabled">
+                                            <i class="bi bi-telephone-fill text-success me-1"></i> Call Toll-Free
+                                        </label>
+                                    </div>
+                                    <small class="text-muted d-block mt-1">Direct click-to-call dialer</small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-6">
+                                <div class="card p-3 border h-100">
+                                    <div class="form-check form-switch mb-0">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="floating_linkedin_enabled" name="floating_linkedin_enabled" value="1" {{ old('floating_linkedin_enabled', site_setting('floating_linkedin_enabled', '0')) === '1' ? 'checked' : '' }}>
+                                        <label class="form-check-label fw-bold small text-dark ms-1" for="floating_linkedin_enabled">
+                                            <i class="bi bi-linkedin text-primary me-1"></i> LinkedIn
+                                        </label>
+                                    </div>
+                                    <small class="text-muted d-block mt-1">Corporate networking profile</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Official Social Media Profiles -->
+                    <div class="card border-0 shadow-sm p-4 mb-4">
+                        <h5 class="fw-bold text-agro-forest mb-3"><i class="bi bi-share me-2"></i>Official Social Media Profiles & Links</h5>
                         
-                        <div class="mb-3">
-                            <label class="form-label fw-bold"><i class="bi bi-youtube text-danger me-1"></i> YouTube Channel</label>
-                            <input type="url" name="social_youtube" class="form-control" value="{{ old('social_youtube', $allSettings['social_youtube']->value ?? 'https://youtube.com/@chauhangroupindia?si=UnQCzy4DrxsMjZdc') }}">
-                        </div>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold"><i class="bi bi-youtube text-danger me-1"></i> YouTube Channel URL</label>
+                                    <input type="url" name="social_youtube" class="form-control" value="{{ old('social_youtube', $allSettings['social_youtube']->value ?? 'https://youtube.com/@chauhangroupindia?si=UnQCzy4DrxsMjZdc') }}" placeholder="https://youtube.com/@yourchannel">
+                                </div>
+                            </div>
 
-                        <div class="mb-3">
-                            <label class="form-label fw-bold"><i class="bi bi-facebook text-primary me-1"></i> Facebook Page</label>
-                            <input type="url" name="social_facebook" class="form-control" value="{{ old('social_facebook', $allSettings['social_facebook']->value ?? 'https://www.facebook.com/share/1GpUiRYvWb/') }}">
-                        </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold"><i class="bi bi-facebook text-primary me-1"></i> Facebook Page URL</label>
+                                    <input type="url" name="social_facebook" class="form-control" value="{{ old('social_facebook', $allSettings['social_facebook']->value ?? 'https://www.facebook.com/share/1GpUiRYvWb/') }}" placeholder="https://facebook.com/yourpage">
+                                </div>
+                            </div>
 
-                        <div class="mb-3">
-                            <label class="form-label fw-bold"><i class="bi bi-instagram text-danger me-1"></i> Instagram Profile</label>
-                            <input type="url" name="social_instagram" class="form-control" value="{{ old('social_instagram', $allSettings['social_instagram']->value ?? 'https://www.instagram.com/chauhangroup_india?utm_source=qr&exln=dnZxdXdkYjc1Z2Vs') }}">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold"><i class="bi bi-instagram text-danger me-1"></i> Instagram Profile URL</label>
+                                    <input type="url" name="social_instagram" class="form-control" value="{{ old('social_instagram', $allSettings['social_instagram']->value ?? 'https://www.instagram.com/chauhangroup_india?utm_source=qr&exln=dnZxdXdkYjc1Z2Vs') }}" placeholder="https://instagram.com/yourprofile">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold"><i class="bi bi-whatsapp text-success me-1"></i> WhatsApp Number</label>
+                                    <input type="text" name="whatsapp_number" class="form-control" value="{{ old('whatsapp_number', $allSettings['whatsapp_number']->value ?? '+91 98765 43210') }}" placeholder="+91 98765 43210">
+                                    <small class="text-muted">Enter with country code (e.g. +91 98765 43210)</small>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold"><i class="bi bi-linkedin text-primary me-1"></i> LinkedIn Profile URL</label>
+                                    <input type="url" name="social_linkedin" class="form-control" value="{{ old('social_linkedin', $allSettings['social_linkedin']->value ?? '') }}" placeholder="https://linkedin.com/company/yourcompany">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold"><i class="bi bi-twitter-x text-dark me-1"></i> X (Twitter) URL</label>
+                                    <input type="url" name="social_twitter" class="form-control" value="{{ old('social_twitter', $allSettings['social_twitter']->value ?? '') }}" placeholder="https://x.com/yourhandle">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

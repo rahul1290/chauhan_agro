@@ -52,7 +52,7 @@ class PageSectionController extends Controller
             'page_id' => $page->id,
             'type' => $request->type,
             'order' => $maxOrder + 1,
-            'is_active' => $request->boolean('is_active', true),
+            'is_active' => $request->has('is_active') ? $request->boolean('is_active') : true,
             'settings_json' => $request->settings ?? [],
         ]);
 
@@ -98,7 +98,7 @@ class PageSectionController extends Controller
             'translations' => ['required', 'array'],
         ]);
 
-        $section->is_active = $request->boolean('is_active', true);
+        $section->is_active = $request->boolean('is_active');
         if ($request->has('settings')) {
             $currentSettings = $section->settings_json ?? [];
             $section->settings_json = array_merge($currentSettings, $request->settings);
@@ -152,6 +152,16 @@ class PageSectionController extends Controller
         }
 
         return back()->with('success', 'Section order updated.');
+    }
+
+    public function toggleStatus(Page $page, PageSection $section)
+    {
+        $section->is_active = !$section->is_active;
+        $section->save();
+
+        ActivityLog::log('toggle_section', "Toggled section #{$section->id} ({$section->type}) on page {$page->slug} to " . ($section->is_active ? 'active' : 'disabled'));
+
+        return back()->with('success', 'Section status updated successfully.');
     }
 
     public function destroy(Page $page, PageSection $section)

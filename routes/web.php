@@ -89,6 +89,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
             Route::get('/pages/{page}/sections/{section}/edit', [PageSectionController::class, 'edit'])->name('pages.sections.edit');
             Route::put('/pages/{page}/sections/{section}', [PageSectionController::class, 'update'])->name('pages.sections.update');
             Route::post('/pages/{page}/sections/{section}/reorder/{direction}', [PageSectionController::class, 'reorder'])->name('pages.sections.reorder');
+            Route::post('/pages/{page}/sections/{section}/toggle-status', [PageSectionController::class, 'toggleStatus'])->name('pages.sections.toggle');
             Route::delete('/pages/{page}/sections/{section}', [PageSectionController::class, 'destroy'])->name('pages.sections.destroy');
 
             // Banners & Sliders

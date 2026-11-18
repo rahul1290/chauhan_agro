@@ -190,7 +190,7 @@ class CategoryController extends Controller
         if ($request->filled('order')) {
             $category->order = (int)$request->order;
         }
-        $category->is_active = $request->boolean('is_active', true);
+        $category->is_active = $request->boolean('is_active');
         $category->is_featured = $request->boolean('is_featured', false);
         $category->save();
 
