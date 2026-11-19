@@ -32,6 +32,10 @@ class Setting extends Model
 
     public static function set(string $key, $value, string $group = 'general')
     {
+        if (is_array($value)) {
+            $value = json_encode($value);
+        }
+
         static::$cache[$key] = $value;
 
         return static::updateOrCreate(

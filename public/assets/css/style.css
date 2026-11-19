@@ -898,6 +898,106 @@ i.bi-tractor::before {
     transform: translateY(-3px);
 }
 
+/* ==========================================================================
+   Footer Social Icons Styles (Manageable via Admin Panel)
+   ========================================================================== */
+.footer-social-style-brand .footer-social-link.social-whatsapp {
+    background-color: #25D366;
+    color: #ffffff !important;
+}
+.footer-social-style-brand .footer-social-link.social-whatsapp:hover {
+    background-color: #20bd5a;
+    transform: translateY(-3px) scale(1.08);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.45);
+}
+
+.footer-social-style-brand .footer-social-link.social-facebook {
+    background-color: #1877F2;
+    color: #ffffff !important;
+}
+.footer-social-style-brand .footer-social-link.social-facebook:hover {
+    background-color: #1464cc;
+    transform: translateY(-3px) scale(1.08);
+    box-shadow: 0 4px 12px rgba(24, 119, 242, 0.45);
+}
+
+.footer-social-style-brand .footer-social-link.social-instagram {
+    background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+    color: #ffffff !important;
+}
+.footer-social-style-brand .footer-social-link.social-instagram:hover {
+    filter: brightness(1.15);
+    transform: translateY(-3px) scale(1.08);
+    box-shadow: 0 4px 12px rgba(225, 48, 108, 0.45);
+}
+
+.footer-social-style-brand .footer-social-link.social-youtube {
+    background-color: #FF0000;
+    color: #ffffff !important;
+}
+.footer-social-style-brand .footer-social-link.social-youtube:hover {
+    background-color: #d90000;
+    transform: translateY(-3px) scale(1.08);
+    box-shadow: 0 4px 12px rgba(255, 0, 0, 0.45);
+}
+
+.footer-social-style-brand .footer-social-link.social-phone {
+    background-color: #059669;
+    color: #ffffff !important;
+}
+.footer-social-style-brand .footer-social-link.social-phone:hover {
+    background-color: #047857;
+    transform: translateY(-3px) scale(1.08);
+    box-shadow: 0 4px 12px rgba(5, 150, 105, 0.45);
+}
+
+.footer-social-style-brand .footer-social-link.social-linkedin {
+    background-color: #0A66C2;
+    color: #ffffff !important;
+}
+.footer-social-style-brand .footer-social-link.social-linkedin:hover {
+    background-color: #08529c;
+    transform: translateY(-3px) scale(1.08);
+    box-shadow: 0 4px 12px rgba(10, 102, 194, 0.45);
+}
+
+.footer-social-style-brand .footer-social-link.social-twitter {
+    background-color: #000000;
+    color: #ffffff !important;
+}
+.footer-social-style-brand .footer-social-link.social-twitter:hover {
+    background-color: #222222;
+    transform: translateY(-3px) scale(1.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+}
+
+.footer-social-style-primary .footer-social-link {
+    background-color: var(--agro-primary);
+    color: #ffffff !important;
+}
+.footer-social-style-primary .footer-social-link:hover {
+    background-color: var(--agro-primary-dark);
+    transform: translateY(-3px);
+}
+
+.footer-social-style-secondary .footer-social-link {
+    background-color: var(--agro-secondary);
+    color: #ffffff !important;
+}
+.footer-social-style-secondary .footer-social-link:hover {
+    background-color: var(--agro-secondary-hover);
+    transform: translateY(-3px);
+}
+
+.footer-social-style-dark .footer-social-link {
+    background: rgba(255, 255, 255, 0.08);
+    color: #ffffff !important;
+}
+.footer-social-style-dark .footer-social-link:hover {
+    background: var(--agro-secondary);
+    transform: translateY(-3px);
+}
+
 .agro-footer-bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     padding: 24px 0;

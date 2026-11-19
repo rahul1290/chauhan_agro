@@ -49,6 +49,24 @@ class SettingController extends Controller
             $inputs['floating_twitter_enabled'] = $request->boolean('floating_twitter_enabled') ? '1' : '0';
         }
 
+        // Handle sticky social bar channel sorting order
+        if ($request->has('floating_social_order_list') && is_array($request->floating_social_order_list)) {
+            $inputs['floating_social_order'] = json_encode(array_values($request->floating_social_order_list));
+        } elseif ($request->has('floating_social_order')) {
+            $orderData = $request->input('floating_social_order');
+            if (is_array($orderData)) {
+                if (array_is_list($orderData)) {
+                    $inputs['floating_social_order'] = json_encode($orderData);
+                } else {
+                    asort($orderData);
+                    $inputs['floating_social_order'] = json_encode(array_keys($orderData));
+                }
+            } elseif (is_string($orderData)) {
+                $inputs['floating_social_order'] = $orderData;
+            }
+        }
+        unset($inputs['floating_social_order_list']);
+
         // Handle section-wise animation settings
         if ($request->has('section_animations') && is_array($request->section_animations)) {
             foreach ($request->section_animations as $secId => $secData) {

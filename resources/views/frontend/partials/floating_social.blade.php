@@ -1,13 +1,15 @@
 @php
     $floatingEnabled = site_setting('floating_social_enabled', '1') === '1';
-    
-    $showWhatsapp = site_setting('floating_whatsapp_enabled', '1') === '1';
-    $showFacebook = site_setting('floating_facebook_enabled', '1') === '1';
-    $showInstagram = site_setting('floating_instagram_enabled', '1') === '1';
-    $showYoutube = site_setting('floating_youtube_enabled', '1') === '1';
-    $showPhone = site_setting('floating_phone_enabled', '1') === '1';
-    $showLinkedin = site_setting('floating_linkedin_enabled', '0') === '1';
-    $showTwitter = site_setting('floating_twitter_enabled', '0') === '1';
+
+    $defaultOrder = ['whatsapp', 'facebook', 'instagram', 'youtube', 'phone', 'linkedin', 'twitter'];
+    $savedOrderRaw = site_setting('floating_social_order', '[]');
+    $savedOrder = json_decode($savedOrderRaw, true);
+    if (!is_array($savedOrder) || empty($savedOrder)) {
+        $savedOrder = $defaultOrder;
+    } else {
+        // Append any missing channels to the end
+        $savedOrder = array_unique(array_merge($savedOrder, $defaultOrder));
+    }
 
     $whatsappNum = site_setting('whatsapp_number', '+91 98765 43210');
     $cleanWhatsapp = preg_replace('/[^0-9]/', '', $whatsappNum);
@@ -21,91 +23,90 @@
 
     $linkedinUrl = site_setting('social_linkedin', '');
     $twitterUrl = site_setting('social_twitter', '');
+
+    $channelsData = [
+        'whatsapp' => [
+            'enabled' => site_setting('floating_whatsapp_enabled', '1') === '1',
+            'url' => !empty($cleanWhatsapp) ? "https://wa.me/{$cleanWhatsapp}?text=" . urlencode('Hello Chauhan Agro Industries, I would like to inquire about your agricultural machinery & products.') : null,
+            'class' => 'social-whatsapp',
+            'icon' => 'bi-whatsapp',
+            'title' => ($currentLocale === 'hi' ? 'व्हाट्सएप पर चैट करें' : 'Chat on WhatsApp'),
+            'label' => ($currentLocale === 'hi' ? 'व्हाट्सएप' : 'WhatsApp'),
+            'target' => '_blank',
+        ],
+        'facebook' => [
+            'enabled' => site_setting('floating_facebook_enabled', '1') === '1',
+            'url' => $facebookUrl,
+            'class' => 'social-facebook',
+            'icon' => 'bi-facebook',
+            'title' => ($currentLocale === 'hi' ? 'फेसबुक पेज' : 'Facebook Page'),
+            'label' => ($currentLocale === 'hi' ? 'फेसबुक' : 'Facebook'),
+            'target' => '_blank',
+        ],
+        'instagram' => [
+            'enabled' => site_setting('floating_instagram_enabled', '1') === '1',
+            'url' => $instagramUrl,
+            'class' => 'social-instagram',
+            'icon' => 'bi-instagram',
+            'title' => ($currentLocale === 'hi' ? 'इंस्टाग्राम प्रोफाइल' : 'Instagram Profile'),
+            'label' => ($currentLocale === 'hi' ? 'इंस्टाग्राम' : 'Instagram'),
+            'target' => '_blank',
+        ],
+        'youtube' => [
+            'enabled' => site_setting('floating_youtube_enabled', '1') === '1',
+            'url' => $youtubeUrl,
+            'class' => 'social-youtube',
+            'icon' => 'bi-youtube',
+            'title' => ($currentLocale === 'hi' ? 'यूट्यूब चैनल' : 'YouTube Channel'),
+            'label' => ($currentLocale === 'hi' ? 'यूट्यूब' : 'YouTube'),
+            'target' => '_blank',
+        ],
+        'phone' => [
+            'enabled' => site_setting('floating_phone_enabled', '1') === '1',
+            'url' => !empty($cleanPhone) ? "tel:{$cleanPhone}" : null,
+            'class' => 'social-phone',
+            'icon' => 'bi-telephone-fill',
+            'title' => ($currentLocale === 'hi' ? 'कॉल करें: ' . $phoneNum : 'Call Us: ' . $phoneNum),
+            'label' => ($currentLocale === 'hi' ? 'कॉल करें' : 'Call Toll-Free'),
+            'target' => null,
+        ],
+        'linkedin' => [
+            'enabled' => site_setting('floating_linkedin_enabled', '0') === '1',
+            'url' => $linkedinUrl,
+            'class' => 'social-linkedin',
+            'icon' => 'bi-linkedin',
+            'title' => 'LinkedIn',
+            'label' => 'LinkedIn',
+            'target' => '_blank',
+        ],
+        'twitter' => [
+            'enabled' => site_setting('floating_twitter_enabled', '0') === '1',
+            'url' => $twitterUrl,
+            'class' => 'social-twitter',
+            'icon' => 'bi-twitter-x',
+            'title' => 'Twitter (X)',
+            'label' => 'X (Twitter)',
+            'target' => '_blank',
+        ],
+    ];
 @endphp
 
 @if($floatingEnabled)
-    <!-- Sticky Social Media Bar (Right Middle) with Genuine Brand Colors -->
+    <!-- Sticky Social Media Bar (Right Middle) with Genuine Brand Colors & Dynamic Sorting -->
     <div class="sticky-social-bar" id="stickySocialBar" aria-label="Social Media and Instant Contact Channels">
-        {{-- WhatsApp --}}
-        @if($showWhatsapp && !empty($cleanWhatsapp))
-            <a href="https://wa.me/{{ $cleanWhatsapp }}?text={{ urlencode('Hello Chauhan Agro Industries, I would like to inquire about your agricultural machinery & products.') }}"
-               class="sticky-social-item social-whatsapp"
-               target="_blank"
-               rel="noopener noreferrer"
-               title="{{ $currentLocale === 'hi' ? 'व्हाट्सएप पर चैट करें' : 'Chat on WhatsApp' }}">
-                <span class="social-label-text">{{ $currentLocale === 'hi' ? 'व्हाट्सएप' : 'WhatsApp' }}</span>
-                <span class="social-icon-wrapper"><i class="bi bi-whatsapp"></i></span>
-            </a>
-        @endif
-
-        {{-- Facebook --}}
-        @if($showFacebook && !empty($facebookUrl))
-            <a href="{{ $facebookUrl }}"
-               class="sticky-social-item social-facebook"
-               target="_blank"
-               rel="noopener noreferrer"
-               title="{{ $currentLocale === 'hi' ? 'फेसबुक पेज' : 'Facebook Page' }}">
-                <span class="social-label-text">{{ $currentLocale === 'hi' ? 'फेसबुक' : 'Facebook' }}</span>
-                <span class="social-icon-wrapper"><i class="bi bi-facebook"></i></span>
-            </a>
-        @endif
-
-        {{-- Instagram --}}
-        @if($showInstagram && !empty($instagramUrl))
-            <a href="{{ $instagramUrl }}"
-               class="sticky-social-item social-instagram"
-               target="_blank"
-               rel="noopener noreferrer"
-               title="{{ $currentLocale === 'hi' ? 'इंस्टाग्राम प्रोफाइल' : 'Instagram Profile' }}">
-                <span class="social-label-text">{{ $currentLocale === 'hi' ? 'इंस्टाग्राम' : 'Instagram' }}</span>
-                <span class="social-icon-wrapper"><i class="bi bi-instagram"></i></span>
-            </a>
-        @endif
-
-        {{-- YouTube --}}
-        @if($showYoutube && !empty($youtubeUrl))
-            <a href="{{ $youtubeUrl }}"
-               class="sticky-social-item social-youtube"
-               target="_blank"
-               rel="noopener noreferrer"
-               title="{{ $currentLocale === 'hi' ? 'यूट्यूब चैनल' : 'YouTube Channel' }}">
-                <span class="social-label-text">{{ $currentLocale === 'hi' ? 'यूट्यूब' : 'YouTube' }}</span>
-                <span class="social-icon-wrapper"><i class="bi bi-youtube"></i></span>
-            </a>
-        @endif
-
-        {{-- Phone / Call / Toll-Free --}}
-        @if($showPhone && !empty($cleanPhone))
-            <a href="tel:{{ $cleanPhone }}"
-               class="sticky-social-item social-phone"
-               title="{{ $currentLocale === 'hi' ? 'कॉल करें: ' . $phoneNum : 'Call Us: ' . $phoneNum }}">
-                <span class="social-label-text">{{ $currentLocale === 'hi' ? 'कॉल करें' : 'Call Toll-Free' }}</span>
-                <span class="social-icon-wrapper"><i class="bi bi-telephone-fill"></i></span>
-            </a>
-        @endif
-
-        {{-- LinkedIn --}}
-        @if($showLinkedin && !empty($linkedinUrl))
-            <a href="{{ $linkedinUrl }}"
-               class="sticky-social-item social-linkedin"
-               target="_blank"
-               rel="noopener noreferrer"
-               title="LinkedIn">
-                <span class="social-label-text">LinkedIn</span>
-                <span class="social-icon-wrapper"><i class="bi bi-linkedin"></i></span>
-            </a>
-        @endif
-
-        {{-- Twitter / X --}}
-        @if($showTwitter && !empty($twitterUrl))
-            <a href="{{ $twitterUrl }}"
-               class="sticky-social-item social-twitter"
-               target="_blank"
-               rel="noopener noreferrer"
-               title="Twitter (X)">
-                <span class="social-label-text">X (Twitter)</span>
-                <span class="social-icon-wrapper"><i class="bi bi-twitter-x"></i></span>
-            </a>
-        @endif
+        @foreach($savedOrder as $chKey)
+            @if(isset($channelsData[$chKey]))
+                @php $ch = $channelsData[$chKey]; @endphp
+                @if($ch['enabled'] && !empty($ch['url']))
+                    <a href="{{ $ch['url'] }}"
+                       class="sticky-social-item {{ $ch['class'] }}"
+                       @if($ch['target']) target="{{ $ch['target'] }}" rel="noopener noreferrer" @endif
+                       title="{{ $ch['title'] }}">
+                        <span class="social-label-text">{{ $ch['label'] }}</span>
+                        <span class="social-icon-wrapper"><i class="bi {{ $ch['icon'] }}"></i></span>
+                    </a>
+                @endif
+            @endif
+        @endforeach
     </div>
 @endif

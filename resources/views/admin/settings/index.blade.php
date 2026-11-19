@@ -95,7 +95,7 @@
                     <i class="bi bi-geo-alt me-2"></i> Factory Map & Address
                 </a>
                 <a class="list-group-item list-group-item-action {{ $activeTab === '#tab-social' ? 'active' : '' }} py-3 fw-semibold" id="tab-social-link" data-bs-toggle="list" href="#tab-social">
-                    <i class="bi bi-share me-2"></i> Social Media Links
+                    <i class="bi bi-share me-2"></i> Social Media & Footer
                 </a>
                 <a class="list-group-item list-group-item-action {{ $activeTab === '#tab-seo' ? 'active' : '' }} py-3 fw-semibold" id="tab-seo-link" data-bs-toggle="list" href="#tab-seo">
                     <i class="bi bi-search me-2"></i> Default SEO & Meta
@@ -143,10 +143,14 @@
                             </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">Footer About / Company Summary</label>
-                            <textarea name="footer_about_text" class="form-control" rows="3">{{ old('footer_about_text', $allSettings['footer_about_text']->value ?? 'Chauhan Agro Industries is a premier global manufacturer of advanced farm machinery, agricultural implements, and tillage equipment engineered with robotic precision and high-tensile boron steel.') }}</textarea>
-                            <div class="form-text">Brief synopsis displayed in the public website footer across all pages.</div>
+                        <div class="p-3 bg-light rounded-3 border d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
+                            <div>
+                                <div class="fw-bold text-dark"><i class="bi bi-layout-text-window-reverse text-success me-1"></i> Footer Content & Social Icons Styling</div>
+                                <small class="text-muted">Manage the footer about paragraph, copyright notice, and social media icon colors/shapes in the <strong>Social Media & Footer</strong> tab.</small>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-outline-success text-nowrap" onclick="document.getElementById('tab-social-link').click(); document.getElementById('footerStylingCard').scrollIntoView({behavior: 'smooth'});">
+                                Configure Footer <i class="bi bi-arrow-right ms-1"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -302,11 +306,11 @@
                     </div>
                 </div>
 
-                <!-- Social Media Tab -->
+                <!-- Social Media & Footer Tab -->
                 <div class="tab-pane fade {{ $activeTab === '#tab-social' ? 'show active' : '' }}" id="tab-social">
                     <input type="hidden" name="social_settings_present" value="1">
 
-                    <!-- Floating Sticky Social Media Icons Bar -->
+                    <!-- Floating Sticky Social Media Icons Bar with Sorting -->
                     <div class="card border-0 shadow-sm p-4 mb-4">
                         <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
                             <div>
@@ -314,7 +318,7 @@
                                     <i class="bi bi-pin-angle-fill me-2 text-danger"></i>Floating Sticky Social Icons (Right-Middle)
                                 </h5>
                                 <p class="text-muted small mb-0">
-                                    Fixed vertical social bar pinned on the right-middle of the website with authentic brand colors and smooth expand-on-hover effect.
+                                    Fixed vertical social bar on the right-middle edge. Use the sorting controls below to arrange their display order from top to bottom.
                                 </p>
                             </div>
                             <div class="form-check form-switch fs-4 mb-0">
@@ -322,108 +326,256 @@
                             </div>
                         </div>
 
-                        <!-- Genuine Brand Colors Live Preview -->
-                        <div class="p-3 bg-light rounded-3 mb-4 border">
-                            <div class="small fw-bold text-muted text-uppercase mb-2">Live Preview of Authentic Brand Colored Sticky Bar:</div>
-                            <div class="d-flex flex-wrap gap-2 align-items-center">
-                                <div class="badge rounded-pill text-white px-3 py-2 fw-semibold" style="background-color: #25D366; font-size: 0.85rem;">
-                                    <i class="bi bi-whatsapp me-1"></i> WhatsApp (#25D366)
+                        <!-- Sticky Channels Sorting & Visibility Table -->
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6 class="fw-bold text-dark mb-0">
+                                <i class="bi bi-arrow-down-up text-primary me-1"></i> Sticky Bar Channel Sorting & Visibility
+                            </h6>
+                            <span class="badge bg-light text-muted border">Drag or use ▲ / ▼ to reorder</span>
+                        </div>
+                        <p class="text-muted small mb-3">Reorder channels using the Up/Down arrow buttons or numeric inputs. The first channel appears at the top of the sticky bar.</p>
+
+                        @php
+                            $allChannels = [
+                                'whatsapp' => [
+                                    'name' => 'WhatsApp Chat',
+                                    'icon' => 'bi-whatsapp',
+                                    'bg' => '#25D366',
+                                    'textColor' => '#ffffff',
+                                    'enabledKey' => 'floating_whatsapp_enabled',
+                                    'valueHint' => site_setting('whatsapp_number', '+91 98765 43210'),
+                                    'defaultEnabled' => true,
+                                ],
+                                'facebook' => [
+                                    'name' => 'Facebook Page',
+                                    'icon' => 'bi-facebook',
+                                    'bg' => '#1877F2',
+                                    'textColor' => '#ffffff',
+                                    'enabledKey' => 'floating_facebook_enabled',
+                                    'valueHint' => site_setting('social_facebook', 'https://www.facebook.com/share/1GpUiRYvWb/'),
+                                    'defaultEnabled' => true,
+                                ],
+                                'instagram' => [
+                                    'name' => 'Instagram Profile',
+                                    'icon' => 'bi-instagram',
+                                    'bg' => 'radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%)',
+                                    'textColor' => '#ffffff',
+                                    'enabledKey' => 'floating_instagram_enabled',
+                                    'valueHint' => site_setting('social_instagram', 'https://www.instagram.com/chauhangroup_india?utm_source=qr&exln=dnZxdXdkYjc1Z2Vs'),
+                                    'defaultEnabled' => true,
+                                ],
+                                'youtube' => [
+                                    'name' => 'YouTube Channel',
+                                    'icon' => 'bi-youtube',
+                                    'bg' => '#FF0000',
+                                    'textColor' => '#ffffff',
+                                    'enabledKey' => 'floating_youtube_enabled',
+                                    'valueHint' => site_setting('social_youtube', 'https://youtube.com/@chauhangroupindia?si=UnQCzy4DrxsMjZdc'),
+                                    'defaultEnabled' => true,
+                                ],
+                                'phone' => [
+                                    'name' => 'Call Toll-Free',
+                                    'icon' => 'bi-telephone-fill',
+                                    'bg' => '#059669',
+                                    'textColor' => '#ffffff',
+                                    'enabledKey' => 'floating_phone_enabled',
+                                    'valueHint' => site_setting('toll_free_number', site_setting('primary_phone', '1800-212-9002')),
+                                    'defaultEnabled' => true,
+                                ],
+                                'linkedin' => [
+                                    'name' => 'LinkedIn Company',
+                                    'icon' => 'bi-linkedin',
+                                    'bg' => '#0A66C2',
+                                    'textColor' => '#ffffff',
+                                    'enabledKey' => 'floating_linkedin_enabled',
+                                    'valueHint' => site_setting('social_linkedin', 'Not configured'),
+                                    'defaultEnabled' => false,
+                                ],
+                                'twitter' => [
+                                    'name' => 'X (Twitter)',
+                                    'icon' => 'bi-twitter-x',
+                                    'bg' => '#000000',
+                                    'textColor' => '#ffffff',
+                                    'enabledKey' => 'floating_twitter_enabled',
+                                    'valueHint' => site_setting('social_twitter', 'Not configured'),
+                                    'defaultEnabled' => false,
+                                ],
+                            ];
+
+                            $defaultOrder = ['whatsapp', 'facebook', 'instagram', 'youtube', 'phone', 'linkedin', 'twitter'];
+                            $savedOrderRaw = site_setting('floating_social_order', '[]');
+                            $savedOrder = json_decode($savedOrderRaw, true);
+                            if (!is_array($savedOrder) || empty($savedOrder)) {
+                                $savedOrder = $defaultOrder;
+                            } else {
+                                $savedOrder = array_unique(array_merge($savedOrder, $defaultOrder));
+                            }
+                        @endphp
+
+                        <div class="table-responsive mb-4">
+                            <table class="table table-hover align-middle border bg-white rounded-3 shadow-sm" id="stickySocialSortTable">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th style="width: 105px;" class="text-center">Sort Order</th>
+                                        <th style="width: 100px;" class="text-center">Move</th>
+                                        <th>Channel & Genuine Color</th>
+                                        <th>Destination / Phone Preview</th>
+                                        <th style="width: 130px;" class="text-center">Visibility</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="stickySocialSortBody">
+                                    @foreach($savedOrder as $index => $key)
+                                        @if(isset($allChannels[$key]))
+                                            @php 
+                                                $c = $allChannels[$key]; 
+                                                $isEnabled = old($c['enabledKey'], site_setting($c['enabledKey'], $c['defaultEnabled'] ? '1' : '0')) === '1';
+                                            @endphp
+                                            <tr class="sortable-channel-row" data-channel="{{ $key }}">
+                                                <td class="text-center">
+                                                    <input type="hidden" name="floating_social_order_list[]" value="{{ $key }}" class="channel-key-input">
+                                                    <div class="d-flex align-items-center justify-content-center gap-1">
+                                                        <span class="badge bg-secondary bg-opacity-25 text-dark font-monospace row-order-badge">#{{ $index + 1 }}</span>
+                                                        <input type="number" 
+                                                               name="floating_social_order[{{ $key }}]" 
+                                                               value="{{ $index + 1 }}" 
+                                                               min="1" 
+                                                               max="{{ count($allChannels) }}" 
+                                                               class="form-control form-control-sm text-center fw-bold row-order-number" 
+                                                               style="width: 48px;" 
+                                                               onchange="reorderFromInput(this)">
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="btn-group btn-group-sm" role="group">
+                                                        <button type="button" class="btn btn-outline-secondary py-1 px-2" title="Move Up (Higher on Screen)" onclick="moveChannelRow(this, -1)">
+                                                            <i class="bi bi-arrow-up"></i>
+                                                        </button>
+                                                        <button type="button" class="btn btn-outline-secondary py-1 px-2" title="Move Down (Lower on Screen)" onclick="moveChannelRow(this, 1)">
+                                                            <i class="bi bi-arrow-down"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex align-items-center gap-2">
+                                                        <div class="rounded-circle d-flex align-items-center justify-content-center" 
+                                                             style="width: 32px; height: 32px; background: {{ $c['bg'] }}; color: {{ $c['textColor'] }}; font-size: 1rem; flex-shrink: 0;">
+                                                            <i class="bi {{ $c['icon'] }}"></i>
+                                                        </div>
+                                                        <span class="fw-bold text-dark">{{ $c['name'] }}</span>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <small class="text-muted text-break font-monospace">{{ Str::limit($c['valueHint'], 45) }}</small>
+                                                </td>
+                                                <td class="text-center">
+                                                    <div class="form-check form-switch d-inline-block mb-0">
+                                                        <input class="form-check-input" type="checkbox" role="switch" id="ch_{{ $key }}" name="{{ $c['enabledKey'] }}" value="1" {{ $isEnabled ? 'checked' : '' }}>
+                                                        <label class="form-check-label small fw-semibold" for="ch_{{ $key }}">
+                                                            {{ $isEnabled ? 'Active' : 'Hidden' }}
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    @endforeach
+                                </tbody>
+                            </table>
+                            <div class="small text-muted d-flex align-items-center gap-2 mt-2">
+                                <i class="bi bi-info-circle text-primary"></i>
+                                <span>Click the <strong>▲ / ▼ arrow buttons</strong> or enter <strong>1, 2, 3...</strong> in the order boxes to change which icons appear on top. Changes save when you click <em>Save Settings</em>.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Footer Content & Social Media Icons Styling -->
+                    <div class="card border-0 shadow-sm p-4 mb-4" id="footerStylingCard">
+                        <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+                            <div>
+                                <h5 class="fw-bold text-agro-forest mb-1">
+                                    <i class="bi bi-layout-text-window-reverse me-2 text-success"></i>Footer Content & Social Media Icons Styling
+                                </h5>
+                                <p class="text-muted small mb-0">
+                                    Customize the overview paragraph under the footer logo and control the colors, hover effects, and shapes of the footer social icons.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Footer About Text / Paragraph -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                <i class="bi bi-text-paragraph text-primary me-1"></i> Footer About / Company Overview Paragraph
+                            </label>
+                            <textarea name="footer_about_text" class="form-control" rows="3" placeholder="Enter introductory overview paragraph...">{{ old('footer_about_text', $allSettings['footer_about_text']->value ?? 'Chauhan Agro Industries is a premier manufacturer of heavy-duty tractor trollies, hydraulic tipping farm trailers, and agricultural haulage machinery engineered with heavy channel chassis, precision hydraulic rams, and high-tensile steel.') }}</textarea>
+                            <small class="text-muted d-block mt-1">This text appears directly beneath the white Chauhan logo in the website footer on every page (pointed by the red arrow in your screenshot).</small>
+                        </div>
+
+                        <!-- Footer Social Icons Color Style & Shape -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Footer Social Icons Color Style</label>
+                                @php $currentFooterStyle = old('footer_social_color_style', site_setting('footer_social_color_style', 'brand')); @endphp
+                                <select name="footer_social_color_style" id="footerSocialStyleSelect" class="form-select" onchange="updateFooterSocialPreview()">
+                                    <option value="brand" {{ $currentFooterStyle === 'brand' ? 'selected' : '' }}>Authentic Official Brand Colors (Facebook Blue, YouTube Red, IG Gradient, WhatsApp Green)</option>
+                                    <option value="dark" {{ $currentFooterStyle === 'dark' ? 'selected' : '' }}>Subtle Dark Circles / Minimalist (Current Default)</option>
+                                    <option value="primary" {{ $currentFooterStyle === 'primary' ? 'selected' : '' }}>Theme Forest Green (#047857)</option>
+                                    <option value="secondary" {{ $currentFooterStyle === 'secondary' ? 'selected' : '' }}>Theme Industrial Orange (#ea580c)</option>
+                                    <option value="custom" {{ $currentFooterStyle === 'custom' ? 'selected' : '' }}>Custom Color Picker (Configure Below)</option>
+                                </select>
+                                <small class="text-muted d-block mt-1">Select "Authentic Official Brand Colors" to give footer icons official brand colors.</small>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Footer Social Icon Shape</label>
+                                @php $currentFooterShape = old('footer_social_shape', site_setting('footer_social_shape', 'circle')); @endphp
+                                <select name="footer_social_shape" id="footerSocialShapeSelect" class="form-select" onchange="updateFooterSocialPreview()">
+                                    <option value="circle" {{ $currentFooterShape === 'circle' ? 'selected' : '' }}>Circle (Default)</option>
+                                    <option value="rounded" {{ $currentFooterShape === 'rounded' ? 'selected' : '' }}>Soft Rounded Square</option>
+                                    <option value="square" {{ $currentFooterShape === 'square' ? 'selected' : '' }}>Sharp Square</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Custom Colors Pickers (Conditional) -->
+                        <div class="row g-3 p-3 bg-light rounded-3 border mb-4" id="footerSocialCustomColorOptions" style="{{ $currentFooterStyle === 'custom' ? '' : 'display: none;' }}">
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold small">Custom Background Color</label>
+                                <div class="input-group">
+                                    <input type="color" name="footer_social_custom_bg" id="footer_social_custom_bg" class="form-control form-control-color" value="{{ old('footer_social_custom_bg', site_setting('footer_social_custom_bg', '#047857')) }}" onchange="updateFooterSocialPreview()">
+                                    <input type="text" class="form-control font-monospace" value="{{ old('footer_social_custom_bg', site_setting('footer_social_custom_bg', '#047857')) }}" oninput="document.getElementById('footer_social_custom_bg').value=this.value; updateFooterSocialPreview();">
                                 </div>
-                                <div class="badge rounded-pill text-white px-3 py-2 fw-semibold" style="background-color: #1877F2; font-size: 0.85rem;">
-                                    <i class="bi bi-facebook me-1"></i> Facebook (#1877F2)
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold small">Custom Hover Color</label>
+                                <div class="input-group">
+                                    <input type="color" name="footer_social_custom_hover" id="footer_social_custom_hover" class="form-control form-control-color" value="{{ old('footer_social_custom_hover', site_setting('footer_social_custom_hover', '#ea580c')) }}" onchange="updateFooterSocialPreview()">
+                                    <input type="text" class="form-control font-monospace" value="{{ old('footer_social_custom_hover', site_setting('footer_social_custom_hover', '#ea580c')) }}" oninput="document.getElementById('footer_social_custom_hover').value=this.value; updateFooterSocialPreview();">
                                 </div>
-                                <div class="badge rounded-pill text-white px-3 py-2 fw-semibold" style="background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); font-size: 0.85rem;">
-                                    <i class="bi bi-instagram me-1"></i> Instagram (Official Gradient)
-                                </div>
-                                <div class="badge rounded-pill text-white px-3 py-2 fw-semibold" style="background-color: #FF0000; font-size: 0.85rem;">
-                                    <i class="bi bi-youtube me-1"></i> YouTube (#FF0000)
-                                </div>
-                                <div class="badge rounded-pill text-white px-3 py-2 fw-semibold" style="background-color: #059669; font-size: 0.85rem;">
-                                    <i class="bi bi-telephone-fill me-1"></i> Call Toll-Free (#059669)
-                                </div>
-                                <div class="badge rounded-pill text-white px-3 py-2 fw-semibold" style="background-color: #0A66C2; font-size: 0.85rem;">
-                                    <i class="bi bi-linkedin me-1"></i> LinkedIn (#0A66C2)
-                                </div>
-                                <div class="badge rounded-pill text-white px-3 py-2 fw-semibold" style="background-color: #000000; font-size: 0.85rem;">
-                                    <i class="bi bi-twitter-x me-1"></i> X / Twitter (#000000)
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold small">Custom Icon / Glyph Color</label>
+                                <div class="input-group">
+                                    <input type="color" name="footer_social_custom_color" id="footer_social_custom_color" class="form-control form-control-color" value="{{ old('footer_social_custom_color', site_setting('footer_social_custom_color', '#ffffff')) }}" onchange="updateFooterSocialPreview()">
+                                    <input type="text" class="form-control font-monospace" value="{{ old('footer_social_custom_color', site_setting('footer_social_custom_color', '#ffffff')) }}" oninput="document.getElementById('footer_social_custom_color').value=this.value; updateFooterSocialPreview();">
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Sticky Channels Toggles -->
-                        <h6 class="fw-bold text-dark mb-3">Visible Channels in Sticky Bar</h6>
-                        <div class="row g-3 mb-2">
-                            <div class="col-md-4 col-sm-6">
-                                <div class="card p-3 border h-100">
-                                    <div class="form-check form-switch mb-0">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="floating_whatsapp_enabled" name="floating_whatsapp_enabled" value="1" {{ old('floating_whatsapp_enabled', site_setting('floating_whatsapp_enabled', '1')) === '1' ? 'checked' : '' }}>
-                                        <label class="form-check-label fw-bold small text-dark ms-1" for="floating_whatsapp_enabled">
-                                            <i class="bi bi-whatsapp text-success me-1"></i> WhatsApp
-                                        </label>
-                                    </div>
-                                    <small class="text-muted d-block mt-1">Direct click-to-chat link</small>
-                                </div>
+                        <!-- Live Interactive Preview of Footer Social Icons -->
+                        <div class="p-3 bg-dark rounded-3 border">
+                            <div class="small fw-bold text-warning text-uppercase mb-2"><i class="bi bi-eye me-1"></i> Live Preview of Footer Icons on Dark Footer Background:</div>
+                            <div class="d-flex align-items-center gap-2 footer-social-wrapper footer-social-style-{{ $currentFooterStyle }}" id="footerSocialPreviewWrapper">
+                                <a href="#" class="footer-social-link social-facebook {{ $currentFooterShape === 'rounded' ? 'rounded-3' : ($currentFooterShape === 'square' ? 'rounded-0' : 'rounded-circle') }}" style="pointer-events: none;" title="Facebook"><i class="bi bi-facebook"></i></a>
+                                <a href="#" class="footer-social-link social-youtube {{ $currentFooterShape === 'rounded' ? 'rounded-3' : ($currentFooterShape === 'square' ? 'rounded-0' : 'rounded-circle') }}" style="pointer-events: none;" title="YouTube"><i class="bi bi-youtube"></i></a>
+                                <a href="#" class="footer-social-link social-instagram {{ $currentFooterShape === 'rounded' ? 'rounded-3' : ($currentFooterShape === 'square' ? 'rounded-0' : 'rounded-circle') }}" style="pointer-events: none;" title="Instagram"><i class="bi bi-instagram"></i></a>
+                                <a href="#" class="footer-social-link social-whatsapp {{ $currentFooterShape === 'rounded' ? 'rounded-3' : ($currentFooterShape === 'square' ? 'rounded-0' : 'rounded-circle') }}" style="pointer-events: none;" title="WhatsApp"><i class="bi bi-whatsapp"></i></a>
+                                <a href="#" class="footer-social-link social-linkedin {{ $currentFooterShape === 'rounded' ? 'rounded-3' : ($currentFooterShape === 'square' ? 'rounded-0' : 'rounded-circle') }}" style="pointer-events: none;" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
                             </div>
+                        </div>
 
-                            <div class="col-md-4 col-sm-6">
-                                <div class="card p-3 border h-100">
-                                    <div class="form-check form-switch mb-0">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="floating_facebook_enabled" name="floating_facebook_enabled" value="1" {{ old('floating_facebook_enabled', site_setting('floating_facebook_enabled', '1')) === '1' ? 'checked' : '' }}>
-                                        <label class="form-check-label fw-bold small text-dark ms-1" for="floating_facebook_enabled">
-                                            <i class="bi bi-facebook text-primary me-1"></i> Facebook
-                                        </label>
-                                    </div>
-                                    <small class="text-muted d-block mt-1">Official Facebook page</small>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4 col-sm-6">
-                                <div class="card p-3 border h-100">
-                                    <div class="form-check form-switch mb-0">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="floating_instagram_enabled" name="floating_instagram_enabled" value="1" {{ old('floating_instagram_enabled', site_setting('floating_instagram_enabled', '1')) === '1' ? 'checked' : '' }}>
-                                        <label class="form-check-label fw-bold small text-dark ms-1" for="floating_instagram_enabled">
-                                            <i class="bi bi-instagram text-danger me-1"></i> Instagram
-                                        </label>
-                                    </div>
-                                    <small class="text-muted d-block mt-1">Official Instagram feed</small>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4 col-sm-6">
-                                <div class="card p-3 border h-100">
-                                    <div class="form-check form-switch mb-0">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="floating_youtube_enabled" name="floating_youtube_enabled" value="1" {{ old('floating_youtube_enabled', site_setting('floating_youtube_enabled', '1')) === '1' ? 'checked' : '' }}>
-                                        <label class="form-check-label fw-bold small text-dark ms-1" for="floating_youtube_enabled">
-                                            <i class="bi bi-youtube text-danger me-1"></i> YouTube
-                                        </label>
-                                    </div>
-                                    <small class="text-muted d-block mt-1">Machinery field demo videos</small>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4 col-sm-6">
-                                <div class="card p-3 border h-100">
-                                    <div class="form-check form-switch mb-0">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="floating_phone_enabled" name="floating_phone_enabled" value="1" {{ old('floating_phone_enabled', site_setting('floating_phone_enabled', '1')) === '1' ? 'checked' : '' }}>
-                                        <label class="form-check-label fw-bold small text-dark ms-1" for="floating_phone_enabled">
-                                            <i class="bi bi-telephone-fill text-success me-1"></i> Call Toll-Free
-                                        </label>
-                                    </div>
-                                    <small class="text-muted d-block mt-1">Direct click-to-call dialer</small>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4 col-sm-6">
-                                <div class="card p-3 border h-100">
-                                    <div class="form-check form-switch mb-0">
-                                        <input class="form-check-input" type="checkbox" role="switch" id="floating_linkedin_enabled" name="floating_linkedin_enabled" value="1" {{ old('floating_linkedin_enabled', site_setting('floating_linkedin_enabled', '0')) === '1' ? 'checked' : '' }}>
-                                        <label class="form-check-label fw-bold small text-dark ms-1" for="floating_linkedin_enabled">
-                                            <i class="bi bi-linkedin text-primary me-1"></i> LinkedIn
-                                        </label>
-                                    </div>
-                                    <small class="text-muted d-block mt-1">Corporate networking profile</small>
-                                </div>
-                            </div>
+                        <!-- Footer Copyright Notice -->
+                        <div class="mt-4">
+                            <label class="form-label fw-bold">Footer Copyright Notice</label>
+                            <input type="text" name="footer_copyright" class="form-control" value="{{ old('footer_copyright', $allSettings['footer_copyright']->value ?? '© 2026 Chauhan Agro Industries Pvt. Ltd. All Rights Reserved.') }}">
                         </div>
                     </div>
 
@@ -783,6 +935,83 @@ function triggerTestAnimation() {
         card.style.animation = 'none';
         card.offsetHeight; // trigger reflow
         card.style.animation = `animPreview_${effect} 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.1}s both`;
+    });
+}
+
+function moveChannelRow(button, direction) {
+    const row = button.closest('tr');
+    const tbody = row.parentElement;
+    if (direction === -1) {
+        const prev = row.previousElementSibling;
+        if (prev) {
+            tbody.insertBefore(row, prev);
+            updateOrderBadges();
+        }
+    } else if (direction === 1) {
+        const next = row.nextElementSibling;
+        if (next) {
+            tbody.insertBefore(next, row);
+            updateOrderBadges();
+        }
+    }
+}
+
+function updateOrderBadges() {
+    const rows = document.querySelectorAll('#stickySocialSortBody tr.sortable-channel-row');
+    rows.forEach((r, idx) => {
+        const order = idx + 1;
+        const badge = r.querySelector('.row-order-badge');
+        const numInput = r.querySelector('.row-order-number');
+        if (badge) badge.textContent = '#' + order;
+        if (numInput) numInput.value = order;
+    });
+}
+
+function reorderFromInput(input) {
+    const rows = Array.from(document.querySelectorAll('#stickySocialSortBody tr.sortable-channel-row'));
+    rows.sort((a, b) => {
+        const valA = parseInt(a.querySelector('.row-order-number').value, 10) || 0;
+        const valB = parseInt(b.querySelector('.row-order-number').value, 10) || 0;
+        return valA - valB;
+    });
+    const tbody = document.getElementById('stickySocialSortBody');
+    rows.forEach(r => tbody.appendChild(r));
+    updateOrderBadges();
+}
+
+function updateFooterSocialPreview() {
+    const styleSelect = document.getElementById('footerSocialStyleSelect');
+    const shapeSelect = document.getElementById('footerSocialShapeSelect');
+    if (!styleSelect || !shapeSelect) return;
+
+    const style = styleSelect.value;
+    const shape = shapeSelect.value;
+    const customOptions = document.getElementById('footerSocialCustomColorOptions');
+    const previewWrapper = document.getElementById('footerSocialPreviewWrapper');
+    
+    if (customOptions) {
+        customOptions.style.display = (style === 'custom') ? 'flex' : 'none';
+    }
+
+    if (!previewWrapper) return;
+
+    previewWrapper.className = 'd-flex align-items-center gap-2 footer-social-wrapper footer-social-style-' + style;
+    
+    const shapeClass = (shape === 'rounded') ? 'rounded-3' : ((shape === 'square') ? 'rounded-0' : 'rounded-circle');
+    const customBg = document.getElementById('footer_social_custom_bg') ? document.getElementById('footer_social_custom_bg').value : '#047857';
+    const customColor = document.getElementById('footer_social_custom_color') ? document.getElementById('footer_social_custom_color').value : '#ffffff';
+
+    const icons = previewWrapper.querySelectorAll('.footer-social-link');
+    icons.forEach(icon => {
+        icon.classList.remove('rounded-circle', 'rounded-3', 'rounded-0');
+        icon.classList.add(shapeClass);
+        if (style === 'custom') {
+            icon.style.backgroundColor = customBg;
+            icon.style.color = customColor;
+        } else {
+            icon.style.backgroundColor = '';
+            icon.style.color = '';
+        }
     });
 }
 </script>

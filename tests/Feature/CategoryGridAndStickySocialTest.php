@@ -162,4 +162,82 @@ class CategoryGridAndStickySocialTest extends TestCase
         $frontendEnabled->assertStatus(200);
         $frontendEnabled->assertSee('sticky-social-bar');
     }
+
+    public function test_admin_can_sort_floating_social_icons()
+    {
+        $this->actingAs($this->adminUser);
+
+        $customOrder = ['phone', 'youtube', 'whatsapp', 'facebook', 'instagram', 'linkedin', 'twitter'];
+
+        $response = $this->post('/admin/settings', [
+            'active_tab' => '#tab-social',
+            'social_settings_present' => '1',
+            'floating_social_enabled' => '1',
+            'floating_phone_enabled' => '1',
+            'floating_youtube_enabled' => '1',
+            'floating_whatsapp_enabled' => '1',
+            'floating_facebook_enabled' => '1',
+            'floating_instagram_enabled' => '1',
+            'floating_social_order_list' => $customOrder,
+        ]);
+
+        $response->assertRedirect('/admin/settings#tab-social');
+        $this->assertEquals(json_encode($customOrder), Setting::get('floating_social_order'));
+
+        \Illuminate\Support\Facades\Artisan::call('view:clear');
+
+        $frontend = $this->get('/en');
+        $frontend->assertStatus(200);
+
+        $html = $frontend->getContent();
+        $stickyPos = strpos($html, 'id="stickySocialBar"');
+        $this->assertNotFalse($stickyPos);
+
+        $stickySection = substr($html, $stickyPos, 3000);
+        $phPos = strpos($stickySection, 'social-phone');
+        $ytPos = strpos($stickySection, 'social-youtube');
+        $waPos = strpos($stickySection, 'social-whatsapp');
+
+        $this->assertNotFalse($phPos);
+        $this->assertNotFalse($ytPos);
+        $this->assertNotFalse($waPos);
+
+        // Verify Phone appears before YouTube, and YouTube before WhatsApp
+        $this->assertLessThan($ytPos, $phPos, 'Phone icon should be ordered before YouTube icon');
+        $this->assertLessThan($waPos, $ytPos, 'YouTube icon should be ordered before WhatsApp icon');
+    }
+
+    public function test_admin_can_update_footer_about_content_and_social_icon_color_style()
+    {
+        $this->actingAs($this->adminUser);
+
+        $testAboutText = 'Chauhan Agro Industries leads the precision engineering market for farm haulage equipment.';
+
+        $response = $this->post('/admin/settings', [
+            'active_tab' => '#tab-social',
+            'social_settings_present' => '1',
+            'footer_about_text' => $testAboutText,
+            'footer_social_color_style' => 'brand',
+            'footer_social_shape' => 'rounded',
+            'footer_copyright' => '© 2026 Test Chauhan Agro Reserved',
+        ]);
+
+        $response->assertRedirect('/admin/settings#tab-social');
+        $this->assertEquals($testAboutText, Setting::get('footer_about_text'));
+        $this->assertEquals('brand', Setting::get('footer_social_color_style'));
+        $this->assertEquals('rounded', Setting::get('footer_social_shape'));
+
+        \Illuminate\Support\Facades\Artisan::call('view:clear');
+
+        $frontend = $this->get('/en');
+        $frontend->assertStatus(200);
+
+        // Verify footer content
+        $frontend->assertSee($testAboutText);
+        $frontend->assertSee('footer-social-style-brand');
+        $frontend->assertSee('rounded-3');
+        $frontend->assertSee('social-facebook');
+        $frontend->assertSee('social-whatsapp');
+        $frontend->assertSee('© 2026 Test Chauhan Agro Reserved');
+    }
 }
